@@ -1,7 +1,10 @@
 package de.caffeineaddicted.ld37.actor;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.actions.MoveByAction;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
+import com.badlogic.gdx.scenes.scene2d.actions.RepeatAction;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.utils.Align;
 import de.caffeineaddicted.ld37.screen.GameScreen;
 import de.caffeineaddicted.sgl.SGL;
@@ -17,7 +20,9 @@ public class Tile extends Entity implements Mortal, Creatable {
     private int stepsLeft;
     private boolean hasKey = false;
     private boolean created = false;
-    private MoveToAction mta;
+    private Vector2 move;
+    private Vector2 moveLeft;
+    private boolean moveReversed = false;
 
     private Vector2 start, end;
     private boolean dieing = false;
@@ -38,12 +43,7 @@ public class Tile extends Entity implements Mortal, Creatable {
         this.hasKey = hasKey;
         this.start = start;
         this.end = end;
-        if (end != null) {
-            mta = new MoveToAction();
-            mta.setAlignment(Align.center);
-            mta.setReverse(false);
-            addAction(mta);
-        }
+
     }
 
     @Override
@@ -52,9 +52,26 @@ public class Tile extends Entity implements Mortal, Creatable {
             create();
         }
         super.act(delta);
-        if (!dead && end != null && !hasActions()) {
-            mta.setReverse(!mta.isReverse());
-            mta.restart();
+        if (end != null && type.speed > 0) {
+            float percent = delta / type.speed;
+            float mX = move.x * (move.x == 0 ? 0 : Map.TileSize / move.x) * percent;
+            float mY = move.y * (move.y == 0 ? 0 : Map.TileSize / move.y) * percent;
+            mX *= (moveReversed) ? -1 : 1;
+            mY *= (moveReversed) ? -1 : 1;
+            if (Math.abs(moveLeft.x) < mX) {
+                mX = moveLeft.x;
+            }
+            if (Math.abs(moveLeft.y) < mY) {
+                mY = moveLeft.y;
+            }
+            moveLeft.sub(mX, mY);
+            moveBy(mX, mY);
+            //SGL.debug("percent=" + percent + ";dx=" + dX + ";dy=" + dY + ";mx=" + mX + ";my=" + mY);
+            if ((moveReversed ? -moveLeft.x : moveLeft.x) < 1 && (moveReversed ? -moveLeft.y : moveLeft.y) < 1) {
+                SGL.debug("reverse!");
+                moveReversed = !moveReversed;
+                moveLeft.set(moveReversed ? -move.x : move.x, moveReversed ? -move.y : move.y);
+            }
         }
         if (dieing) {
             if (SGL.provide(GameScreen.class).getMap().getTileAt(getCenterPoint()) != SGL.provide(GameScreen.class).getMap().getTileAt(SGL.provide(GameScreen.class).getPlayer().getCenterPoint())) {
@@ -120,9 +137,17 @@ public class Tile extends Entity implements Mortal, Creatable {
 
     @Override
     public void create() {
-        Vector2 pos = SGL.provide(GameScreen.class).getMap().calPixCoord(start);
-        setCenterPosition(pos.x, pos.y);
+        Vector2 vecstart = SGL.provide(GameScreen.class).getMap().calPixCoord(start);
+        setCenterPosition(vecstart.x, vecstart.y);
+        if (end != null) {
+            Vector2 vecend = SGL.provide(GameScreen.class).getMap().calPixCoord(end);
+            move = vecend.cpy().sub(vecstart);
+            moveLeft = move.cpy();
+            SGL.debug(move.toString());
+        }
         setTexture();
+        sizeChanged();
+        SGL.debug(getWidth() + "," + getHeight());
         created = true;
     }
 
@@ -148,22 +173,24 @@ public class Tile extends Entity implements Mortal, Creatable {
                 a = 1;
             }
         }
-        addTexture(type.assets[a]);
+        String Texture = addTexture(type.assets[a]);
     }
 
     public enum Type {
 
-        Empty(0, false, "tile_empty.png"),
-        Stone(2, false, "stonebroke.png", "stonehalf.png", "stone.png"),
-        Ice(1, true, "icebroke.png", "ice.png");
+        Empty(0, false, 0, "tile_empty.png"),
+        Stone(2, false, 4, "stonebroke.png", "stonehalf.png", "stone.png"),
+        Ice(1, true, 2, "icebroke.png", "ice.png");
 
         public final int durability;
         public final boolean slipery;
+        public final float speed;
         public final String[] assets;
 
-        Type(int durability, boolean slippery, String... assets) {
+        Type(int durability, boolean slippery, float speed, String... assets) {
             this.durability = durability;
             this.slipery = slippery;
+            this.speed = speed;
             this.assets = assets;
         }
     }

@@ -11,22 +11,41 @@ import de.caffeineaddicted.sgl.input.SGLInputProcessor;
  */
 public class GameInputProcessor extends SGLInputProcessor {
 
-    private float startDragX, startDragY;
+    private float lastDragX, lastDragY;
 
     @Override
     public boolean keyDown(int keycode) {
         switch (keycode) {
             case Input.Keys.UP:
-                SGL.provide(GameScreen.class).getPlayer().move(UnitPlayer.MovementDirection.UP);
+                SGL.provide(GameScreen.class).getPlayer().keyDown(UnitPlayer.MovementDirection.UP);
                 break;
             case Input.Keys.LEFT:
-                SGL.provide(GameScreen.class).getPlayer().move(UnitPlayer.MovementDirection.LEFT);
+                SGL.provide(GameScreen.class).getPlayer().keyDown(UnitPlayer.MovementDirection.LEFT);
                 break;
             case Input.Keys.DOWN:
-                SGL.provide(GameScreen.class).getPlayer().move(UnitPlayer.MovementDirection.DOWN);
+                SGL.provide(GameScreen.class).getPlayer().keyDown(UnitPlayer.MovementDirection.DOWN);
                 break;
             case Input.Keys.RIGHT:
-                SGL.provide(GameScreen.class).getPlayer().move(UnitPlayer.MovementDirection.RIGHT);
+                SGL.provide(GameScreen.class).getPlayer().keyDown(UnitPlayer.MovementDirection.RIGHT);
+                break;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean keyUp(int keycode) {
+        switch (keycode) {
+            case Input.Keys.UP:
+                SGL.provide(GameScreen.class).getPlayer().keyUp(UnitPlayer.MovementDirection.UP);
+                break;
+            case Input.Keys.LEFT:
+                SGL.provide(GameScreen.class).getPlayer().keyUp(UnitPlayer.MovementDirection.LEFT);
+                break;
+            case Input.Keys.DOWN:
+                SGL.provide(GameScreen.class).getPlayer().keyUp(UnitPlayer.MovementDirection.DOWN);
+                break;
+            case Input.Keys.RIGHT:
+                SGL.provide(GameScreen.class).getPlayer().keyUp(UnitPlayer.MovementDirection.RIGHT);
                 break;
         }
         return false;
@@ -35,8 +54,8 @@ public class GameInputProcessor extends SGLInputProcessor {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         SGL.debug("touchDown: " + screenX + "," + screenY);
-        startDragX = screenX;
-        startDragY = screenY;
+        lastDragX = screenX;
+        lastDragY = screenY;
         return true;
     }
 
@@ -48,16 +67,18 @@ public class GameInputProcessor extends SGLInputProcessor {
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        SGL.debug("touchDragged: " + screenX + "," + screenY);
-        SGL.provide(GameScreen.class).drag(screenX - startDragX, screenY - startDragY);
-        startDragX = screenX;
-        startDragY = screenY;
+        SGL.debug("touchDragged: " + screenX + "," + screenY + " distance: " + (screenX - lastDragX) + "," + (screenY - lastDragY));
+        SGL.debug("x:" + lastDragX + " y:" + lastDragY);
+        SGL.provide(GameScreen.class).drag(screenX - lastDragX, screenY - lastDragY);
+        lastDragX = screenX;
+        lastDragY = screenY;
+        SGL.debug("x:" + lastDragX + " y:" + lastDragY);
         return true;
     }
 
     @Override
     public boolean mouseMoved(int screenX, int screenY) {
-        SGL.debug("mouseMoved: " + screenX + "," + screenY);
+        //SGL.debug("mouseMoved: " + screenX + "," + screenY);
         return true;
     }
 

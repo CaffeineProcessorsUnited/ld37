@@ -10,7 +10,7 @@ public class UnitPlayer extends UnitBase {
     final private float speed = 1;
     private int collectedKeys;
     private String ACTOR_BASE;
-    private MovementDirection movingDir = MovementDirection.NONE, slipperyDir;
+    private MovementDirection movingDir = MovementDirection.NONE, slipperyDir, keyDir = MovementDirection.NONE;
     private Tile currentTile;
     private boolean newTile = true;
 
@@ -20,16 +20,19 @@ public class UnitPlayer extends UnitBase {
         getActor(ACTOR_BASE).setHeight(64);
         setWidth(getActor(ACTOR_BASE).getWidth());
         setHeight(getActor(ACTOR_BASE).getHeight());
-
         collectedKeys = 0;
 
         update();
     }
 
-    public void move(MovementDirection dir) {
-        if (!hasActions()) {
-            SGL.debug("Move: " + dir.name());
-            movingDir = dir;
+    public void keyDown(MovementDirection dir) {
+        SGL.debug("Move: " + dir.name());
+        keyDir = dir;
+    }
+
+    public void keyUp(MovementDirection dir) {
+        if (keyDir == dir) {
+            keyDir = MovementDirection.NONE;
         }
     }
 
@@ -66,10 +69,10 @@ public class UnitPlayer extends UnitBase {
                 newTile = false;
                 if (tile != null) {
                     tile.walkOver();
-                }
-                if (tile.hasKey()) {
-                    tile.takeKey();
-                    collectKey();
+                    if (tile.hasKey()) {
+                        tile.takeKey();
+                        collectKey();
+                    }
                 }
             }
             if (tile == null || tile.isDead()) {
@@ -84,6 +87,8 @@ public class UnitPlayer extends UnitBase {
                 addAction(createAction(movingDir));
                 slipperyDir = movingDir;
                 movingDir = MovementDirection.NONE;
+            } else {
+                movingDir = keyDir;
             }
         }
         if (currentTile != tile) {

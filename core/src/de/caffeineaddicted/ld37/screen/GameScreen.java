@@ -119,6 +119,8 @@ public class GameScreen extends SGLStagedScreen<LD37> {
     }
 
     public void drag(float x, float y) {
+        SGL.debug(x + "," + y);
+        //stage().getCamera().position.add(x, y, 0);
         map.moveBy(x, y);
         player.moveBy(x, y);
     }
