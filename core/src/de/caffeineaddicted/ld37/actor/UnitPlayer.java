@@ -60,7 +60,10 @@ public class UnitPlayer extends UnitBase {
         Tile tile = SGL.provide(GameScreen.class).getMap().getTileAt(getCenterPoint().x, getCenterPoint().y);
         boolean onNextBlock = false;
         if (tile != currentTile) {
-            onNextBlock = true;
+            SGL.debug(""+tile.getCenterPoint().dst(getCenterPoint()));
+            if(tile != null && tile.getCenterPoint().dst(getCenterPoint()) < 5) {
+                onNextBlock = true;
+            }
         }
 
         if (tile != null) {

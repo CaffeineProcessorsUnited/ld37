@@ -80,8 +80,8 @@ abstract public class Map extends Entity implements Creatable {
     }
 
     public Vector2 calPixCoord(float x, float y) {
-        int x_pix = (int) (x / (dimx + 1) * SGL.provide(GameScreen.class).getViewWidth());
-        int y_pix = (int) (y / (dimy + 1) * SGL.provide(GameScreen.class).getViewHeight());
+        int x_pix = (int)(x*TileSize);//(int) (x / (dimx+1) * SGL.provide(GameScreen.class).getViewWidth());
+        int y_pix = (int)(y*TileSize);//(int) (y / (dimy+1) * SGL.provide(GameScreen.class).getViewHeight());
         return new Vector2(x_pix, y_pix);
     }
 
@@ -90,6 +90,8 @@ abstract public class Map extends Entity implements Creatable {
             tile.update();
         }
     }
+
+    public static int TileSize = 64;
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
