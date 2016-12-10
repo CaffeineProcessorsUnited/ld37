@@ -5,6 +5,7 @@ import de.caffeineaddicted.ld37prep.LD37;
 import de.caffeineaddicted.ld37prep.actor.Map;
 import de.caffeineaddicted.ld37prep.actor.Tile;
 import de.caffeineaddicted.ld37prep.actor.UnitPlayer;
+import de.caffeineaddicted.ld37prep.actor.maps.Map01;
 import de.caffeineaddicted.ld37prep.message.FireEverythingMessage;
 import de.caffeineaddicted.sgl.SGL;
 import de.caffeineaddicted.sgl.etities.Actor;
@@ -50,7 +51,7 @@ public class GameScreen extends SGLStagedScreen<LD37> {
     @Override
     public void onCreate() {
         player = new UnitPlayer();
-        map = new Map(new Tile[]{}, new Vector2(0,0), new Vector2(0,0));
+        map = new Map01(new Vector2(0,0), new Vector2(0,0));
         addActor(player);
         SGL.registerMessageReceiver(FireEverythingMessage.class, new MessageReceiver() {
             @Override

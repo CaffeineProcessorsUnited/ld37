@@ -1,23 +1,26 @@
 package de.caffeineaddicted.ld37prep.actor;
 
 import com.badlogic.gdx.math.Vector2;
+import de.caffeineaddicted.ld37prep.actor.maps.Map01;
 import de.caffeineaddicted.ld37prep.screen.GameScreen;
 import de.caffeineaddicted.sgl.SGL;
 import de.caffeineaddicted.sgl.etities.Entity;
+import de.caffeineaddicted.sgl.ui.interfaces.Creatable;
 
 import static java.lang.Math.abs;
 
 /**
  * Created by felix on 10.12.16.
  */
-public class Map extends Entity {
+abstract public class Map extends Entity implements Creatable{
     private Tile[] floor;
     private Vector2 start;
     private Vector2 exit;
     private int dimx, dimy;
 
-    public Map(Tile[] floor, Vector2 start, Vector2 exit) {
-        this.floor = floor;
+    protected boolean created = false;
+
+    public Map(Vector2 start, Vector2 exit) {
         this.start = start;
         this.exit = exit;
         int currentx = 0;
@@ -28,6 +31,21 @@ public class Map extends Entity {
         }
         this.dimx = currentx;
         this.dimy = currenty;
+    }
+
+    @Override
+    public void create() {
+        onCreate();
+        created = true;
+    }
+
+    @Override
+    public boolean isCreated() {
+        return created;
+    }
+
+    public void setFloor(Tile[] floor){
+        this.floor = floor;
     }
 
     public Tile[] getFloor() {
