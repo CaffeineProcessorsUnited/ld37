@@ -32,6 +32,7 @@ public class Tile extends Entity implements Mortal {
         this.hasKey = hasKey;
         this.start = start;
         Vector2 pos = SGL.provide(GameScreen.class).getMap().calPixCoord(start);
+        SGL.debug(""+pos);
         setCenterPosition(pos.x, pos.y);
         this.end = end;
         if (end != null) {

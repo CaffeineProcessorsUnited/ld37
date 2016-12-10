@@ -12,7 +12,7 @@ public class Map01 extends Map {
     public void onCreate(){
         Tile[] tiles = new Tile[100];
         for(int i = 0; i < 100; ++i){
-            tiles[i] = new Tile(Tile.Type.Empty, new Vector2(10*(i%10), 10*(i/10)));
+            tiles[i] = new Tile(Tile.Type.Stone, new Vector2((i%10), (i/10)));
         }
         super.setFloor(tiles);
     }
