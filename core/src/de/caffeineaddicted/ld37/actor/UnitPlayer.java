@@ -66,7 +66,7 @@ public class UnitPlayer extends UnitBase {
                 if (tile != null) {
                     tile.walkOver();
                 }
-                if (tile.hasKey()) {
+                if (tile != null && tile.hasKey()) {
                     tile.takeKey();
                     collectKey();
                 }

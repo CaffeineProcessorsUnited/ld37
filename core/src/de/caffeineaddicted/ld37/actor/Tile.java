@@ -28,6 +28,10 @@ public class Tile extends Entity implements Mortal, Creatable {
         this(type, false, start, null);
     }
 
+    public Tile(Tile.Type type, boolean hasKey, Vector2 start) {
+        this(type, hasKey, start, null);
+    }
+
     public Tile(Tile.Type type, Vector2 start, Vector2 end) {
         this(type, false, start, end);
     }
@@ -163,6 +167,15 @@ public class Tile extends Entity implements Mortal, Creatable {
             this.durability = durability;
             this.slipery = slippery;
             this.assets = assets;
+        }
+
+        public static Type getTypeByName(String name){
+            for(Type type: values()){
+                if(type.name().equals(name)){
+                    return type;
+                }
+            }
+            return null;
         }
     }
 }

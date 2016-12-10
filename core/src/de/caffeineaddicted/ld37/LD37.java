@@ -2,10 +2,16 @@ package de.caffeineaddicted.ld37;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
+import com.badlogic.gdx.assets.loaders.resolvers.LocalFileHandleResolver;
+import de.caffeineaddicted.ld37.actor.Map;
+import de.caffeineaddicted.ld37.actor.MapLoader;
+import de.caffeineaddicted.ld37.actor.MapWrapper;
 import de.caffeineaddicted.ld37.screen.GameScreen;
 import de.caffeineaddicted.ld37.utils.Assets;
 import de.caffeineaddicted.sgl.ApplicationConfiguration;
 import de.caffeineaddicted.sgl.AttributeList;
+import de.caffeineaddicted.sgl.SGL;
 import de.caffeineaddicted.sgl.SGLGame;
 import de.caffeineaddicted.sgl.ui.screens.SGLRootScreen;
 import de.caffeineaddicted.sgl.utils.SGLAssets;
@@ -36,6 +42,10 @@ public class LD37 extends SGLGame {
     @Override
     protected void startGame() {
         provide(SGLAssets.class).setup();
+        provide(SGLAssets.class).setLoader(MapWrapper.class,
+                new MapLoader(new InternalFileHandleResolver())
+            );
+
         provide(SGLAssets.class).preload();
         provide(SGLAssets.class).load();
         provide(SGLAssets.class).finishLoading();
@@ -64,7 +74,6 @@ public class LD37 extends SGLGame {
 
     @Override
     public void onCreate() {
-
     }
 
     @Override

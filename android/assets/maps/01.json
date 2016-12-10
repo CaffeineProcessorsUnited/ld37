@@ -1,0 +1,508 @@
+{
+    "end_y": 10,
+    "tiles": [
+        {
+            "y": 0,
+            "x": 0,
+            "type": "Ice"
+        },
+        {
+            "y": 1,
+            "x": 0,
+            "type": "Stone"
+        },
+        {
+            "y": 2,
+            "x": 0,
+            "type": "Stone"
+        },
+        {
+            "y": 3,
+            "x": 0,
+            "type": "Stone"
+        },
+        {
+            "y": 4,
+            "x": 0,
+            "type": "Stone"
+        },
+        {
+            "y": 5,
+            "x": 0,
+            "type": "Stone"
+        },
+        {
+            "y": 6,
+            "x": 0,
+            "type": "Stone"
+        },
+        {
+            "y": 7,
+            "x": 0,
+            "type": "Stone"
+        },
+        {
+            "y": 8,
+            "x": 0,
+            "type": "Stone"
+        },
+        {
+            "y": 9,
+            "x": 0,
+            "type": "Stone"
+        },
+        {
+            "y": 0,
+            "x": 1,
+            "type": "Stone"
+        },
+        {
+            "y": 1,
+            "x": 1,
+            "type": "Ice"
+        },
+        {
+            "y": 2,
+            "x": 1,
+            "type": "Stone"
+        },
+        {
+            "y": 3,
+            "x": 1,
+            "type": "Stone"
+        },
+        {
+            "y": 4,
+            "x": 1,
+            "type": "Stone"
+        },
+        {
+            "y": 5,
+            "x": 1,
+            "type": "Stone"
+        },
+        {
+            "y": 6,
+            "x": 1,
+            "type": "Stone"
+        },
+        {
+            "y": 7,
+            "x": 1,
+            "type": "Stone"
+        },
+        {
+            "y": 8,
+            "x": 1,
+            "type": "Stone"
+        },
+        {
+            "y": 9,
+            "x": 1,
+            "type": "Stone"
+        },
+        {
+            "y": 0,
+            "x": 2,
+            "type": "Stone"
+        },
+        {
+            "y": 1,
+            "x": 2,
+            "type": "Stone"
+        },
+        {
+            "y": 2,
+            "x": 2,
+            "type": "Ice"
+        },
+        {
+            "y": 3,
+            "x": 2,
+            "type": "Stone"
+        },
+        {
+            "y": 4,
+            "x": 2,
+            "type": "Stone"
+        },
+        {
+            "y": 5,
+            "x": 2,
+            "type": "Stone"
+        },
+        {
+            "y": 6,
+            "x": 2,
+            "type": "Stone"
+        },
+        {
+            "y": 7,
+            "x": 2,
+            "type": "Stone"
+        },
+        {
+            "y": 8,
+            "x": 2,
+            "type": "Stone"
+        },
+        {
+            "y": 9,
+            "x": 2,
+            "type": "Stone"
+        },
+        {
+            "y": 0,
+            "x": 3,
+            "type": "Stone"
+        },
+        {
+            "y": 1,
+            "x": 3,
+            "type": "Stone"
+        },
+        {
+            "y": 2,
+            "x": 3,
+            "type": "Stone"
+        },
+        {
+            "y": 3,
+            "x": 3,
+            "type": "Ice"
+        },
+        {
+            "y": 4,
+            "x": 3,
+            "type": "Stone"
+        },
+        {
+            "y": 5,
+            "x": 3,
+            "type": "Stone"
+        },
+        {
+            "y": 6,
+            "x": 3,
+            "type": "Stone"
+        },
+        {
+            "y": 7,
+            "x": 3,
+            "type": "Stone"
+        },
+        {
+            "y": 8,
+            "x": 3,
+            "type": "Stone"
+        },
+        {
+            "y": 9,
+            "x": 3,
+            "type": "Stone"
+        },
+        {
+            "y": 0,
+            "x": 4,
+            "type": "Stone"
+        },
+        {
+            "y": 1,
+            "x": 4,
+            "type": "Stone"
+        },
+        {
+            "y": 2,
+            "x": 4,
+            "type": "Stone"
+        },
+        {
+            "y": 3,
+            "x": 4,
+            "type": "Stone"
+        },
+        {
+            "y": 4,
+            "x": 4,
+            "type": "Ice"
+        },
+        {
+            "y": 5,
+            "x": 4,
+            "type": "Stone"
+        },
+        {
+            "y": 6,
+            "x": 4,
+            "type": "Stone"
+        },
+        {
+            "y": 7,
+            "x": 4,
+            "type": "Stone"
+        },
+        {
+            "y": 8,
+            "x": 4,
+            "type": "Stone"
+        },
+        {
+            "y": 9,
+            "x": 4,
+            "type": "Stone"
+        },
+        {
+            "y": 0,
+            "x": 5,
+            "type": "Stone"
+        },
+        {
+            "y": 1,
+            "x": 5,
+            "type": "Stone"
+        },
+        {
+            "y": 2,
+            "x": 5,
+            "type": "Stone"
+        },
+        {
+            "y": 3,
+            "x": 5,
+            "type": "Stone"
+        },
+        {
+            "y": 4,
+            "x": 5,
+            "type": "Stone"
+        },
+        {
+            "y": 5,
+            "x": 5,
+            "type": "Ice"
+        },
+        {
+            "y": 6,
+            "x": 5,
+            "type": "Stone"
+        },
+        {
+            "y": 7,
+            "x": 5,
+            "type": "Stone"
+        },
+        {
+            "y": 8,
+            "x": 5,
+            "type": "Stone"
+        },
+        {
+            "y": 9,
+            "x": 5,
+            "type": "Stone"
+        },
+        {
+            "y": 0,
+            "x": 6,
+            "type": "Stone"
+        },
+        {
+            "y": 1,
+            "x": 6,
+            "type": "Stone"
+        },
+        {
+            "y": 2,
+            "x": 6,
+            "type": "Stone"
+        },
+        {
+            "y": 3,
+            "x": 6,
+            "type": "Stone"
+        },
+        {
+            "y": 4,
+            "x": 6,
+            "type": "Stone"
+        },
+        {
+            "y": 5,
+            "x": 6,
+            "type": "Stone"
+        },
+        {
+            "y": 6,
+            "x": 6,
+            "type": "Ice"
+        },
+        {
+            "y": 7,
+            "x": 6,
+            "type": "Stone"
+        },
+        {
+            "y": 8,
+            "x": 6,
+            "type": "Stone"
+        },
+        {
+            "y": 9,
+            "x": 6,
+            "type": "Stone"
+        },
+        {
+            "y": 0,
+            "x": 7,
+            "type": "Stone"
+        },
+        {
+            "y": 1,
+            "x": 7,
+            "type": "Stone"
+        },
+        {
+            "y": 2,
+            "x": 7,
+            "type": "Stone"
+        },
+        {
+            "y": 3,
+            "x": 7,
+            "type": "Stone"
+        },
+        {
+            "y": 4,
+            "x": 7,
+            "type": "Stone"
+        },
+        {
+            "y": 5,
+            "x": 7,
+            "type": "Stone"
+        },
+        {
+            "y": 6,
+            "x": 7,
+            "type": "Stone"
+        },
+        {
+            "y": 7,
+            "x": 7,
+            "type": "Ice"
+        },
+        {
+            "y": 8,
+            "x": 7,
+            "type": "Stone"
+        },
+        {
+            "y": 9,
+            "x": 7,
+            "type": "Stone"
+        },
+        {
+            "y": 0,
+            "x": 8,
+            "type": "Stone"
+        },
+        {
+            "y": 1,
+            "x": 8,
+            "type": "Stone"
+        },
+        {
+            "y": 2,
+            "x": 8,
+            "type": "Stone"
+        },
+        {
+            "y": 3,
+            "x": 8,
+            "type": "Stone"
+        },
+        {
+            "y": 4,
+            "x": 8,
+            "type": "Stone"
+        },
+        {
+            "y": 5,
+            "x": 8,
+            "type": "Stone"
+        },
+        {
+            "y": 6,
+            "x": 8,
+            "type": "Stone"
+        },
+        {
+            "y": 7,
+            "x": 8,
+            "type": "Stone"
+        },
+        {
+            "y": 8,
+            "x": 8,
+            "type": "Ice"
+        },
+        {
+            "y": 9,
+            "x": 8,
+            "type": "Stone"
+        },
+        {
+            "y": 0,
+            "x": 9,
+            "type": "Stone"
+        },
+        {
+            "y": 1,
+            "x": 9,
+            "type": "Stone"
+        },
+        {
+            "y": 2,
+            "x": 9,
+            "type": "Stone"
+        },
+        {
+            "y": 3,
+            "x": 9,
+            "type": "Stone"
+        },
+        {
+            "y": 4,
+            "x": 9,
+            "type": "Stone"
+        },
+        {
+            "y": 5,
+            "x": 9,
+            "type": "Stone"
+        },
+        {
+            "y": 6,
+            "x": 9,
+            "type": "Stone"
+        },
+        {
+            "y": 7,
+            "x": 9,
+            "type": "Stone"
+        },
+        {
+            "y": 8,
+            "x": 9,
+            "type": "Stone"
+        },
+        {
+            "y": 9,
+            "x": 9,
+            "type": "Ice"
+        }
+    ],
+    "start_y": 0,
+    "start_x": 0,
+    "end_x": 10
+}

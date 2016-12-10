@@ -3,16 +3,20 @@ package de.caffeineaddicted.ld37.screen;
 import com.badlogic.gdx.math.Vector2;
 import de.caffeineaddicted.ld37.LD37;
 import de.caffeineaddicted.ld37.actor.Map;
+import de.caffeineaddicted.ld37.actor.MapConfig;
+import de.caffeineaddicted.ld37.actor.MapWrapper;
 import de.caffeineaddicted.ld37.actor.UnitPlayer;
 import de.caffeineaddicted.ld37.actor.maps.Map01;
 import de.caffeineaddicted.ld37.input.GameInputProcessor;
 import de.caffeineaddicted.ld37.message.FireEverythingMessage;
+import de.caffeineaddicted.ld37.utils.Assets;
 import de.caffeineaddicted.sgl.SGL;
 import de.caffeineaddicted.sgl.etities.Actor;
 import de.caffeineaddicted.sgl.input.SGLScreenInputMultiplexer;
 import de.caffeineaddicted.sgl.messages.Message;
 import de.caffeineaddicted.sgl.messages.MessageReceiver;
 import de.caffeineaddicted.sgl.ui.screens.SGLStagedScreen;
+import de.caffeineaddicted.sgl.utils.SGLAssets;
 
 import java.util.ArrayList;
 
@@ -56,7 +60,7 @@ public class GameScreen extends SGLStagedScreen<LD37> {
     public void onCreate() {
         SGL.provide(SGLScreenInputMultiplexer.class).addProcessor(this, new GameInputProcessor());
         player = new UnitPlayer();
-        map = new Map01(new Vector2(0, 0), new Vector2(0, 0));
+        map = SGL.provide(SGLAssets.class).get("maps/01.json", MapWrapper.class).getMap();
         map.create();
         addActor(player);
         addActor(map);
