@@ -91,7 +91,6 @@ public class UnitPlayer extends UnitBase {
                 moveBy(0, speed*delta);
             }
 
-            //TODO: Check if current tile is slippery
             boolean slippery = tile.isSlippery();
             if(!slippery && onNextBlock){
                 moving = false;
