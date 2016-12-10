@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class Map01 extends Map {
     public Map01(Vector2 start, Vector2 exit) {
-        super(start, exit);
+        super(start, exit, 10, 10);
     }
 
     public void onCreate() {

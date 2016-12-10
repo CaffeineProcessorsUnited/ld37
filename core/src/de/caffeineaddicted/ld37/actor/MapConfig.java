@@ -38,6 +38,8 @@ public class MapConfig
         public int start_y;
         public int end_x;
         public int end_y;
+        public int width;
+        public int height;
     }
 
     public static Map readMap(String mapData){
@@ -46,7 +48,8 @@ public class MapConfig
         final MapConfigWrapper mapConfig = json.fromJson(MapConfigWrapper.class, mapData);
 
         return new Map(new Vector2(mapConfig.start_x, mapConfig.start_y),
-                new Vector2(mapConfig.end_x, mapConfig.end_y)) {
+                new Vector2(mapConfig.end_x, mapConfig.end_y),
+                mapConfig.width, mapConfig.height) {
             @Override
             public void onCreate() {
                 Tile[] tiles = new Tile[mapConfig.tiles.size()];

@@ -14,22 +14,20 @@ abstract public class Map extends Entity implements Creatable {
     private Tile[] floor;
     private Vector2 start;
     private Vector2 exit;
+    int width;
+    int height;
 
-    public Map(Vector2 start, Vector2 exit) {
+    public Map(Vector2 start, Vector2 exit, int width, int height) {
         this.start = start;
         this.exit = exit;
+        this.width = width;
+        this.height = height;
     }
 
     @Override
     public void create() {
         onCreate();
         created = true;
-        int currentx = 0;
-        int currenty = 0;
-        for (Tile tile : floor) {
-            currentx = Math.max(currentx, (int) tile.getStart().x);
-            currenty = Math.max(currenty, (int) tile.getStart().y);
-        }
         for (Tile tile : floor) {
             tile.create();
             addActor(tile);
