@@ -2,7 +2,6 @@ package de.caffeineaddicted.ld37prep;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
-
 import de.caffeineaddicted.ld37prep.screen.GameScreen;
 import de.caffeineaddicted.ld37prep.utils.Assets;
 import de.caffeineaddicted.sgl.ApplicationConfiguration;

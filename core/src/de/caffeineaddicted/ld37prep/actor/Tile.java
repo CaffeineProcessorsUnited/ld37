@@ -11,9 +11,11 @@ abstract public class Tile extends Entity implements Mortal {
     private Tile.Type type;
     private float stepsLeft;
     private boolean hasKey = false;
+
     private Vector2 start, end;
     private MoveToAction mta;
     private boolean dieing = false;
+
     private boolean dead = false;
 
     public Tile(Tile.Type type, Vector2 start) {
@@ -29,7 +31,8 @@ abstract public class Tile extends Entity implements Mortal {
         stepsLeft = type.durability;
         this.hasKey = hasKey;
         this.start = start;
-        setCenterPosition(SGL.provide(GameScreen.class).getMap().g2s(start));
+        Vector2 pos = SGL.provide(GameScreen.class).getMap().calPixCoord(start);
+        setCenterPosition(pos.x, pos.y);
         this.end = end;
         if (end != null) {
             mta = new MoveToAction();
@@ -58,6 +61,31 @@ abstract public class Tile extends Entity implements Mortal {
                 dead = true;
             }
         }
+    }
+
+    public Vector2 getStart() {
+        return start;
+    }
+
+    public Vector2 getEnd() {
+        return end;
+    }
+
+    @Override
+    public boolean isDead() {
+        return dead;
+    }
+
+    public boolean hasKey() {
+        return hasKey;
+    }
+
+    public void takeKey() {
+        hasKey = false;
+    }
+
+    public Tile.Type getType() {
+        return type;
     }
 
     public void onDie() {

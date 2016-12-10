@@ -5,11 +5,11 @@ import de.caffeineaddicted.ld37prep.screen.GameScreen;
 import de.caffeineaddicted.sgl.SGL;
 
 public class UnitPlayer extends UnitBase {
+    final private float speed = 5;
     private int collectedKeys;
     private String ACTOR_BASE;
     private boolean moving;
     private MovementDirection movingDir;
-    final private float speed = 5;
     private Tile currentTile;
 
     public UnitPlayer() {
@@ -22,19 +22,19 @@ public class UnitPlayer extends UnitBase {
         update();
     }
 
-    public void move(MovementDirection dir){
-        if(!moving){
+    public void move(MovementDirection dir) {
+        if (!moving) {
             movingDir = dir;
             moving = true;
         }
     }
 
-    public void collectKey(){
+    public void collectKey() {
         collectedKeys += 1;
     }
 
-    public boolean useKeys(int numKeys){
-        if(numKeys <= collectedKeys){
+    public boolean useKeys(int numKeys) {
+        if (numKeys <= collectedKeys) {
             collectedKeys -= numKeys;
             return true;
         }
@@ -57,37 +57,37 @@ public class UnitPlayer extends UnitBase {
 
         Tile tile = SGL.provide(Map.class).getTileAt(getCenterPoint().x, getCenterPoint().y);
         boolean onNextBlock = false;
-        if(tile != currentTile){
+        if (tile != currentTile) {
             onNextBlock = true;
         }
 
-        if(tile != null && onNextBlock){
+        if (tile != null && onNextBlock) {
             tile.walkOver();
         }
 
-        if( tile == null || !tile.isAlive()){
+        if (tile == null || tile.isDead()) {
             onDie();
             return;
         }
 
-        if(tile.hasKey){
+        if (tile.hasKey()) {
             tile.takeKey();
             collectKey();
         }
 
-        if(moving) {
+        if (moving) {
             if (movingDir == MovementDirection.LEFT) {
-                moveBy(-speed*delta, 0);
+                moveBy(-speed * delta, 0);
             } else if (movingDir == MovementDirection.RIGHT) {
-                moveBy(speed*delta, 0);
+                moveBy(speed * delta, 0);
             } else if (movingDir == MovementDirection.UP) {
-                moveBy(0, -speed*delta);
+                moveBy(0, -speed * delta);
             } else if (movingDir == MovementDirection.DOWN) {
-                moveBy(0, speed*delta);
+                moveBy(0, speed * delta);
             }
 
-            boolean slippery = tile.isSlippery();
-            if(!slippery && onNextBlock){
+            boolean slippery = tile.getType().slipery;
+            if (!slippery && onNextBlock) {
                 moving = false;
             }
         }

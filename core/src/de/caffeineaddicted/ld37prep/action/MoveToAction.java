@@ -9,15 +9,10 @@ import de.caffeineaddicted.sgl.etities.Actor;
  */
 public class MoveToAction extends com.badlogic.gdx.scenes.scene2d.actions.MoveToAction {
 
-    Actor target;
-    Updater updater;
-
     public float startX, startY;
     public float endX, endY;
-
-    public interface Updater {
-        void update(MoveToAction target, float percent);
-    }
+    Actor target;
+    Updater updater;
 
     public void setUpdater(Updater updater) {
         this.updater = updater;
@@ -32,15 +27,15 @@ public class MoveToAction extends com.badlogic.gdx.scenes.scene2d.actions.MoveTo
         }
     }
 
-    public void setTarget (Actor target) {
-        this.target = target;
-    }
-
-    public Actor getTarget () {
+    public Actor getTarget() {
         return target;
     }
 
-    protected void begin () {
+    public void setTarget(Actor target) {
+        this.target = target;
+    }
+
+    protected void begin() {
         startX = target.getCenterPoint().x;
         startY = target.getCenterPoint().y;
     }
@@ -48,5 +43,9 @@ public class MoveToAction extends com.badlogic.gdx.scenes.scene2d.actions.MoveTo
     public void setPosition(Vector2 end) {
         endX = end.x;
         endY = end.y;
+    }
+
+    public interface Updater {
+        void update(MoveToAction target, float percent);
     }
 }

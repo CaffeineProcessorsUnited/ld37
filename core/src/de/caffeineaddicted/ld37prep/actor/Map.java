@@ -5,8 +5,6 @@ import de.caffeineaddicted.ld37prep.screen.GameScreen;
 import de.caffeineaddicted.sgl.SGL;
 import de.caffeineaddicted.sgl.etities.Entity;
 
-import java.util.ArrayList;
-
 import static java.lang.Math.abs;
 
 /**
@@ -26,9 +24,9 @@ public class Map extends Entity {
         this.exit = exit;
         int currentx = 0;
         int currenty = 0;
-        for(Tile tile:floor) {
-            currentx = Math.max(currentx, tile.getStart());
-            currenty = Math.max(currenty, tile.getStart());
+        for (Tile tile : floor) {
+            currentx = Math.max(currentx, (int) tile.getStart().x);
+            currenty = Math.max(currenty, (int) tile.getStart().y);
         }
         this.dimx = currentx;
         this.dimy = currenty;
@@ -38,10 +36,10 @@ public class Map extends Entity {
         return floor;
     }
 
-    public Tile getTileAt(float x, float y){
-        for(Tile tile: floor){
-            if(abs(tile.getCenterPoint().x-x) < tile.getWidth() &&
-                    abs(tile.getCenterPoint().y-y) < tile.getHeight()){
+    public Tile getTileAt(float x, float y) {
+        for (Tile tile : floor) {
+            if (abs(tile.getCenterPoint().x - x) < tile.getWidth() &&
+                    abs(tile.getCenterPoint().y - y) < tile.getHeight()) {
                 return tile;
             }
         }
@@ -61,14 +59,18 @@ public class Map extends Entity {
         return exit;
     }
 
-    public Vector2 calPixCoord(float x, float y){
+    public Vector2 calPixCoord(Vector2 v) {
+        return calPixCoord(v.x, v.y);
+    }
+
+    public Vector2 calPixCoord(float x, float y) {
         int x_pix = (int) (x / dimx * SGL.provide(GameScreen.class).getViewWidth());
         int y_pix = (int) (y / dimy * SGL.provide(GameScreen.class).getViewHeight());
         return new Vector2(x_pix, y_pix);
     }
 
     public void update() {
-        for (Tile tile:floor) {
+        for (Tile tile : floor) {
             tile.update();
         }
     }

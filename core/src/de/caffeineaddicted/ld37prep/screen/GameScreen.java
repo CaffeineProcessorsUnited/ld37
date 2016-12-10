@@ -1,6 +1,7 @@
 package de.caffeineaddicted.ld37prep.screen;
 
 import de.caffeineaddicted.ld37prep.LD37;
+import de.caffeineaddicted.ld37prep.actor.Map;
 import de.caffeineaddicted.ld37prep.actor.UnitPlayer;
 import de.caffeineaddicted.ld37prep.message.FireEverythingMessage;
 import de.caffeineaddicted.sgl.SGL;
@@ -19,13 +20,13 @@ public class GameScreen extends SGLStagedScreen<LD37> {
     public static float height = 5;
     public ArrayList<Actor> deleteLater = new ArrayList<Actor>();
     private UnitPlayer player;
-
+    private Map map;
 
     public void onBeforeAct(float delta) {
-        for (Actor a: deleteLater) {
+        for (Actor a : deleteLater) {
             stage().removeActor(a);
         }
-        if(player != null)
+        if (player != null)
             player.act(delta);
     }
 
@@ -72,7 +73,7 @@ public class GameScreen extends SGLStagedScreen<LD37> {
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
     }
 
     public void loseGame() {
@@ -87,10 +88,10 @@ public class GameScreen extends SGLStagedScreen<LD37> {
         return map;
     }
 
-    public int getNumActorsOfType(Class <? extends Actor> type){
+    public int getNumActorsOfType(Class<? extends Actor> type) {
         int count = 0;
-        for(com.badlogic.gdx.scenes.scene2d.Actor actor: stage().getActors()){
-            if(type.isInstance(actor)){
+        for (com.badlogic.gdx.scenes.scene2d.Actor actor : stage().getActors()) {
+            if (type.isInstance(actor)) {
                 count++;
             }
         }
