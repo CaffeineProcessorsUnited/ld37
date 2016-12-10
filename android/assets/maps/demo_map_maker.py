@@ -28,7 +28,7 @@ class Map:
                 else:
                     print("{:>2}".format("E"),end="")
 
-                if self.tiles[i]["keys"][0] or self.tiles[i]["keys"][1] or self.tiles[i]["keys"][2]:
+                if self.tiles[i]["key"] > 0:
                     print("k", end="")
                 else:
                     print(" ", end="")
@@ -50,10 +50,10 @@ class Map:
 
         print("Set block move from ({}, {}) to ({},{})".format(posx, posy, endx, endy))
 
-    def toggle_key(self, posx, posy, type):
+    def set_key(self, posx, posy, type):
         i = posx * self.height + posy
-        self.tiles[i]["keys"][type] = not self.tiles[i]["keys"][type]
-        print("Set Key {} at ({}, {}) to {}".format(["Gold","Pink","Green"][type], posx, posy, self.tiles[i]["keys"]))
+        self.tiles[i]["key"] = type
+        print("Set Key at ({}, {}) to {}".format(posx, posy, ["None","Gold","Pink","Green"][type]))
 
     def fill(self):
         for x in range(self.width):
@@ -65,7 +65,7 @@ class Map:
                     "y": y,
                     "y2": -1,
                     "type": self.type,
-                    "keys": [False, False, False]
+                    "key": 0
                 }
 
     def del_block(self, posx, posy):
@@ -146,9 +146,9 @@ if __name__ == "__main__":
             map.del_block(int(pos[0]), int(pos[1]))
         if action == "6":
             pos = input("Select position (x y): ")
-            type = int(input("Select key type(Gold[0]/Pink[1]/Green[2]): "))
+            type = int(input("Select key type(None[0]/Gold[1]/Pink[2]/Green[3]): "))
             pos = pos.split()
-            map.toggle_key(int(pos[0]), int(pos[1]),type)
+            map.set_key(int(pos[0]), int(pos[1]),type)
         if action == "7":
             map.show()
         if action == "8":

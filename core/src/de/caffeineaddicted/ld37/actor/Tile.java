@@ -11,9 +11,7 @@ import de.caffeineaddicted.sgl.ui.interfaces.Mortal;
 public class Tile extends Entity implements Mortal, Creatable {
     private Tile.Type type;
     private int stepsLeft;
-    private boolean hasKeyGold = false;
-    private boolean hasKeyPink = false;
-    private boolean hasKeyGreen = false;
+    private int key = 0;
     private boolean created = false;
     private Vector2 move;
     private Vector2 moveLeft;
@@ -25,23 +23,21 @@ public class Tile extends Entity implements Mortal, Creatable {
     private boolean dead = false;
 
     public Tile(Tile.Type type, Vector2 start) {
-        this(type, false, false, false, start, null);
+        this(type, 0, start, null);
     }
 
-    public Tile(Tile.Type type, boolean hasKeyGold, boolean hasKeyPink, boolean hasKeyGreen, Vector2 start) {
-        this(type, hasKeyGold, hasKeyPink, hasKeyGreen, start, null);
+    public Tile(Tile.Type type, int key, Vector2 start) {
+        this(type, key, start, null);
     }
 
     public Tile(Tile.Type type, Vector2 start, Vector2 end) {
-        this(type, false, false, false, start, end);
+        this(type, 0, start, end);
     }
 
-    public Tile(Tile.Type type, boolean hasKeyGold, boolean hasKeyPink, boolean hasKeyGreen, Vector2 start, Vector2 end) {
+    public Tile(Tile.Type type, int key, Vector2 start, Vector2 end) {
         this.type = type;
         stepsLeft = type.durability;
-        this.hasKeyGold = hasKeyGold;
-        this.hasKeyPink = hasKeyPink;
-        this.hasKeyGreen = hasKeyGreen;
+        this.key = key;
         this.start = start;
         this.end = end;
         zindex(GameScreen.ZINDEX.Tile.idx);
@@ -99,42 +95,18 @@ public class Tile extends Entity implements Mortal, Creatable {
     }
 
     public boolean hasKey() {
-        return hasKeyGold || hasKeyPink || hasKeyGreen;
+        return key > 0;
     }
     public boolean hasKey(int type) {
-        switch (type){
-            case 0:
-                return hasKeyGold;
-            case 1:
-                return hasKeyPink;
-            case 2:
-                return hasKeyGreen ;
-        }
-        return false;
+        return type == key;
     }
 
     public int getKeyType(){
-        if(hasKeyGold)
-            return 0;
-        if(hasKeyPink)
-            return 1;
-        if(hasKeyGreen)
-            return 2;
-        return -1;
+        return key;
     }
 
-    public void takeKey(int type) {
-        switch (type){
-            case 0:
-                hasKeyGold = false;
-                break;
-            case 1:
-                hasKeyPink = false;
-                break;
-            case 2:
-                hasKeyGreen = false;
-                break;
-        }
+    public void takeKey() {
+        key = 0;
         setTexture();
     }
 
@@ -222,7 +194,18 @@ public class Tile extends Entity implements Mortal, Creatable {
         }
         String Texture = addTexture(type.assets[a]);
         if (hasKey()) {
-            addActor(new UnitKey());
+            switch (getKeyType())
+            {
+                case 1:
+                    addActor(new UnitKey("keygold.png"));
+                    break;
+                case 2:
+                    addActor(new UnitKey("keypink.png"));
+                    break;
+                case 3:
+                    addActor(new UnitKey("keygreen.png"));
+                    break;
+            }
         }
     }
 

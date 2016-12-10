@@ -4,8 +4,8 @@ import de.caffeineaddicted.ld37.screen.GameScreen;
 import de.caffeineaddicted.sgl.etities.Image;
 
 public class UnitKey extends Image {
-    public UnitKey() {
-        super("keygold.png");
+    public UnitKey(String image) {
+        super(image);
         zindex(GameScreen.ZINDEX.Key.idx);
     }
 }
