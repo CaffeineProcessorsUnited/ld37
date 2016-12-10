@@ -16,6 +16,8 @@ public class MapConfig
     public static class TileConfig implements Json.Serializable {
         public int x;
         public int y;
+        public int x2;
+        public int y2;
         public boolean key;
         public String type;
 
@@ -27,6 +29,8 @@ public class MapConfig
         public void read(Json json, JsonValue jsonData) {
             x = jsonData.getInt("x");
             y = jsonData.getInt("y");
+            x2 = jsonData.getInt("x2", -1);
+            y2 = jsonData.getInt("y2", -1);
             key = jsonData.getBoolean("key", false);
             type = jsonData.getString("type", "Empty");
         }
@@ -55,9 +59,13 @@ public class MapConfig
                 Tile[] tiles = new Tile[mapConfig.tiles.size()];
                 for(int i = 0; i < tiles.length; ++i){
                     TileConfig tileConfig = mapConfig.tiles.get(i);
+                    Vector2 end = null;
+                    if (tileConfig.x2 >= 0 && tileConfig.y2 >= 0) {
+                        end = new Vector2(tileConfig.x2, tileConfig.y2);
+                    }
                     tiles[i] = new Tile(Tile.Type.getTypeByName(tileConfig.type),
                             tileConfig.key,
-                            new Vector2(tileConfig.x, tileConfig.y));
+                            new Vector2(tileConfig.x, tileConfig.y), end);
                 }
 
                 setFloor(tiles);

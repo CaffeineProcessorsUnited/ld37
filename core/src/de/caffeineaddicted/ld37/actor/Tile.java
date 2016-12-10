@@ -99,6 +99,7 @@ public class Tile extends Entity implements Mortal, Creatable {
 
     public void takeKey() {
         hasKey = false;
+        setTexture();
     }
 
     public Tile.Type getType() {
@@ -184,6 +185,9 @@ public class Tile extends Entity implements Mortal, Creatable {
             }
         }
         String Texture = addTexture(type.assets[a]);
+        if (hasKey) {
+            addActor(new UnitKey());
+        }
     }
 
     public enum Type {
