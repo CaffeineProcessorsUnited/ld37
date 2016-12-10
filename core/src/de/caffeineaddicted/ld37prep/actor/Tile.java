@@ -1,5 +1,6 @@
 package de.caffeineaddicted.ld37prep.actor;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.math.Vector2;
 import de.caffeineaddicted.ld37prep.action.MoveToAction;
 import de.caffeineaddicted.ld37prep.screen.GameScreen;
@@ -7,6 +8,9 @@ import de.caffeineaddicted.sgl.SGL;
 import de.caffeineaddicted.sgl.etities.Entity;
 import de.caffeineaddicted.sgl.ui.interfaces.Creatable;
 import de.caffeineaddicted.sgl.ui.interfaces.Mortal;
+
+import static java.lang.Math.max;
+import static java.lang.Math.min;
 
 public class Tile extends Entity implements Mortal, Creatable {
     private Tile.Type type;
@@ -106,6 +110,7 @@ public class Tile extends Entity implements Mortal, Creatable {
                 dieing = true;
             }
         }
+        setTexture();
     }
 
     @Override
@@ -116,8 +121,10 @@ public class Tile extends Entity implements Mortal, Creatable {
     @Override
     public void create() {
         Vector2 pos = SGL.provide(GameScreen.class).getMap().calPixCoord(start);
-        SGL.debug(""+pos);
         setCenterPosition(pos.x, pos.y);
+        SGL.provide(GameScreen.class).addActor(this);
+        setTexture();
+        created = true;
     }
 
     @Override
@@ -128,6 +135,11 @@ public class Tile extends Entity implements Mortal, Creatable {
     @Override
     public boolean isCreated() {
         return created;
+    }
+
+    public void setTexture(){
+        clear();
+        addTexture(type.assets[min(type.assets.length-1,max(0,(int)stepsLeft+1))]);
     }
 
     public enum Type {

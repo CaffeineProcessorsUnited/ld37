@@ -67,6 +67,7 @@ public class UnitPlayer extends UnitBase {
 
         if (tile == null || tile.isDead()) {
             onDie();
+            SGL.error("U DEAD");
             return;
         }
 

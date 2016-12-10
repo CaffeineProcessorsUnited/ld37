@@ -1,5 +1,6 @@
 package de.caffeineaddicted.ld37prep.actor;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import de.caffeineaddicted.ld37prep.actor.maps.Map01;
 import de.caffeineaddicted.ld37prep.screen.GameScreen;
@@ -9,9 +10,6 @@ import de.caffeineaddicted.sgl.ui.interfaces.Creatable;
 
 import static java.lang.Math.abs;
 
-/**
- * Created by felix on 10.12.16.
- */
 abstract public class Map extends Entity implements Creatable{
     private Tile[] floor;
     private Vector2 start;
@@ -78,9 +76,6 @@ abstract public class Map extends Entity implements Creatable{
     }
 
     public Vector2 calPixCoord(float x, float y) {
-        SGL.debug("++"+x+" "+y);
-        SGL.debug("--"+dimx+" "+dimy);
-        SGL.debug("##"+SGL.provide(GameScreen.class).getViewWidth()+" "+SGL.provide(GameScreen.class).getViewHeight());
         int x_pix = (int) (x / dimx * SGL.provide(GameScreen.class).getViewWidth());
         int y_pix = (int) (y / dimy * SGL.provide(GameScreen.class).getViewHeight());
         return new Vector2(x_pix, y_pix);
@@ -91,4 +86,11 @@ abstract public class Map extends Entity implements Creatable{
             tile.update();
         }
     }
+/*
+    @Override
+    public void draw(Batch batch, float parentAlpha){
+        for(Tile tile: floor){
+            tile.draw(batch, parentAlpha);
+        }
+    }*/
 }
