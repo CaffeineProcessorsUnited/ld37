@@ -61,7 +61,7 @@ public class UnitPlayer extends UnitBase {
             onNextBlock = true;
         }
 
-        if(tile != null && onNextBlock == true){
+        if(tile != null && onNextBlock){
             tile.walkOver();
         }
 
@@ -70,7 +70,7 @@ public class UnitPlayer extends UnitBase {
             return;
         }
 
-        if(tile.hasKey()){
+        if(tile.hasKey){
             tile.takeTey();
             collectKey();
         }

@@ -7,6 +7,8 @@ import de.caffeineaddicted.sgl.etities.Entity;
 
 import java.util.ArrayList;
 
+import static java.lang.Math.abs;
+
 /**
  * Created by felix on 10.12.16.
  */
