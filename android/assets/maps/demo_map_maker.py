@@ -27,7 +27,11 @@ class Map:
                     print("{:>2}".format(self.tiles[i]["type"][0]),end="")
                 else:
                     print("{:>2}".format("E"),end="")
-                print("k" if self.tiles[i]["key"] else " ", end="")
+
+                if self.tiles[i]["keys"][0] or self.tiles[i]["keys"][1] or self.tiles[i]["keys"][2]:
+                    print("k", end="")
+                else:
+                    print(" ", end="")
 
             print()
 
@@ -39,10 +43,17 @@ class Map:
         self.tiles[i]["type"] = self.type
         print("Set block at ({}, {}) to {}".format(posx, posy, self.type))
 
-    def toggle_key(self, posx, posy):
+    def set_block_movement_end(self, posx, posy, endx, endy):
+        i = posx*self.height+posy
+        self.tiles[i]["x2"] = endx
+        self.tiles[i]["y2"] = endy
+
+        print("Set block move from ({}, {}) to ({},{})".format(posx, posy, endx, endy))
+
+    def toggle_key(self, posx, posy, type):
         i = posx * self.height + posy
-        self.tiles[i]["key"] = not self.tiles[i]["key"]
-        print("Set Key at ({}, {}) to {}".format(posx, posy, self.tiles[i]["key"]))
+        self.tiles[i]["keys"][type] = not self.tiles[i]["keys"][type]
+        print("Set Key {} at ({}, {}) to {}".format(["Gold","Pink","Green"][type], posx, posy, self.tiles[i]["keys"]))
 
     def fill(self):
         for x in range(self.width):
@@ -50,9 +61,11 @@ class Map:
                 i = x * self.height + y
                 self.tiles[i] = {
                     "x": x,
+                    "x2": -1,
                     "y": y,
+                    "y2": -1,
                     "type": self.type,
-                    "key": False
+                    "keys": [False, False, False]
                 }
 
     def del_block(self, posx, posy):
@@ -83,11 +96,12 @@ def show_menu():
     print("Possible actions:")
     print("\t Set block type [1]")
     print("\t Draw block [2]")
-    print("\t Fill [3]")
-    print("\t Delete block [4]")
-    print("\t Set Key [5]")
-    print("\t Show [6]")
-    print("\t Save as [7]")
+    print("\t Draw block movent [3]")
+    print("\t Fill [4]")
+    print("\t Delete block [5]")
+    print("\t Set Key [6]")
+    print("\t Show [7]")
+    print("\t Save as [8]")
     print("\t Quit [q]")
     while True:
         action = input("Choose your action :")
@@ -98,6 +112,7 @@ def show_menu():
                 or action == "5" \
                 or action == "6" \
                 or action == "7" \
+                or action == "8" \
                 or action == "q":
             return action
         else:
@@ -120,17 +135,22 @@ if __name__ == "__main__":
             pos = pos.split()
             map.set_block(int(pos[0]), int(pos[1]))
         if action == "3":
-            map.fill()
-        if action == "4":
-            pos = input("Select position (x y): ")
+            pos = input("Select position (x y x2 y1): ")
             pos = pos.split()
-            map.del_block(int(pos[0]), int(pos[1]))
+            map.set_block_movement_end(int(pos[0]), int(pos[1]), int(pos[2]), int(pos[3]))
+        if action == "4":
+            map.fill()
         if action == "5":
             pos = input("Select position (x y): ")
             pos = pos.split()
-            map.toggle_key(int(pos[0]), int(pos[1]))
+            map.del_block(int(pos[0]), int(pos[1]))
         if action == "6":
-            map.show()
+            pos = input("Select position (x y): ")
+            type = int(input("Select key type(Gold[0]/Pink[1]/Green[2]): "))
+            pos = pos.split()
+            map.toggle_key(int(pos[0]), int(pos[1]),type)
         if action == "7":
+            map.show()
+        if action == "8":
             map.save()
     map.save()

@@ -19,6 +19,7 @@ public class MapConfig
         public int x2;
         public int y2;
         public boolean key;
+        public boolean keyGold, keyPink, keyGreen;
         public String type;
 
         @Override
@@ -31,7 +32,13 @@ public class MapConfig
             y = jsonData.getInt("y");
             x2 = jsonData.getInt("x2", -1);
             y2 = jsonData.getInt("y2", -1);
-            key = jsonData.getBoolean("key", false);
+            keyGold = keyPink = keyGreen = false;
+            if(jsonData.has("keys")) {
+                boolean[] keys = jsonData.get("keys").asBooleanArray();
+                keyGold = keys[0];
+                keyPink = keys[1];
+                keyGreen = keys[2];
+            }
             type = jsonData.getString("type", "Empty");
         }
     }
@@ -64,7 +71,7 @@ public class MapConfig
                         end = new Vector2(tileConfig.x2, tileConfig.y2);
                     }
                     tiles[i] = new Tile(Tile.Type.getTypeByName(tileConfig.type),
-                            tileConfig.key,
+                            tileConfig.keyGold, tileConfig.keyPink, tileConfig.keyGreen,
                             new Vector2(tileConfig.x, tileConfig.y), end);
                 }
 
