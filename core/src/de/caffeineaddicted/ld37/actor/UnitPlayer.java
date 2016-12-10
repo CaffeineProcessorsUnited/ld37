@@ -1,10 +1,14 @@
 package de.caffeineaddicted.ld37.actor;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveByAction;
 import de.caffeineaddicted.ld37.screen.GameScreen;
 import de.caffeineaddicted.sgl.SGL;
+import de.caffeineaddicted.sgl.etities.Animation;
+import de.caffeineaddicted.sgl.etities.Image;
+import de.caffeineaddicted.sgl.utils.SGLAssets;
 
 public class UnitPlayer extends UnitBase {
     final private float speed = 1;
@@ -15,7 +19,8 @@ public class UnitPlayer extends UnitBase {
     private boolean newTile = true;
 
     public UnitPlayer() {
-        ACTOR_BASE = addTexture("player.png");
+        ACTOR_BASE = addActor("unicorn", new Animation(SGL.provide(SGLAssets.class).get("unicorn.png", Texture.class), 4, 64, 64));
+
         getActor(ACTOR_BASE).setWidth(64);
         getActor(ACTOR_BASE).setHeight(64);
         setWidth(getActor(ACTOR_BASE).getWidth());
