@@ -71,7 +71,7 @@ public class UnitPlayer extends UnitBase {
         }
 
         if(tile.hasKey){
-            tile.takeTey();
+            tile.takeKey();
             collectKey();
         }
 
