@@ -2,7 +2,6 @@ package de.caffeineaddicted.ld37.actor;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
-import de.caffeineaddicted.ld37.screen.GameScreen;
 import de.caffeineaddicted.sgl.SGL;
 import de.caffeineaddicted.sgl.etities.Entity;
 import de.caffeineaddicted.sgl.ui.interfaces.Creatable;
@@ -10,6 +9,7 @@ import de.caffeineaddicted.sgl.ui.interfaces.Creatable;
 import static java.lang.Math.abs;
 
 abstract public class Map extends Entity implements Creatable {
+    public static int TileSize = 64;
     protected boolean created = false;
     private Tile[] floor;
     private Vector2 start;
@@ -80,8 +80,8 @@ abstract public class Map extends Entity implements Creatable {
     }
 
     public Vector2 calPixCoord(int x, int y) {
-        int x_pix = x*TileSize;//(int) (x / (dimx+1) * SGL.provide(GameScreen.class).getViewWidth());
-        int y_pix = y*TileSize;//(int) (y / (dimy+1) * SGL.provide(GameScreen.class).getViewHeight());
+        int x_pix = x * TileSize;//(int) (x / (dimx+1) * SGL.provide(GameScreen.class).getViewWidth());
+        int y_pix = y * TileSize;//(int) (y / (dimy+1) * SGL.provide(GameScreen.class).getViewHeight());
         return new Vector2(x_pix, y_pix);
     }
 
@@ -90,8 +90,6 @@ abstract public class Map extends Entity implements Creatable {
             tile.update();
         }
     }
-
-    public static int TileSize = 64;
 
     @Override
     public void draw(Batch batch, float parentAlpha) {

@@ -1,19 +1,11 @@
 package de.caffeineaddicted.ld37.actor;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.actions.MoveByAction;
-import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
-import com.badlogic.gdx.scenes.scene2d.actions.RepeatAction;
-import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
-import com.badlogic.gdx.utils.Align;
 import de.caffeineaddicted.ld37.screen.GameScreen;
 import de.caffeineaddicted.sgl.SGL;
 import de.caffeineaddicted.sgl.etities.Entity;
 import de.caffeineaddicted.sgl.ui.interfaces.Creatable;
 import de.caffeineaddicted.sgl.ui.interfaces.Mortal;
-
-import static java.lang.Math.max;
-import static java.lang.Math.min;
 
 public class Tile extends Entity implements Mortal, Creatable {
     private Tile.Type type;
