@@ -5,7 +5,7 @@ import de.caffeineaddicted.ld37.screen.GameScreen;
 import de.caffeineaddicted.sgl.SGL;
 
 public class UnitPlayer extends UnitBase {
-    final private float speed = 5;
+    final private float speed = 64;
     private int collectedKeys;
     private String ACTOR_BASE;
     private boolean moving;
@@ -14,6 +14,8 @@ public class UnitPlayer extends UnitBase {
 
     public UnitPlayer() {
         ACTOR_BASE = addTexture("player.png");
+        getActor(ACTOR_BASE).setWidth(64);
+        getActor(ACTOR_BASE).setHeight(64);
         setWidth(getActor(ACTOR_BASE).getWidth());
         setHeight(getActor(ACTOR_BASE).getHeight());
 
@@ -82,9 +84,9 @@ public class UnitPlayer extends UnitBase {
             } else if (movingDir == MovementDirection.RIGHT) {
                 moveBy(speed * delta, 0);
             } else if (movingDir == MovementDirection.UP) {
-                moveBy(0, -speed * delta);
-            } else if (movingDir == MovementDirection.DOWN) {
                 moveBy(0, speed * delta);
+            } else if (movingDir == MovementDirection.DOWN) {
+                moveBy(0, -speed * delta);
             }
 
             boolean slippery = tile.getType().slipery;

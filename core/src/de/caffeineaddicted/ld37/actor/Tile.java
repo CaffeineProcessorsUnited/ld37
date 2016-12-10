@@ -1,7 +1,8 @@
 package de.caffeineaddicted.ld37.actor;
 
 import com.badlogic.gdx.math.Vector2;
-import de.caffeineaddicted.ld37.action.MoveToAction;
+import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
+import com.badlogic.gdx.utils.Align;
 import de.caffeineaddicted.ld37.screen.GameScreen;
 import de.caffeineaddicted.sgl.SGL;
 import de.caffeineaddicted.sgl.etities.Entity;
@@ -16,9 +17,9 @@ public class Tile extends Entity implements Mortal, Creatable {
     private float stepsLeft;
     private boolean hasKey = false;
     private boolean created = false;
+    private MoveToAction mta;
 
     private Vector2 start, end;
-    private MoveToAction mta;
     private boolean dieing = false;
 
     private boolean dead = false;
@@ -39,12 +40,7 @@ public class Tile extends Entity implements Mortal, Creatable {
         this.end = end;
         if (end != null) {
             mta = new MoveToAction();
-            mta.setUpdater(new MoveToAction.Updater() {
-                @Override
-                public void update(MoveToAction action, float percent) {
-                    action.getTarget().setCenterPosition(action.startX + (action.endX - action.startX) * percent, action.startY + (action.endY - action.startY) * percent);
-                }
-            });
+            mta.setAlignment(Align.center);
             mta.setReverse(false);
             addAction(mta);
         }
@@ -121,7 +117,6 @@ public class Tile extends Entity implements Mortal, Creatable {
     public void create() {
         Vector2 pos = SGL.provide(GameScreen.class).getMap().calPixCoord(start);
         setCenterPosition(pos.x, pos.y);
-        SGL.provide(GameScreen.class).addActor(this);
         setTexture();
         created = true;
     }

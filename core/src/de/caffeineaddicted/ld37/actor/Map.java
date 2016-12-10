@@ -1,5 +1,6 @@
 package de.caffeineaddicted.ld37.actor;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import de.caffeineaddicted.ld37.screen.GameScreen;
 import de.caffeineaddicted.sgl.SGL;
@@ -31,10 +32,11 @@ abstract public class Map extends Entity implements Creatable{
             currentx = Math.max(currentx, (int) tile.getStart().x);
             currenty = Math.max(currenty, (int) tile.getStart().y);
         }
-        this.dimx = currentx;
-        this.dimy = currenty;
+        dimx = currentx;
+        dimy = currenty;
         for (Tile tile : floor) {
             tile.create();
+            addActor(tile);
         }
     }
 
@@ -84,11 +86,17 @@ abstract public class Map extends Entity implements Creatable{
             tile.update();
         }
     }
-/*
+
     @Override
     public void draw(Batch batch, float parentAlpha){
         for(Tile tile: floor){
             tile.draw(batch, parentAlpha);
         }
-    }*/
+    }
+
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+        //moveBy(100 * delta, 0);
+    }
 }

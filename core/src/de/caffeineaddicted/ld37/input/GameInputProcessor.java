@@ -1,7 +1,9 @@
 package de.caffeineaddicted.ld37.input;
 
 import com.badlogic.gdx.Input;
+import de.caffeineaddicted.ld37.actor.UnitPlayer;
 import de.caffeineaddicted.ld37.message.FireEverythingMessage;
+import de.caffeineaddicted.ld37.screen.GameScreen;
 import de.caffeineaddicted.sgl.SGL;
 import de.caffeineaddicted.sgl.input.SGLInputProcessor;
 
@@ -10,11 +12,22 @@ import de.caffeineaddicted.sgl.input.SGLInputProcessor;
  */
 public class GameInputProcessor extends SGLInputProcessor {
 
+    private float startDragX, startDragY;
+
     @Override
-    public boolean keyUp(int keycode) {
+    public boolean keyDown(int keycode) {
         switch (keycode) {
-            case Input.Keys.SPACE:
-                SGL.message(new FireEverythingMessage());
+            case Input.Keys.UP:
+                SGL.provide(GameScreen.class).getPlayer().move(UnitPlayer.MovementDirection.UP);
+                break;
+            case Input.Keys.LEFT:
+                SGL.provide(GameScreen.class).getPlayer().move(UnitPlayer.MovementDirection.LEFT);
+                break;
+            case Input.Keys.DOWN:
+                SGL.provide(GameScreen.class).getPlayer().move(UnitPlayer.MovementDirection.DOWN);
+                break;
+            case Input.Keys.RIGHT:
+                SGL.provide(GameScreen.class).getPlayer().move(UnitPlayer.MovementDirection.RIGHT);
                 break;
         }
         return false;
@@ -23,6 +36,8 @@ public class GameInputProcessor extends SGLInputProcessor {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         SGL.debug("touchDown: " + screenX + "," + screenY);
+        startDragX = screenX;
+        startDragY = screenY;
         return true;
     }
 
@@ -35,6 +50,9 @@ public class GameInputProcessor extends SGLInputProcessor {
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
         SGL.debug("touchDragged: " + screenX + "," + screenY);
+        SGL.provide(GameScreen.class).drag(screenX - startDragX, screenY - startDragY);
+        startDragX = screenX;
+        startDragY = screenY;
         return true;
     }
 
