@@ -37,6 +37,9 @@ abstract public class Map extends Entity implements Creatable{
         }
         this.dimx = currentx;
         this.dimy = currenty;
+        for (Tile tile : floor) {
+            tile.create();
+        }
     }
 
     @Override

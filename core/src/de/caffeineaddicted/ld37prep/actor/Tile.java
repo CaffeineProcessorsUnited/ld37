@@ -5,12 +5,14 @@ import de.caffeineaddicted.ld37prep.action.MoveToAction;
 import de.caffeineaddicted.ld37prep.screen.GameScreen;
 import de.caffeineaddicted.sgl.SGL;
 import de.caffeineaddicted.sgl.etities.Entity;
+import de.caffeineaddicted.sgl.ui.interfaces.Creatable;
 import de.caffeineaddicted.sgl.ui.interfaces.Mortal;
 
-public class Tile extends Entity implements Mortal {
+public class Tile extends Entity implements Mortal, Creatable {
     private Tile.Type type;
     private float stepsLeft;
     private boolean hasKey = false;
+    private boolean created = false;
 
     private Vector2 start, end;
     private MoveToAction mta;
@@ -31,9 +33,6 @@ public class Tile extends Entity implements Mortal {
         stepsLeft = type.durability;
         this.hasKey = hasKey;
         this.start = start;
-        Vector2 pos = SGL.provide(GameScreen.class).getMap().calPixCoord(start);
-        SGL.debug(""+pos);
-        setCenterPosition(pos.x, pos.y);
         this.end = end;
         if (end != null) {
             mta = new MoveToAction();
@@ -50,6 +49,9 @@ public class Tile extends Entity implements Mortal {
 
     @Override
     public void act(float delta) {
+        if (!isCreated()) {
+            create();
+        }
         super.act(delta);
         if (!dead && end != null && !hasActions()) {
             mta.setReverse(!mta.isReverse());
@@ -109,6 +111,23 @@ public class Tile extends Entity implements Mortal {
     @Override
     public void update() {
 
+    }
+
+    @Override
+    public void create() {
+        Vector2 pos = SGL.provide(GameScreen.class).getMap().calPixCoord(start);
+        SGL.debug(""+pos);
+        setCenterPosition(pos.x, pos.y);
+    }
+
+    @Override
+    public void onCreate() {
+
+    }
+
+    @Override
+    public boolean isCreated() {
+        return created;
     }
 
     public enum Type {
