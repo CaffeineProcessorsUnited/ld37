@@ -1,6 +1,7 @@
 package de.caffeineaddicted.ld37.actor;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Align;
 import de.caffeineaddicted.ld37.screen.GameScreen;
 import de.caffeineaddicted.sgl.SGL;
 import de.caffeineaddicted.sgl.etities.Entity;
@@ -114,6 +115,7 @@ public class Tile extends Entity implements Mortal, Creatable {
     }
 
     public void walkOver() {
+        SGL.debug("HEY?");
         if (type.durability > 0) {
             if (--stepsLeft < 1) {
                 dieing = true;
@@ -122,6 +124,20 @@ public class Tile extends Entity implements Mortal, Creatable {
         if (!(type.durability > 0 && stepsLeft < 1)) {
             setTexture();
         }
+    }
+
+    public final static int ACCESS_NONE = 0;
+    public final static int ACCESS_LEFT = 1;
+    public final static int ACCESS_RIGHT = 2;
+    public final static int ACCESS_UP = 4;
+    public final static int ACCESS_DOWN = 8;
+
+    public final static int ACCESS_HORIZONTAL = ACCESS_LEFT + ACCESS_RIGHT;
+    public final static int ACCESS_VERTICAL = ACCESS_UP + ACCESS_DOWN;
+    public final static int ACCESS_ALL = ACCESS_LEFT + ACCESS_RIGHT + ACCESS_UP + ACCESS_DOWN;
+
+    public boolean canAccess(int direction) {
+        return (type.access & direction) == direction;
     }
 
     @Override
@@ -172,19 +188,22 @@ public class Tile extends Entity implements Mortal, Creatable {
 
     public enum Type {
 
-        Empty(0, false, 0, "tile_empty.png"),
-        Stone(2, false, 4, "stonebroke.png", "stonehalf.png", "stone.png"),
-        Ice(1, true, 2, "icebroke.png", "ice.png");
+        Empty(0, false, 0, ACCESS_ALL, "tile_empty.png"),
+        Stone(2, false, 4, ACCESS_ALL, "stonebroke.png", "stonehalf.png", "stone.png"),
+        Ice(1, true, 2, ACCESS_ALL, "icebroke.png", "ice.png"),
+        Wall(1, true, 2, ACCESS_NONE, "icebroke.png", "ice.png");// TODO: Assets
 
         public final int durability;
         public final boolean slipery;
         public final float speed;
+        public final int access;
         public final String[] assets;
 
-        Type(int durability, boolean slippery, float speed, String... assets) {
+        Type(int durability, boolean slippery, float speed, int access, String... assets) {
             this.durability = durability;
             this.slipery = slippery;
             this.speed = speed;
+            this.access = access;
             this.assets = assets;
         }
 
@@ -196,5 +215,10 @@ public class Tile extends Entity implements Mortal, Creatable {
             }
             return null;
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Tile(" + getX(Align.center) + "," + getY(Align.center) + ")";
     }
 }

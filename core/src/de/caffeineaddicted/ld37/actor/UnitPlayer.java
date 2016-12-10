@@ -64,6 +64,16 @@ public class UnitPlayer extends UnitBase {
 
         Tile tile = SGL.provide(GameScreen.class).getMap().getTileAt(getCenterPoint().x, getCenterPoint().y);
 
+        if (currentTile != tile) {
+            newTile = true;
+        }
+
+        if ((tile == null && currentTile != null) || tile.isDead() || (slipperyDir != null && !tile.canAccess(slipperyDir.flag()))) {
+            onDie();
+            SGL.error("U DEAD");
+            return;
+        }
+
         if (!hasActions()) {
             if (newTile) {
                 newTile = false;
@@ -75,11 +85,6 @@ public class UnitPlayer extends UnitBase {
                     }
                 }
             }
-            if (tile == null || tile.isDead()) {
-                onDie();
-                SGL.error("U DEAD");
-                return;
-            }
             if (tile != null && tile.getType().slipery && slipperyDir != null) {
                 addAction(createAction(slipperyDir));
             } else
@@ -90,9 +95,6 @@ public class UnitPlayer extends UnitBase {
             } else {
                 movingDir = keyDir;
             }
-        }
-        if (currentTile != tile) {
-            newTile = true;
         }
         currentTile = tile;
     }
@@ -123,10 +125,20 @@ public class UnitPlayer extends UnitBase {
     }
 
     public enum MovementDirection {
-        NONE,
-        LEFT,
-        RIGHT,
-        UP,
-        DOWN
+        NONE(Tile.ACCESS_NONE),
+        LEFT(Tile.ACCESS_LEFT),
+        RIGHT(Tile.ACCESS_RIGHT),
+        UP(Tile.ACCESS_UP),
+        DOWN(Tile.ACCESS_DOWN);
+
+        private int flag;
+
+        MovementDirection(int f) {
+            flag = f;
+        }
+
+        public int flag() {
+            return flag;
+        }
     }
 }
