@@ -6,8 +6,6 @@ import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveByAction;
 import de.caffeineaddicted.ld37.screen.GameScreen;
 import de.caffeineaddicted.sgl.SGL;
-import de.caffeineaddicted.sgl.etities.Animation;
-import de.caffeineaddicted.sgl.etities.Image;
 import de.caffeineaddicted.sgl.utils.SGLAssets;
 
 public class UnitPlayer extends UnitBase {
@@ -19,7 +17,9 @@ public class UnitPlayer extends UnitBase {
     private boolean newTile = true;
 
     public UnitPlayer() {
-        ACTOR_BASE = addActor("unicorn", new Animation(SGL.provide(SGLAssets.class).get("unicorn.png", Texture.class), 4, 64, 64));
+        Animation animation = new Animation(SGL.provide(SGLAssets.class).get("unicornwalk.png", Texture.class), 4, 64, 64);
+        animation.setFrameDuration(0.18f);
+        ACTOR_BASE = addActor("unicorn", animation);
 
         getActor(ACTOR_BASE).setWidth(64);
         getActor(ACTOR_BASE).setHeight(64);
@@ -100,6 +100,11 @@ public class UnitPlayer extends UnitBase {
             } else {
                 movingDir = keyDir;
             }
+        }
+        if (hasActions()) {
+            getActor(ACTOR_BASE, Animation.class).resume();
+        } else {
+            getActor(ACTOR_BASE, Animation.class).pause();
         }
         currentTile = tile;
     }
