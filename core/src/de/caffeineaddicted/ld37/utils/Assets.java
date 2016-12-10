@@ -1,6 +1,7 @@
 package de.caffeineaddicted.ld37.utils;
 
 import com.badlogic.gdx.graphics.Texture;
+import de.caffeineaddicted.ld37.actor.MapWrapper;
 import de.caffeineaddicted.sgl.utils.SGLAssets;
 
 public class Assets extends SGLAssets {
@@ -25,6 +26,8 @@ public class Assets extends SGLAssets {
         load("stone.png", Texture.class);
         load("icebroke.png", Texture.class);
         load("ice.png", Texture.class);
+
+        load("maps/01.json", MapWrapper.class);
 
     }
 }
