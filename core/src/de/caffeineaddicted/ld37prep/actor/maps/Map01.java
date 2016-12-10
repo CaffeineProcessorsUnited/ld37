@@ -3,6 +3,7 @@ package de.caffeineaddicted.ld37prep.actor.maps;
 import com.badlogic.gdx.math.Vector2;
 import de.caffeineaddicted.ld37prep.actor.Map;
 import de.caffeineaddicted.ld37prep.actor.Tile;
+import de.caffeineaddicted.sgl.SGL;
 
 public class Map01 extends Map {
     public Map01(Vector2 start, Vector2 exit){
@@ -11,8 +12,16 @@ public class Map01 extends Map {
 
     public void onCreate(){
         Tile[] tiles = new Tile[100];
-        for(int i = 0; i < 100; ++i){
-            tiles[i] = new Tile(Tile.Type.Stone, new Vector2((i%10), (i/10)));
+        for(int x = 0; x < 10; ++x){
+            for(int y = 0; y < 10; ++y){
+                int i = x*10+y;
+                if(x == y){
+                    tiles[i] = new Tile(Tile.Type.Stone, new Vector2(x, y));
+                } else {
+                    tiles[i] = new Tile(Tile.Type.Ice, new Vector2(x, y));
+                }
+                SGL.debug(x+" "+y+" "+(x*10+y));
+            }
         }
         super.setFloor(tiles);
     }
