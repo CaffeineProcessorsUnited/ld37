@@ -1,4 +1,4 @@
-package de.caffeineaddicted.ld37prep;
+package de.caffeineaddicted.ld37;
 
 import android.os.Bundle;
 

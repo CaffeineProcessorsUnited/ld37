@@ -1,7 +1,7 @@
-package de.caffeineaddicted.ld37prep.input;
+package de.caffeineaddicted.ld37.input;
 
 import com.badlogic.gdx.Input;
-import de.caffeineaddicted.ld37prep.message.FireEverythingMessage;
+import de.caffeineaddicted.ld37.message.FireEverythingMessage;
 import de.caffeineaddicted.sgl.SGL;
 import de.caffeineaddicted.sgl.input.SGLInputProcessor;
 

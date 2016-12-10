@@ -1,9 +1,9 @@
-package de.caffeineaddicted.ld37prep;
+package de.caffeineaddicted.ld37;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
-import de.caffeineaddicted.ld37prep.screen.GameScreen;
-import de.caffeineaddicted.ld37prep.utils.Assets;
+import de.caffeineaddicted.ld37.screen.GameScreen;
+import de.caffeineaddicted.ld37.utils.Assets;
 import de.caffeineaddicted.sgl.ApplicationConfiguration;
 import de.caffeineaddicted.sgl.AttributeList;
 import de.caffeineaddicted.sgl.SGLGame;
@@ -44,7 +44,7 @@ public class LD37 extends SGLGame {
 
     @Override
     public String getAppName() {
-        return "LD37Prep";
+        return "LD37";
     }
 
     @Override

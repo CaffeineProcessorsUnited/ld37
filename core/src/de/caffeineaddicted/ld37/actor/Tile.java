@@ -1,9 +1,8 @@
-package de.caffeineaddicted.ld37prep.actor;
+package de.caffeineaddicted.ld37.actor;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.math.Vector2;
-import de.caffeineaddicted.ld37prep.action.MoveToAction;
-import de.caffeineaddicted.ld37prep.screen.GameScreen;
+import de.caffeineaddicted.ld37.action.MoveToAction;
+import de.caffeineaddicted.ld37.screen.GameScreen;
 import de.caffeineaddicted.sgl.SGL;
 import de.caffeineaddicted.sgl.etities.Entity;
 import de.caffeineaddicted.sgl.ui.interfaces.Creatable;

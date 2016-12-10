@@ -1,4 +1,4 @@
-package de.caffeineaddicted.ld37prep.utils;
+package de.caffeineaddicted.ld37.utils;
 
 import com.badlogic.gdx.graphics.Texture;
 import de.caffeineaddicted.sgl.utils.SGLAssets;

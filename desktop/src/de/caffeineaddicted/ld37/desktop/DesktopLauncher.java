@@ -1,8 +1,8 @@
-package de.caffeineaddicted.ld37prep.desktop;
+package de.caffeineaddicted.ld37.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import de.caffeineaddicted.ld37prep.LD37;
+import de.caffeineaddicted.ld37.LD37;
 import de.caffeineaddicted.sgl.AttributeList;
 import de.caffeineaddicted.sgl.SGL;
 import de.caffeineaddicted.sgl.SGLGame;

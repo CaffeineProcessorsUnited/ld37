@@ -1,4 +1,4 @@
-package de.caffeineaddicted.ld37prep.action;
+package de.caffeineaddicted.ld37.action;
 
 
 import com.badlogic.gdx.math.Vector2;
