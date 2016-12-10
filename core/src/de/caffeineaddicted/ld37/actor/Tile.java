@@ -14,7 +14,7 @@ import static java.lang.Math.min;
 
 public class Tile extends Entity implements Mortal, Creatable {
     private Tile.Type type;
-    private float stepsLeft;
+    private int stepsLeft;
     private boolean hasKey = false;
     private boolean created = false;
     private MoveToAction mta;
@@ -101,10 +101,15 @@ public class Tile extends Entity implements Mortal, Creatable {
     }
 
     public void walkOver() {
+        SGL.debug("durability: " + type.durability);
         if (type.durability > 0) {
-            if (--stepsLeft < 0) {
+            SGL.debug("stepsLeft: " + stepsLeft);
+            if (--stepsLeft < 1) {
                 dieing = true;
             }
+        }
+        if (!(type.durability > 0 && stepsLeft < 1)) {
+            setTexture();
         }
     }
 
@@ -133,7 +138,17 @@ public class Tile extends Entity implements Mortal, Creatable {
 
     public void setTexture() {
         clear();
-        addTexture(type.assets[min(type.assets.length - 1, max(0, (int) stepsLeft + 1))]);
+        int a = type.assets.length - 1;
+        if (dieing || dead) {
+            a = 0;
+        } else {
+            if (stepsLeft > 0) {
+                a = stepsLeft;
+            } else {
+                a = 1;
+            }
+        }
+        addTexture(type.assets[a]);
     }
 
     public enum Type {
@@ -142,11 +157,11 @@ public class Tile extends Entity implements Mortal, Creatable {
         Stone(2, false, "stonebroke.png", "stonehalf.png", "stone.png"),
         Ice(1, true, "icebroke.png", "ice.png");
 
-        public final float durability;
+        public final int durability;
         public final boolean slipery;
         public final String[] assets;
 
-        Type(float durability, boolean slippery, String... assets) {
+        Type(int durability, boolean slippery, String... assets) {
             this.durability = durability;
             this.slipery = slippery;
             this.assets = assets;
