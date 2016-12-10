@@ -28,6 +28,7 @@ public class Assets extends SGLAssets {
         load("ice.png", Texture.class);
 
         load("maps/01.json", MapWrapper.class);
+        load("maps/02.json", MapWrapper.class);
 
     }
 }

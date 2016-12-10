@@ -82,7 +82,7 @@ public class UnitPlayer extends UnitBase {
             }
             if (tile != null && tile.getType().slipery && slipperyDir != null) {
                 addAction(createAction(slipperyDir));
-            }
+            } else
             if (movingDir != MovementDirection.NONE) {
                 addAction(createAction(movingDir));
                 slipperyDir = movingDir;

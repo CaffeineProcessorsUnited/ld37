@@ -60,7 +60,7 @@ public class GameScreen extends SGLStagedScreen<LD37> {
     public void onCreate() {
         SGL.provide(SGLScreenInputMultiplexer.class).addProcessor(this, new GameInputProcessor());
         player = new UnitPlayer();
-        map = SGL.provide(SGLAssets.class).get("maps/01.json", MapWrapper.class).getMap();
+        map = SGL.provide(SGLAssets.class).get("maps/02.json", MapWrapper.class).getMap();
         map.create();
         addActor(player);
         addActor(map);

@@ -1,508 +1,508 @@
 {
-    "end_y": 10,
     "tiles": [
         {
-            "y": 0,
+            "type": "Ice",
             "x": 0,
-            "type": "Ice"
+            "y": 0
         },
         {
-            "y": 1,
+            "type": "Stone",
             "x": 0,
-            "type": "Stone"
+            "y": 1
         },
         {
-            "y": 2,
+            "type": "Stone",
             "x": 0,
-            "type": "Stone"
+            "y": 2
         },
         {
-            "y": 3,
+            "type": "Stone",
             "x": 0,
-            "type": "Stone"
+            "y": 3
         },
         {
-            "y": 4,
+            "type": "Stone",
             "x": 0,
-            "type": "Stone"
+            "y": 4
         },
         {
-            "y": 5,
+            "type": "Stone",
             "x": 0,
-            "type": "Stone"
+            "y": 5
         },
         {
-            "y": 6,
+            "type": "Stone",
             "x": 0,
-            "type": "Stone"
+            "y": 6
         },
         {
-            "y": 7,
+            "type": "Stone",
             "x": 0,
-            "type": "Stone"
+            "y": 7
         },
         {
-            "y": 8,
+            "type": "Stone",
             "x": 0,
-            "type": "Stone"
+            "y": 8
         },
         {
-            "y": 9,
+            "type": "Stone",
             "x": 0,
-            "type": "Stone"
+            "y": 9
         },
         {
-            "y": 0,
+            "type": "Stone",
             "x": 1,
-            "type": "Stone"
+            "y": 0
         },
         {
-            "y": 1,
+            "type": "Ice",
             "x": 1,
-            "type": "Ice"
+            "y": 1
         },
         {
-            "y": 2,
+            "type": "Stone",
             "x": 1,
-            "type": "Stone"
+            "y": 2
         },
         {
-            "y": 3,
+            "type": "Stone",
             "x": 1,
-            "type": "Stone"
+            "y": 3
         },
         {
-            "y": 4,
+            "type": "Stone",
             "x": 1,
-            "type": "Stone"
+            "y": 4
         },
         {
-            "y": 5,
+            "type": "Stone",
             "x": 1,
-            "type": "Stone"
+            "y": 5
         },
         {
-            "y": 6,
+            "type": "Stone",
             "x": 1,
-            "type": "Stone"
+            "y": 6
         },
         {
-            "y": 7,
+            "type": "Stone",
             "x": 1,
-            "type": "Stone"
+            "y": 7
         },
         {
-            "y": 8,
+            "type": "Stone",
             "x": 1,
-            "type": "Stone"
+            "y": 8
         },
         {
-            "y": 9,
+            "type": "Stone",
             "x": 1,
-            "type": "Stone"
+            "y": 9
         },
         {
-            "y": 0,
+            "type": "Stone",
             "x": 2,
-            "type": "Stone"
+            "y": 0
         },
         {
-            "y": 1,
+            "type": "Stone",
             "x": 2,
-            "type": "Stone"
+            "y": 1
         },
         {
-            "y": 2,
+            "type": "Ice",
             "x": 2,
-            "type": "Ice"
+            "y": 2
         },
         {
-            "y": 3,
+            "type": "Stone",
             "x": 2,
-            "type": "Stone"
+            "y": 3
         },
         {
-            "y": 4,
+            "type": "Stone",
             "x": 2,
-            "type": "Stone"
+            "y": 4
         },
         {
-            "y": 5,
+            "type": "Stone",
             "x": 2,
-            "type": "Stone"
+            "y": 5
         },
         {
-            "y": 6,
+            "type": "Stone",
             "x": 2,
-            "type": "Stone"
+            "y": 6
         },
         {
-            "y": 7,
+            "type": "Stone",
             "x": 2,
-            "type": "Stone"
+            "y": 7
         },
         {
-            "y": 8,
+            "type": "Stone",
             "x": 2,
-            "type": "Stone"
+            "y": 8
         },
         {
-            "y": 9,
+            "type": "Stone",
             "x": 2,
-            "type": "Stone"
+            "y": 9
         },
         {
-            "y": 0,
+            "type": "Stone",
             "x": 3,
-            "type": "Stone"
+            "y": 0
         },
         {
-            "y": 1,
+            "type": "Stone",
             "x": 3,
-            "type": "Stone"
+            "y": 1
         },
         {
-            "y": 2,
+            "type": "Stone",
             "x": 3,
-            "type": "Stone"
+            "y": 2
         },
         {
-            "y": 3,
+            "type": "Ice",
             "x": 3,
-            "type": "Ice"
+            "y": 3
         },
         {
-            "y": 4,
+            "type": "Stone",
             "x": 3,
-            "type": "Stone"
+            "y": 4
         },
         {
-            "y": 5,
+            "type": "Stone",
             "x": 3,
-            "type": "Stone"
+            "y": 5
         },
         {
-            "y": 6,
+            "type": "Stone",
             "x": 3,
-            "type": "Stone"
+            "y": 6
         },
         {
-            "y": 7,
+            "type": "Stone",
             "x": 3,
-            "type": "Stone"
+            "y": 7
         },
         {
-            "y": 8,
+            "type": "Stone",
             "x": 3,
-            "type": "Stone"
+            "y": 8
         },
         {
-            "y": 9,
+            "type": "Stone",
             "x": 3,
-            "type": "Stone"
+            "y": 9
         },
         {
-            "y": 0,
+            "type": "Stone",
             "x": 4,
-            "type": "Stone"
+            "y": 0
         },
         {
-            "y": 1,
+            "type": "Stone",
             "x": 4,
-            "type": "Stone"
+            "y": 1
         },
         {
-            "y": 2,
+            "type": "Stone",
             "x": 4,
-            "type": "Stone"
+            "y": 2
         },
         {
-            "y": 3,
+            "type": "Stone",
             "x": 4,
-            "type": "Stone"
+            "y": 3
         },
         {
-            "y": 4,
+            "type": "Ice",
             "x": 4,
-            "type": "Ice"
+            "y": 4
         },
         {
-            "y": 5,
+            "type": "Stone",
             "x": 4,
-            "type": "Stone"
+            "y": 5
         },
         {
-            "y": 6,
+            "type": "Stone",
             "x": 4,
-            "type": "Stone"
+            "y": 6
         },
         {
-            "y": 7,
+            "type": "Stone",
             "x": 4,
-            "type": "Stone"
+            "y": 7
         },
         {
-            "y": 8,
+            "type": "Stone",
             "x": 4,
-            "type": "Stone"
+            "y": 8
         },
         {
-            "y": 9,
+            "type": "Stone",
             "x": 4,
-            "type": "Stone"
+            "y": 9
         },
         {
-            "y": 0,
+            "type": "Stone",
             "x": 5,
-            "type": "Stone"
+            "y": 0
         },
         {
-            "y": 1,
+            "type": "Stone",
             "x": 5,
-            "type": "Stone"
+            "y": 1
         },
         {
-            "y": 2,
+            "type": "Stone",
             "x": 5,
-            "type": "Stone"
+            "y": 2
         },
         {
-            "y": 3,
+            "type": "Stone",
             "x": 5,
-            "type": "Stone"
+            "y": 3
         },
         {
-            "y": 4,
+            "type": "Stone",
             "x": 5,
-            "type": "Stone"
+            "y": 4
         },
         {
-            "y": 5,
+            "type": "Ice",
             "x": 5,
-            "type": "Ice"
+            "y": 5
         },
         {
-            "y": 6,
+            "type": "Stone",
             "x": 5,
-            "type": "Stone"
+            "y": 6
         },
         {
-            "y": 7,
+            "type": "Stone",
             "x": 5,
-            "type": "Stone"
+            "y": 7
         },
         {
-            "y": 8,
+            "type": "Stone",
             "x": 5,
-            "type": "Stone"
+            "y": 8
         },
         {
-            "y": 9,
+            "type": "Stone",
             "x": 5,
-            "type": "Stone"
+            "y": 9
         },
         {
-            "y": 0,
+            "type": "Stone",
             "x": 6,
-            "type": "Stone"
+            "y": 0
         },
         {
-            "y": 1,
+            "type": "Stone",
             "x": 6,
-            "type": "Stone"
+            "y": 1
         },
         {
-            "y": 2,
+            "type": "Stone",
             "x": 6,
-            "type": "Stone"
+            "y": 2
         },
         {
-            "y": 3,
+            "type": "Stone",
             "x": 6,
-            "type": "Stone"
+            "y": 3
         },
         {
-            "y": 4,
+            "type": "Stone",
             "x": 6,
-            "type": "Stone"
+            "y": 4
         },
         {
-            "y": 5,
+            "type": "Stone",
             "x": 6,
-            "type": "Stone"
+            "y": 5
         },
         {
-            "y": 6,
+            "type": "Ice",
             "x": 6,
-            "type": "Ice"
+            "y": 6
         },
         {
-            "y": 7,
+            "type": "Stone",
             "x": 6,
-            "type": "Stone"
+            "y": 7
         },
         {
-            "y": 8,
+            "type": "Stone",
             "x": 6,
-            "type": "Stone"
+            "y": 8
         },
         {
-            "y": 9,
+            "type": "Stone",
             "x": 6,
-            "type": "Stone"
+            "y": 9
         },
         {
-            "y": 0,
+            "type": "Stone",
             "x": 7,
-            "type": "Stone"
+            "y": 0
         },
         {
-            "y": 1,
+            "type": "Stone",
             "x": 7,
-            "type": "Stone"
+            "y": 1
         },
         {
-            "y": 2,
+            "type": "Stone",
             "x": 7,
-            "type": "Stone"
+            "y": 2
         },
         {
-            "y": 3,
+            "type": "Stone",
             "x": 7,
-            "type": "Stone"
+            "y": 3
         },
         {
-            "y": 4,
+            "type": "Stone",
             "x": 7,
-            "type": "Stone"
+            "y": 4
         },
         {
-            "y": 5,
+            "type": "Stone",
             "x": 7,
-            "type": "Stone"
+            "y": 5
         },
         {
-            "y": 6,
+            "type": "Stone",
             "x": 7,
-            "type": "Stone"
+            "y": 6
         },
         {
-            "y": 7,
+            "type": "Ice",
             "x": 7,
-            "type": "Ice"
+            "y": 7
         },
         {
-            "y": 8,
+            "type": "Stone",
             "x": 7,
-            "type": "Stone"
+            "y": 8
         },
         {
-            "y": 9,
+            "type": "Stone",
             "x": 7,
-            "type": "Stone"
+            "y": 9
         },
         {
-            "y": 0,
+            "type": "Stone",
             "x": 8,
-            "type": "Stone"
+            "y": 0
         },
         {
-            "y": 1,
+            "type": "Stone",
             "x": 8,
-            "type": "Stone"
+            "y": 1
         },
         {
-            "y": 2,
+            "type": "Stone",
             "x": 8,
-            "type": "Stone"
+            "y": 2
         },
         {
-            "y": 3,
+            "type": "Stone",
             "x": 8,
-            "type": "Stone"
+            "y": 3
         },
         {
-            "y": 4,
+            "type": "Stone",
             "x": 8,
-            "type": "Stone"
+            "y": 4
         },
         {
-            "y": 5,
+            "type": "Stone",
             "x": 8,
-            "type": "Stone"
+            "y": 5
         },
         {
-            "y": 6,
+            "type": "Stone",
             "x": 8,
-            "type": "Stone"
+            "y": 6
         },
         {
-            "y": 7,
+            "type": "Stone",
             "x": 8,
-            "type": "Stone"
+            "y": 7
         },
         {
-            "y": 8,
+            "type": "Ice",
             "x": 8,
-            "type": "Ice"
+            "y": 8
         },
         {
-            "y": 9,
+            "type": "Stone",
             "x": 8,
-            "type": "Stone"
+            "y": 9
         },
         {
-            "y": 0,
+            "type": "Stone",
             "x": 9,
-            "type": "Stone"
+            "y": 0
         },
         {
-            "y": 1,
+            "type": "Stone",
             "x": 9,
-            "type": "Stone"
+            "y": 1
         },
         {
-            "y": 2,
+            "type": "Stone",
             "x": 9,
-            "type": "Stone"
+            "y": 2
         },
         {
-            "y": 3,
+            "type": "Stone",
             "x": 9,
-            "type": "Stone"
+            "y": 3
         },
         {
-            "y": 4,
+            "type": "Stone",
             "x": 9,
-            "type": "Stone"
+            "y": 4
         },
         {
-            "y": 5,
+            "type": "Stone",
             "x": 9,
-            "type": "Stone"
+            "y": 5
         },
         {
-            "y": 6,
+            "type": "Stone",
             "x": 9,
-            "type": "Stone"
+            "y": 6
         },
         {
-            "y": 7,
+            "type": "Stone",
             "x": 9,
-            "type": "Stone"
+            "y": 7
         },
         {
-            "y": 8,
+            "type": "Stone",
             "x": 9,
-            "type": "Stone"
+            "y": 8
         },
         {
-            "y": 9,
+            "type": "Ice",
             "x": 9,
-            "type": "Ice"
+            "y": 9
         }
     ],
-    "start_y": 0,
+    "end_x": 10,
+    "end_y": 10,
     "start_x": 0,
-    "end_x": 10
+    "start_y": 0
 }
