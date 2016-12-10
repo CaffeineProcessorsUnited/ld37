@@ -10,35 +10,40 @@ import de.caffeineaddicted.sgl.SGL;
 import java.util.ArrayList;
 
 public class UnitPlayer extends UnitBase {
-
-    private final static int baseHP = 100;
-    private int money = 0;
-    private Weapon weapon;
+    private int collectedKeys;
     private String ACTOR_BASE;
-
+    private boolean moving;
+    private MovementDirection movingDir;
+    final private float speed = 5;
+    private Tile currentTile;
 
     public UnitPlayer() {
         ACTOR_BASE = addTexture("player.png");
         setWidth(getActor(ACTOR_BASE).getWidth());
         setHeight(getActor(ACTOR_BASE).getHeight());
 
-        weapon = new Weapon();
+        collectedKeys = 0;
 
         update();
     }
 
-    public void fire() {
-        ArrayList<Projectile> ps = weapon().spawProjectiles(getCenterPoint());
-        float w = 0;
-        for(int i = 0; i < ps.size(); i++) {
-            w += ps.get(i).getWidth();
+    public void move(MovementDirection dir){
+        if(!moving){
+            movingDir = dir;
+            moving = true;
         }
-        float l = getCenterPoint().x - (w / 2);
-        for(int i = 0; i < ps.size(); i++) {
-            Projectile p = ps.get(i);
-            p.setCenterPosition(i * l, getCenterPoint().y);
-            SGL.provide(GameScreen.class).addActor(p);
+    }
+
+    public void collectKey(){
+        collectedKeys += 1;
+    }
+
+    public boolean useKeys(int numKeys){
+        if(numKeys <= collectedKeys){
+            collectedKeys -= numKeys;
+            return true;
         }
+        return false;
     }
 
     @Override
@@ -54,6 +59,46 @@ public class UnitPlayer extends UnitBase {
     @Override
     public void act(float delta) {
         super.act(delta);
+
+        Tile tile = SGL.provide(Map.class).getTileAt(getCenterPoint().x, getCenterPoint().y);
+        boolean onNextBlock = false;
+        if(tile != currentTile){
+            onNextBlock = true;
+        }
+
+        if(tile != null && onNextBlock == true){
+            tile.walkOver();
+        }
+
+        if( tile == null || !tile.isAlive()){
+            onDie();
+            return;
+        }
+
+        if(tile.hasKey()){
+            tile.takeTey();
+            collectKey();
+        }
+
+        if(moving) {
+            if (movingDir == MovementDirection.LEFT) {
+                moveBy(-speed*delta, 0);
+            } else if (movingDir == MovementDirection.RIGHT) {
+                moveBy(speed*delta, 0);
+            } else if (movingDir == MovementDirection.UP) {
+                moveBy(0, -speed*delta);
+            } else if (movingDir == MovementDirection.DOWN) {
+                moveBy(0, speed*delta);
+            }
+
+            //TODO: Check if current tile is slippery
+            boolean slippery = tile.isSlippery();
+            if(!slippery && onNextBlock){
+                moving = false;
+            }
+        }
+
+        currentTile = tile;
     }
 
     @Override
@@ -61,7 +106,10 @@ public class UnitPlayer extends UnitBase {
         getActor(ACTOR_BASE).draw(batch, parentAlpha);
     }
 
-    public Weapon weapon() {
-        return weapon;
+    public enum MovementDirection {
+        LEFT,
+        RIGHT,
+        UP,
+        DOWN
     }
 }

@@ -36,9 +36,20 @@ public class Map extends Entity {
         return floor;
     }
 
+    public Tile getTileAt(float x, float y){
+        for(Tile tile: floor){
+            if(abs(tile.getCenterPoint().x-x) < tile.getWidth() &&
+                    abs(tile.getCenterPoint().y-y) < tile.getHeight()){
+                return tile;
+            }
+        }
+        return null;
+    }
+
     public Vector2[] getKeypos() {
         return keypos;
     }
+
 
     public Vector2 getStart() {
         return start;
