@@ -1,7 +1,7 @@
-package de.caffeineaddicted.ld37prep.actor;
+package de.caffeineaddicted.ld37.actor;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-import de.caffeineaddicted.ld37prep.screen.GameScreen;
+import de.caffeineaddicted.ld37.screen.GameScreen;
 import de.caffeineaddicted.sgl.SGL;
 
 public class UnitPlayer extends UnitBase {

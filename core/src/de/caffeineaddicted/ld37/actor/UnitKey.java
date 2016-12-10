@@ -1,4 +1,4 @@
-package de.caffeineaddicted.ld37prep.actor;
+package de.caffeineaddicted.ld37.actor;
 
 import de.caffeineaddicted.sgl.etities.Image;
 

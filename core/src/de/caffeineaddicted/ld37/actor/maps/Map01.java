@@ -1,9 +1,10 @@
-package de.caffeineaddicted.ld37prep.actor.maps;
+package de.caffeineaddicted.ld37.actor.maps;
 
 import com.badlogic.gdx.math.Vector2;
-import de.caffeineaddicted.ld37prep.actor.Map;
-import de.caffeineaddicted.ld37prep.actor.Tile;
+import de.caffeineaddicted.ld37.actor.Map;
+import de.caffeineaddicted.ld37.actor.Tile;
 import de.caffeineaddicted.sgl.SGL;
+
 
 public class Map01 extends Map {
     public Map01(Vector2 start, Vector2 exit){

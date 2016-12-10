@@ -1,4 +1,4 @@
-package de.caffeineaddicted.ld37prep.message;
+package de.caffeineaddicted.ld37.message;
 
 import de.caffeineaddicted.sgl.messages.Message;
 
