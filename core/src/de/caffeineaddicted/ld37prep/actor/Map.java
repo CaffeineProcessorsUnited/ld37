@@ -23,6 +23,12 @@ abstract public class Map extends Entity implements Creatable{
     public Map(Vector2 start, Vector2 exit) {
         this.start = start;
         this.exit = exit;
+    }
+
+    @Override
+    public void create() {
+        onCreate();
+        created = true;
         int currentx = 0;
         int currenty = 0;
         for (Tile tile : floor) {
@@ -31,12 +37,6 @@ abstract public class Map extends Entity implements Creatable{
         }
         this.dimx = currentx;
         this.dimy = currenty;
-    }
-
-    @Override
-    public void create() {
-        onCreate();
-        created = true;
     }
 
     @Override

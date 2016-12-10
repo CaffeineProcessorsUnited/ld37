@@ -52,6 +52,7 @@ public class GameScreen extends SGLStagedScreen<LD37> {
     public void onCreate() {
         player = new UnitPlayer();
         map = new Map01(new Vector2(0,0), new Vector2(0,0));
+        map.create();
         addActor(player);
         SGL.registerMessageReceiver(FireEverythingMessage.class, new MessageReceiver() {
             @Override

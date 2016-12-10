@@ -7,7 +7,6 @@ import de.caffeineaddicted.ld37prep.actor.Tile;
 public class Map01 extends Map {
     public Map01(Vector2 start, Vector2 exit){
         super(start, exit);
-        create();
     }
 
     public void onCreate(){
