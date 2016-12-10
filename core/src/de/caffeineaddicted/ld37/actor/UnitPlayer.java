@@ -28,7 +28,6 @@ public class UnitPlayer extends UnitBase {
 
     public void move(MovementDirection dir) {
         if (!hasActions()) {
-            SGL.debug("Move: " + dir.name());
             movingDir = dir;
         }
     }

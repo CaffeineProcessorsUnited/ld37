@@ -29,7 +29,6 @@ abstract public class Map extends Entity implements Creatable {
         for (Tile tile : floor) {
             currentx = Math.max(currentx, (int) tile.getStart().x);
             currenty = Math.max(currenty, (int) tile.getStart().y);
-            SGL.debug("++" + currentx + " " + currenty);
         }
         for (Tile tile : floor) {
             tile.create();

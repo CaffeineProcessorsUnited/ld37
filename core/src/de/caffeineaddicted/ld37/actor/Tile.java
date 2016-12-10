@@ -101,9 +101,7 @@ public class Tile extends Entity implements Mortal, Creatable {
     }
 
     public void walkOver() {
-        SGL.debug("durability: " + type.durability);
         if (type.durability > 0) {
-            SGL.debug("stepsLeft: " + stepsLeft);
             if (--stepsLeft < 1) {
                 dieing = true;
             }
