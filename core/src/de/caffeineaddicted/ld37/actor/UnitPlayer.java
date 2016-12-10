@@ -17,6 +17,7 @@ public class UnitPlayer extends UnitBase {
     private boolean newTile = true;
 
     public UnitPlayer() {
+        zindex(GameScreen.ZINDEX.Player.idx);
         Animation animation = new Animation(SGL.provide(SGLAssets.class).get("unicornwalk.png", Texture.class), 4, 64, 64);
         animation.setFrameDuration(0.18f);
         ACTOR_BASE = addActor("unicorn", animation);

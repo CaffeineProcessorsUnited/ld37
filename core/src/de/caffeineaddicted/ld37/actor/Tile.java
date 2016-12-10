@@ -40,6 +40,7 @@ public class Tile extends Entity implements Mortal, Creatable {
         this.hasKey = hasKey;
         this.start = start;
         this.end = end;
+        zindex(GameScreen.ZINDEX.Tile.idx);
 
     }
 

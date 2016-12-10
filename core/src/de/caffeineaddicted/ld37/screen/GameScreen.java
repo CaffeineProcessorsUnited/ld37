@@ -129,8 +129,13 @@ public class GameScreen extends SGLStagedScreen<LD37> {
         player.moveBy(x, y);
     }
 
-    public static class Z_INDEX {
-        public static int Enemy = 5;
-        public static int Projectile = 10;
+    public enum ZINDEX {
+        Tile(10), Key(20), Player(30);
+
+        public final int idx;
+
+        ZINDEX(int idx) {
+            this.idx = idx;
+        }
     }
 }
