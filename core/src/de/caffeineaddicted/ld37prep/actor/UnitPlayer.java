@@ -1,13 +1,8 @@
 package de.caffeineaddicted.ld37prep.actor;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.utils.Array;
 import de.caffeineaddicted.ld37prep.screen.GameScreen;
-import de.caffeineaddicted.ld37prep.utils.Weapon;
 import de.caffeineaddicted.sgl.SGL;
-
-import java.util.ArrayList;
 
 public class UnitPlayer extends UnitBase {
     private int collectedKeys;
