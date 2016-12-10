@@ -55,7 +55,7 @@ public class UnitPlayer extends UnitBase {
     public void act(float delta) {
         super.act(delta);
 
-        Tile tile = SGL.provide(Map.class).getTileAt(getCenterPoint().x, getCenterPoint().y);
+        Tile tile = SGL.provide(GameScreen.class).getMap().getTileAt(getCenterPoint().x, getCenterPoint().y);
         boolean onNextBlock = false;
         if (tile != currentTile) {
             onNextBlock = true;

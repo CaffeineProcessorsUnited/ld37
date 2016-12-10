@@ -12,14 +12,12 @@ import static java.lang.Math.abs;
  */
 public class Map extends Entity {
     private Tile[] floor;
-    private Vector2[] keypos;
     private Vector2 start;
     private Vector2 exit;
     private int dimx, dimy;
 
-    public Map(Tile[] floor, Vector2[] keypos, Vector2 start, Vector2 exit) {
+    public Map(Tile[] floor, Vector2 start, Vector2 exit) {
         this.floor = floor;
-        this.keypos = keypos;
         this.start = start;
         this.exit = exit;
         int currentx = 0;
@@ -45,11 +43,6 @@ public class Map extends Entity {
         }
         return null;
     }
-
-    public Vector2[] getKeypos() {
-        return keypos;
-    }
-
 
     public Vector2 getStart() {
         return start;
