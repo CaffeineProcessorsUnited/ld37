@@ -57,10 +57,11 @@ public class Tile extends Entity implements Mortal, Creatable {
             mta.restart();
         }
         if (dieing) {
-            if (!getCenterPoint().equals(SGL.provide(GameScreen.class).getPlayer().getCenterPoint())) {
+            if (SGL.provide(GameScreen.class).getMap().getTileAt(getCenterPoint()) != SGL.provide(GameScreen.class).getMap().getTileAt(SGL.provide(GameScreen.class).getPlayer().getCenterPoint())) {
                 // Player left tile. We can now die in peace.
                 dieing = false;
                 dead = true;
+                setTexture();
             }
         }
     }
@@ -105,7 +106,6 @@ public class Tile extends Entity implements Mortal, Creatable {
                 dieing = true;
             }
         }
-        setTexture();
     }
 
     @Override

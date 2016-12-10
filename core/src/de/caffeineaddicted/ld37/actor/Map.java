@@ -53,6 +53,10 @@ abstract public class Map extends Entity implements Creatable {
         this.floor = floor;
     }
 
+    public Tile getTileAt(Vector2 pos) {
+        return getTileAt(pos.x, pos.y);
+    }
+
     public Tile getTileAt(float x, float y) {
         for (Tile tile : floor) {
             if (abs(tile.getCenterPoint().x - x) < tile.getWidth() &&

@@ -63,7 +63,7 @@ public class UnitPlayer extends UnitBase {
             onNextBlock = true;
         }
 
-        if (tile != null && onNextBlock) {
+        if (tile != null) {
             tile.walkOver();
         }
 
