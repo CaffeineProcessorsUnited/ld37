@@ -2,7 +2,6 @@ package de.caffeineaddicted.ld37.input;
 
 import com.badlogic.gdx.Input;
 import de.caffeineaddicted.ld37.actor.UnitPlayer;
-import de.caffeineaddicted.ld37.message.FireEverythingMessage;
 import de.caffeineaddicted.ld37.screen.GameScreen;
 import de.caffeineaddicted.sgl.SGL;
 import de.caffeineaddicted.sgl.input.SGLInputProcessor;

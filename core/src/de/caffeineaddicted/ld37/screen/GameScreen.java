@@ -1,8 +1,6 @@
 package de.caffeineaddicted.ld37.screen;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
-import com.badlogic.gdx.utils.Align;
 import de.caffeineaddicted.ld37.LD37;
 import de.caffeineaddicted.ld37.actor.Map;
 import de.caffeineaddicted.ld37.actor.UnitPlayer;
@@ -58,7 +56,7 @@ public class GameScreen extends SGLStagedScreen<LD37> {
     public void onCreate() {
         SGL.provide(SGLScreenInputMultiplexer.class).addProcessor(this, new GameInputProcessor());
         player = new UnitPlayer();
-        map = new Map01(new Vector2(0,0), new Vector2(0,0));
+        map = new Map01(new Vector2(0, 0), new Vector2(0, 0));
         map.create();
         addActor(player);
         addActor(map);

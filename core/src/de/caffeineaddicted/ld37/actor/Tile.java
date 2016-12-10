@@ -131,9 +131,9 @@ public class Tile extends Entity implements Mortal, Creatable {
         return created;
     }
 
-    public void setTexture(){
+    public void setTexture() {
         clear();
-        addTexture(type.assets[min(type.assets.length-1,max(0,(int)stepsLeft+1))]);
+        addTexture(type.assets[min(type.assets.length - 1, max(0, (int) stepsLeft + 1))]);
     }
 
     public enum Type {

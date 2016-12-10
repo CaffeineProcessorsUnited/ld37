@@ -9,13 +9,12 @@ import de.caffeineaddicted.sgl.ui.interfaces.Creatable;
 
 import static java.lang.Math.abs;
 
-abstract public class Map extends Entity implements Creatable{
+abstract public class Map extends Entity implements Creatable {
+    protected boolean created = false;
     private Tile[] floor;
     private Vector2 start;
     private Vector2 exit;
     private int dimx, dimy;
-
-    protected boolean created = false;
 
     public Map(Vector2 start, Vector2 exit) {
         this.start = start;
@@ -31,7 +30,7 @@ abstract public class Map extends Entity implements Creatable{
         for (Tile tile : floor) {
             currentx = Math.max(currentx, (int) tile.getStart().x);
             currenty = Math.max(currenty, (int) tile.getStart().y);
-            SGL.debug("++"+currentx+" "+currenty);
+            SGL.debug("++" + currentx + " " + currenty);
         }
         dimx = currentx;
         dimy = currenty;
@@ -46,12 +45,12 @@ abstract public class Map extends Entity implements Creatable{
         return created;
     }
 
-    public void setFloor(Tile[] floor){
-        this.floor = floor;
-    }
-
     public Tile[] getFloor() {
         return floor;
+    }
+
+    public void setFloor(Tile[] floor) {
+        this.floor = floor;
     }
 
     public Tile getTileAt(float x, float y) {
@@ -77,8 +76,8 @@ abstract public class Map extends Entity implements Creatable{
     }
 
     public Vector2 calPixCoord(float x, float y) {
-        int x_pix = (int) (x / (dimx+1) * SGL.provide(GameScreen.class).getViewWidth());
-        int y_pix = (int) (y / (dimy+1) * SGL.provide(GameScreen.class).getViewHeight());
+        int x_pix = (int) (x / (dimx + 1) * SGL.provide(GameScreen.class).getViewWidth());
+        int y_pix = (int) (y / (dimy + 1) * SGL.provide(GameScreen.class).getViewHeight());
         return new Vector2(x_pix, y_pix);
     }
 
@@ -89,8 +88,8 @@ abstract public class Map extends Entity implements Creatable{
     }
 
     @Override
-    public void draw(Batch batch, float parentAlpha){
-        for(Tile tile: floor){
+    public void draw(Batch batch, float parentAlpha) {
+        for (Tile tile : floor) {
             tile.draw(batch, parentAlpha);
         }
     }
