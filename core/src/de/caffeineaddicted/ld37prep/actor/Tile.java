@@ -7,7 +7,7 @@ import de.caffeineaddicted.sgl.SGL;
 import de.caffeineaddicted.sgl.etities.Entity;
 import de.caffeineaddicted.sgl.ui.interfaces.Mortal;
 
-abstract public class Tile extends Entity implements Mortal {
+public class Tile extends Entity implements Mortal {
     private Tile.Type type;
     private float stepsLeft;
     private boolean hasKey = false;
@@ -88,6 +88,11 @@ abstract public class Tile extends Entity implements Mortal {
         return type;
     }
 
+    @Override
+    public void die() {
+
+    }
+
     public void onDie() {
 
     }
@@ -100,9 +105,16 @@ abstract public class Tile extends Entity implements Mortal {
         }
     }
 
+    @Override
+    public void update() {
+
+    }
+
     public enum Type {
 
-        Empty(0, false, "tile_empty.png");
+        Empty(0, false, "tile_empty.png"),
+        Stone(2, false, "stonebroke.png", "stonehalf.png", "stone.png"),
+        Ice(1, true, "icebroke.png", "ice.png");
 
         public final float durability;
         public final boolean slipery;
