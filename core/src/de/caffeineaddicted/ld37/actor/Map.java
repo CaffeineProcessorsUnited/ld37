@@ -14,7 +14,6 @@ abstract public class Map extends Entity implements Creatable {
     private Tile[] floor;
     private Vector2 start;
     private Vector2 exit;
-    private int dimx, dimy;
 
     public Map(Vector2 start, Vector2 exit) {
         this.start = start;
@@ -32,8 +31,6 @@ abstract public class Map extends Entity implements Creatable {
             currenty = Math.max(currenty, (int) tile.getStart().y);
             SGL.debug("++" + currentx + " " + currenty);
         }
-        dimx = currentx;
-        dimy = currenty;
         for (Tile tile : floor) {
             tile.create();
             addActor(tile);
@@ -80,8 +77,8 @@ abstract public class Map extends Entity implements Creatable {
     }
 
     public Vector2 calPixCoord(float x, float y) {
-        int x_pix = (int)(x*TileSize);//(int) (x / (dimx+1) * SGL.provide(GameScreen.class).getViewWidth());
-        int y_pix = (int)(y*TileSize);//(int) (y / (dimy+1) * SGL.provide(GameScreen.class).getViewHeight());
+        int x_pix = (int) (x * TileSize);
+        int y_pix = (int) (y * TileSize);
         return new Vector2(x_pix, y_pix);
     }
 
@@ -103,6 +100,5 @@ abstract public class Map extends Entity implements Creatable {
     @Override
     public void act(float delta) {
         super.act(delta);
-        //moveBy(100 * delta, 0);
     }
 }
