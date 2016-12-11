@@ -103,6 +103,8 @@ class Map:
             with open(self.filename, "w+") as f:
                 json.dump(data, f, indent=4, sort_keys=True)
 
+_map = None
+
 def get_pos(count):
     question = "x y"
     if count > 2:
@@ -134,18 +136,34 @@ def show_menu():
         else:
             print("Invalid selection")
 
+def show_draw_block_menu():
+    global _map
+    while True:
+        _map.show()
+        pos = input("Select position (x y): ")
+        pos = pos.split()
+        if len(pos) > 0 and pos[0] == "q":
+            return
+        elif len(pos) == 2:
+            _map.set_block(int(pos[0]), int(pos[1]))
+        else:
+            print("Invalid input. Retry")
+
+
 def main():
     size_x = int(input("Enter Width: "))
     size_y = int(input("Enter Height: "))
+    global _map
+    _map = Map(size_x, size_y)
 
-    map = Map(size_x, size_y)
+
     while True:
         try:
             action = show_menu()
             if action == "q":
                 break
             if action == "s":
-                map.save()
+                _map.save()
             if action == "1":
                 print("block types to choose from:")
                 print("\tWall")
@@ -156,25 +174,25 @@ def main():
                 print("\tMetal")
                 print("\tEmpty")
                 type = input("Select block type: ")
-                map.set_block_type(type)
+                _map.set_block_type(type)
             if action == "2":
-                map.set_block(*get_pos(2))
+                show_draw_block_menu()
             if action == "3":
-                map.set_block_movement_end(*get_pos(4))
+                _map.set_block_movement_end(*get_pos(4))
             if action == "4":
-                map.fill()
+                _map.fill()
             if action == "5":
-                map.del_block(*get_pos(2))
+                _map.del_block(*get_pos(2))
             if action == "6":
                 type = int(input("Select key type(None[0]/Gold[1]/Pink[2]/Green[4]): "))
-                map.set_key(*get_pos(2),type)
+                _map.set_key(*get_pos(2),type)
             if action == "7":
                 trigger = input("Enter trigger text: ")
-                map.set_trigger(*get_pos(2),trigger)
+                _map.set_trigger(*get_pos(2),trigger)
             if action == "8":
-                map.set_start_end(*get_pos(4))
+                _map.set_start_end(*get_pos(4))
             if action == "9":
-                map.show()
+                _map.show()
 
         except Exception as e:
             print(traceback.format_exception(None,  # <- type(e) by docs, but ignored
@@ -182,7 +200,7 @@ def main():
                   file=sys.stderr, flush=True)
             print()
 
-    map.save()
+    _map.save()
 
 if __name__ == "__main__":
     main()
