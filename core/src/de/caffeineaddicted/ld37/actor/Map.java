@@ -53,10 +53,12 @@ public class Map extends Entity implements Creatable {
                 tile.setEnd(new Vector2(tileConfig.x2, tileConfig.y2));
             }
             tile.setKey(tileConfig.key);
+            tile.setKeyHole(tileConfig.hole);
             tile.setTrigger(tileConfig.trigger);
             tiles[i] = tile;
         }
         setFloor(tiles);
+
     }
 
     public void reset() {
