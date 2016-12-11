@@ -83,9 +83,13 @@ class Map:
             self.tiles[i]["key"] = type
             print("Set Key at ({}, {}) to {}".format(posx, posy, ["None","Gold","Pink","Dummy","Green"][type]))
 
-    def fill(self):
-        for x in range(self.width):
-            for y in range(self.height):
+    def fill(self, startx=0, starty=0, endx=-1, endy=-1):
+        if endx == -1:
+            endx = self.width
+        if endy == -1:
+            endy = self.height
+        for x in range(startx, endx):
+            for y in range(starty, endy):
                 i = x * self.height + y
                 self.tiles[i] = {
                     "x": x,
@@ -177,7 +181,6 @@ def main():
     while True:
         try:
             action = show_menu()
-            os.system("clear")
             if action == "q":
                 break
             if action == "s":
@@ -201,7 +204,8 @@ def main():
             if action == "3":
                 _map.set_block_movement_end(*get_pos(4))
             if action == "4":
-                _map.fill()
+                print("leave empyt to fill whole map")
+                _map.fill(*get_pos(4))
             if action == "5":
                 _map.del_block(*get_pos(2))
             if action == "6":
