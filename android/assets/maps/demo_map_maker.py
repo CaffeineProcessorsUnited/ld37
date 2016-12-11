@@ -83,6 +83,20 @@ class Map:
             self.tiles[i]["key"] = type
             print("Set Key at ({}, {}) to {}".format(posx, posy, ["None","Gold","Pink","Dummy","Green"][type]))
 
+    def set_keyhole(self, posx, posy, type):
+        i = posx * self.height + posy
+        if 0 <= type < 8:
+            self.tiles[i]["hole"] = type
+            print("Set Key at ({}, {}) to {}".format(posx, posy,
+                                                     ["None",
+                                                      "Gold",
+                                                      "Pink",
+                                                      "Gold+Pink",
+                                                      "Green"
+                                                      "Gold+Green"
+                                                      "Pink+Green"
+                                                      "Gold+Pink+Green"][type]))
+
     def fill(self, startx=0, starty=0, endx=-1, endy=-1):
         if endx == -1:
             endx = self.width
@@ -95,7 +109,8 @@ class Map:
                     "x": x,
                     "y": y,
                     "type": self.type,
-                    "key": 0
+                    "key": 0,
+                    "hole":0
                 }
 
     def del_block(self, posx, posy):
@@ -143,15 +158,16 @@ def show_menu():
     print("\t Fill [4]")
     print("\t Delete block [5]")
     print("\t Set key [6]")
-    print("\t Set trigger [7]")
-    print("\t Set start/exit [8]")
-    print("\t Show [9]")
+    print("\t Set keyhole [7]")
+    print("\t Set trigger [8]")
+    print("\t Set start/exit [9]")
+    print("\t Show [p]")
     print("\t Save as [s]")
     print("\t Load from [l]")
     print("\t Quit [q]")
     while True:
         action = input("Choose your action :")
-        if action in "qsl" or int(action) > 0:
+        if action in "qslp" or int(action) > 0:
             return action
         else:
             print("Invalid selection")
@@ -188,6 +204,9 @@ def main():
             if action == "l":
                 fname = input("File to load: ")
                 _map.load_file(fname)
+            if action == "p":
+                _map.show()
+
             if action == "1":
                 print("block types to choose from:")
                 print("\tWall")
@@ -211,13 +230,14 @@ def main():
             if action == "6":
                 type = int(input("Select key type(None[0]/Gold[1]/Pink[2]/Green[4]): "))
                 _map.set_key(*get_pos(2),type)
-            if action == "7":
+            if action == "6":
+                type = int(input("Select key type(None[0]/Gold[1]/Pink[2]/Green[4]/bitflag): "))
+                _map.set_keyhole(*get_pos(2), type)
+            if action == "8":
                 trigger = input("Enter trigger text: ")
                 _map.set_trigger(*get_pos(2),trigger)
-            if action == "8":
-                _map.set_start_end(*get_pos(4))
             if action == "9":
-                _map.show()
+                _map.set_start_end(*get_pos(4))
 
         except Exception as e:
             print(traceback.format_exception(None,  # <- type(e) by docs, but ignored
