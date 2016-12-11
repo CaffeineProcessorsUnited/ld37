@@ -41,12 +41,12 @@ public class UnitPlayer extends UnitBase {
         }
     }
 
-    public void collectKey() {
-        int key = 1;
+    public void collectKey(int key) {
         keys |= key;
     }
 
     public boolean hasKey(int key) {
+        SGL.debug("has key " + key + "? " + ((keys & key) == key));
         return (keys & key) == key;
     }
 
@@ -96,8 +96,7 @@ public class UnitPlayer extends UnitBase {
                         tile.setTriggered(true);
                     }
                     if (tile.hasKey()) {
-                        tile.takeKey();
-                        collectKey();
+                        collectKey(tile.takeKey());
                     }
                 }
             }

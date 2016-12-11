@@ -16,14 +16,33 @@ import de.caffeineaddicted.sgl.utils.SGLAssets;
  */
 public class HUD extends Entity {
 
-    Drawable background;
-    Image keyPink, keyGold, keyGreen;
+    private Drawable background;
+    //private Image background;
+    private Image keyPink, keyGold, keyGreen;
+    private int padding = 5;
 
     public HUD() {
+        zindex(GameScreen.ZINDEX.Hud.idx);
+        setAutoWidth(false);
+        setAutoHeight(false);
         background = new TextureRegionDrawable(new TextureRegion(SGL.provide(SGLAssets.class).get("hud.png", Texture.class)));
+        //background = new Image("hud.png");
         keyPink = new Key("keys/keypink.png");
+        //addActor(keyPink);
         keyGold = new Key("keys/keygold.png");
+        //addActor(keyGold);
         keyGreen = new Key("keys/keygreen.png");
+        //addActor(keyGreen);
+        setWidth(3 * (padding + keyPink.getWidth()) + padding);
+        setHeight(keyPink.getHeight() + (2 * padding));
+    }
+
+    @Override
+    public void positionChanged() {
+        super.positionChanged();
+        keyPink.setPosition(getX() + padding, getY() + padding);
+        keyGold.setPosition(getX() + padding + keyPink.getWidth(), getY() + padding);
+        keyGreen.setPosition(getX() + padding + keyPink.getWidth() + padding + keyGold.getWidth(), getY() + padding);
     }
 
     @Override
@@ -37,7 +56,17 @@ public class HUD extends Entity {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-
+        batch.setColor(0.32f, 0.32f, 0.32f, 1f);
+        background.draw(batch, getX(), getY(), getWidth(), getHeight());
+        if  (keyPink.isVisible()) {
+            keyPink.draw(batch, parentAlpha);
+        }
+        if  (keyGold.isVisible()) {
+            keyGold.draw(batch, parentAlpha);
+        }
+        if  (keyGreen.isVisible()) {
+            keyGreen.draw(batch, parentAlpha);
+        }
     }
 
 

@@ -22,11 +22,13 @@ public class Assets extends SGLAssets {
         load("skin/uiskin.json", Skin.class);
         load("background.png", Texture.class);
         load("speech.png", Texture.class);
+        load("hud.png", Texture.class);
     }
 
     @Override
     public void onLoad() {
         load("player/unicornwalk.png", Texture.class);
+
         load("tiles/tile_empty.png", Texture.class);
         load("tiles/stonebroke.png", Texture.class);
         load("tiles/stonehalf.png", Texture.class);

@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import de.caffeineaddicted.ld37.LD37;
+import de.caffeineaddicted.ld37.actor.HUD;
 import de.caffeineaddicted.ld37.actor.Map;
 import de.caffeineaddicted.ld37.actor.MapWrapper;
 import de.caffeineaddicted.ld37.actor.UnitPlayer;
@@ -40,6 +41,7 @@ public class GameScreen extends SGLStagedScreen<LD37> {
     private Drawable speechBackground;
     private float speechPadding = 10;
     private float timer = 0, speechAlpha = 0;
+    private HUD hud;
 
 
     public void onBeforeAct(float delta) {
@@ -104,8 +106,11 @@ public class GameScreen extends SGLStagedScreen<LD37> {
         player = new UnitPlayer();
         map = SGL.provide(SGLAssets.class).get("maps/02.json", MapWrapper.class).getMap();
         map.create();
+        hud = new HUD();
+        hud.setPosition(0, getViewHeight() - hud.getHeight());
         addActor(player);
         addActor(map);
+        addActor(hud);
         /*MoveToAction a = new MoveToAction();
         a.setAlignment(Align.center);
         a.setPosition(200, 0);
@@ -169,6 +174,43 @@ public class GameScreen extends SGLStagedScreen<LD37> {
     public void drag(float x, float y) {
         SGL.debug(x + "," + y);
         //stage().getCamera().position.add(x, y, 0);
+        // TODO: Only if map is not in bounds
+        if (x < 0) {
+            if (map.getWidth() < getViewWidth()) {
+                // map is smaller than view width
+                if (map.getX() + x < 0 && map.getX() + map.getWidth() + x < getViewWidth()) {
+                    x = - map.getX();
+                }
+            } else {
+                // map is wider than view width
+                if (map.getX() + map.getWidth() + x < getViewWidth()) {
+                    // dont go left, right border ist at screen border
+                    x = getViewWidth() - map.getWidth() - map.getX();
+                }
+            }
+        } else if (x > 0) {
+
+        }
+
+        if (y < 0) {
+            if (map.getHeight() < getViewHeight()) {
+                if (map.getY() + y < 0 && map.getY() + map.getHeight() + y < getViewHeight()) {
+                    y = - map.getY();
+                }
+            } else {
+                // map is wider than view width
+                if (map.getY() + map.getHeight() + x < getViewHeight()) {
+                    // dont go left, right border ist at screen border
+                    x = getViewHeight() - map.getHeight() - map.getY();
+                }
+            }
+        } else if (y > 0) {
+
+        }
+        moveMapBy(x, y);
+    }
+
+    public void moveMapBy(float x, float y) {
         map.moveBy(x, y);
         player.moveBy(x, y);
     }
@@ -178,13 +220,11 @@ public class GameScreen extends SGLStagedScreen<LD37> {
         label.setColor(1f, 1f, 1f, 0f);
         label.setPosition(getViewWidth() / 2, 100, Align.center);
         label.addAction(Actions.sequence(Actions.alpha(1, 1), Actions.delay(4), Actions.alpha(0, 1)));
-        label.setZIndex(ZINDEX.Messages.idx);
-
         messageQueue.add(label);
     }
 
     public enum ZINDEX {
-        Tile(10), Key(20), Player(30), Messages(100);
+        Tile(10), Key(20), Player(30), Hud(50), Messages(100);
 
         public final int idx;
 
