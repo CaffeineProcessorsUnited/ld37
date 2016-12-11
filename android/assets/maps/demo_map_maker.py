@@ -176,11 +176,12 @@ def main():
             if action == "9":
                 map.show()
 
-        except IndexError as e:
+        except Exception as e:
             print(traceback.format_exception(None,  # <- type(e) by docs, but ignored
                                              e, e.__traceback__),
                   file=sys.stderr, flush=True)
             print()
+
     map.save()
 
 if __name__ == "__main__":
