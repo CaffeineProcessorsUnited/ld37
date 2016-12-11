@@ -1639,49 +1639,49 @@
         {
             "hole": 0,
             "key": 0,
-            "type": "Wall",
+            "type": "Empty",
             "x": 12,
             "y": 13
         },
         {
             "hole": 0,
             "key": 0,
-            "type": "Wall",
+            "type": "Empty",
             "x": 12,
             "y": 14
         },
         {
             "hole": 0,
             "key": 0,
-            "type": "Wall",
+            "type": "Empty",
             "x": 12,
             "y": 15
         },
         {
             "hole": 0,
             "key": 0,
-            "type": "Wall",
+            "type": "Empty",
             "x": 12,
             "y": 16
         },
         {
             "hole": 0,
             "key": 0,
-            "type": "Wall",
+            "type": "Empty",
             "x": 12,
             "y": 17
         },
         {
             "hole": 0,
             "key": 0,
-            "type": "Wall",
+            "type": "Empty",
             "x": 12,
             "y": 18
         },
         {
             "hole": 0,
             "key": 0,
-            "type": "Wall",
+            "type": "Empty",
             "x": 12,
             "y": 19
         },
@@ -1770,49 +1770,49 @@
         {
             "hole": 0,
             "key": 0,
-            "type": "Wall",
+            "type": "Empty",
             "x": 13,
             "y": 13
         },
         {
             "hole": 0,
             "key": 0,
-            "type": "Stone",
+            "type": "Wall",
             "x": 13,
             "y": 14
         },
         {
             "hole": 0,
             "key": 0,
-            "type": "Stone",
+            "type": "Wall",
             "x": 13,
             "y": 15
         },
         {
             "hole": 0,
             "key": 0,
-            "type": "Stone",
+            "type": "Wall",
             "x": 13,
             "y": 16
         },
         {
             "hole": 0,
             "key": 0,
-            "type": "Stone",
+            "type": "Wall",
             "x": 13,
             "y": 17
         },
         {
             "hole": 0,
             "key": 0,
-            "type": "Stone",
+            "type": "Wall",
             "x": 13,
             "y": 18
         },
         {
             "hole": 0,
             "key": 0,
-            "type": "Stone",
+            "type": "Wall",
             "x": 13,
             "y": 19
         },
@@ -1901,14 +1901,14 @@
         {
             "hole": 0,
             "key": 0,
-            "type": "Wall",
+            "type": "Empty",
             "x": 14,
             "y": 13
         },
         {
             "hole": 0,
             "key": 0,
-            "type": "Stone",
+            "type": "Wall",
             "x": 14,
             "y": 14
         },
@@ -2032,14 +2032,14 @@
         {
             "hole": 0,
             "key": 0,
-            "type": "Wall",
+            "type": "Empty",
             "x": 15,
             "y": 13
         },
         {
             "hole": 0,
             "key": 0,
-            "type": "Stone",
+            "type": "Wall",
             "x": 15,
             "y": 14
         },
@@ -2163,14 +2163,14 @@
         {
             "hole": 0,
             "key": 0,
-            "type": "Wall",
+            "type": "Empty",
             "x": 16,
             "y": 13
         },
         {
             "hole": 0,
             "key": 0,
-            "type": "Stone",
+            "type": "Wall",
             "x": 16,
             "y": 14
         },
@@ -2189,7 +2189,7 @@
             "y": 16
         },
         {
-            "hole": 0,
+            "hole": 3,
             "key": 0,
             "type": "Stone",
             "x": 16,
@@ -2294,14 +2294,14 @@
         {
             "hole": 0,
             "key": 0,
-            "type": "Wall",
+            "type": "Empty",
             "x": 17,
             "y": 13
         },
         {
             "hole": 0,
             "key": 0,
-            "type": "Stone",
+            "type": "Wall",
             "x": 17,
             "y": 14
         },
@@ -2432,7 +2432,7 @@
         {
             "hole": 0,
             "key": 0,
-            "type": "Stone",
+            "type": "Wall",
             "x": 18,
             "y": 14
         },
@@ -2550,6 +2550,7 @@
             "y": 12
         },
         {
+            "hole": 0,
             "key": 0,
             "type": "Metal",
             "x": 19,
@@ -2558,7 +2559,7 @@
         {
             "hole": 0,
             "key": 0,
-            "type": "Stone",
+            "type": "Metal",
             "x": 19,
             "y": 14
         },
