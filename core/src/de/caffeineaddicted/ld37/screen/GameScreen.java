@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TiledDrawable;
 import com.badlogic.gdx.utils.Align;
 import de.caffeineaddicted.ld37.LD37;
 import de.caffeineaddicted.ld37.actor.HUD;
@@ -195,7 +196,7 @@ public class GameScreen extends SGLStagedScreen<LD37> {
             }
         });
 
-        speechBackground = new TextureRegionDrawable(new TextureRegion(SGL.provide(SGLAssets.class).get("speech.png", Texture.class)));
+        speechBackground = new TextureRegionDrawable(new TextureRegion(SGL.provide(SGLAssets.class).get("ui/speech.png", Texture.class)));
     }
 
     public void loadMap(int i) {
@@ -352,6 +353,7 @@ public class GameScreen extends SGLStagedScreen<LD37> {
     public void moveMapBy(float x, float y) {
         map.moveBy(x, y);
         player.moveBy(x, y);
+        SGL.provide(BackgroundScreen.class).moveBy(x, y);
     }
 
     public void showMessage(String trigger) {
@@ -367,7 +369,7 @@ public class GameScreen extends SGLStagedScreen<LD37> {
     }
 
     public enum ZINDEX {
-        Tile(10), Key(20), Player(30), Hud(50), Messages(100);
+        Tile(10), KeyHole(20), Key(30), Player(40), Hud(50), Messages(100);
 
         public final int idx;
 

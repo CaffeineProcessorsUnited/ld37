@@ -10,8 +10,8 @@ public class Key extends Image {
     public final static int KEY_GREEN = 4;
     public final static int KEY_ALL = KEY_PINK + KEY_GOLD + KEY_GREEN;
 
-    public Key(String image) {
-        super(image);
+    public Key(int key) {
+        super("keys/key" + key + ".png");
         zindex(GameScreen.ZINDEX.Key.idx);
     }
 }

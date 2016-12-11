@@ -10,9 +10,7 @@ import de.caffeineaddicted.sgl.ui.interfaces.Mortal;
 
 import java.util.Arrays;
 
-import static de.caffeineaddicted.ld37.actor.Key.KEY_GOLD;
-import static de.caffeineaddicted.ld37.actor.Key.KEY_GREEN;
-import static de.caffeineaddicted.ld37.actor.Key.KEY_PINK;
+import static de.caffeineaddicted.ld37.actor.Key.*;
 
 public class Tile extends Entity implements Mortal, Creatable {
     public final static int ACCESS_NONE = 0;
@@ -220,18 +218,11 @@ public class Tile extends Entity implements Mortal, Creatable {
             a = 0;
         }
         String Texture = addTexture(type.assets[a]);
+        if (keyHole > 0) {
+            addActor(new KeyHole(keyHole));
+        }
         if (hasKey()) {
-            switch (getKeyType()) {
-                case KEY_GOLD:
-                    addActor(new Key("keys/keygold.png"));
-                    break;
-                case KEY_PINK:
-                    addActor(new Key("keys/keypink.png"));
-                    break;
-                case KEY_GREEN:
-                    addActor(new Key("keys/keygreen.png"));
-                    break;
-            }
+            addActor(new Key(getKeyType()));
         }
     }
 
@@ -292,6 +283,8 @@ public class Tile extends Entity implements Mortal, Creatable {
         WallLD(0, false, 2, ACCESS_NONE, Key.KEY_NONE, "walls/wallcornerlowerleft.png"),
         WallRD(0, false, 2, ACCESS_NONE, Key.KEY_NONE, "walls/wallcornerlowerright.png"),
 
+        Entry(0, false, 0, ACCESS_ALL, KEY_NONE, "tiles/entry.png"),
+        Exit(0, false, 0, ACCESS_ALL, KEY_NONE, "tiles/entry.png"),
         ;
 
         public final int durability;

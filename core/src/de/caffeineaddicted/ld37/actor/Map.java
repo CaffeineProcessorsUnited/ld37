@@ -2,12 +2,16 @@ package de.caffeineaddicted.ld37.actor;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.utils.TiledDrawable;
 import de.caffeineaddicted.sgl.SGL;
 import de.caffeineaddicted.sgl.etities.Entity;
 import de.caffeineaddicted.sgl.ui.interfaces.Creatable;
+import de.caffeineaddicted.sgl.utils.SGLAssets;
 
 import static java.lang.Math.abs;
 
@@ -20,6 +24,7 @@ public class Map extends Entity implements Creatable {
     private Vector2 start;
     private Vector2 exit;
     private MapConfig.MapConfigWrapper mapConfig;
+    private TiledDrawable background;
 
     public Map(int width, int height, MapConfig.MapConfigWrapper mapConfig) {
         this.width = width;
@@ -32,6 +37,7 @@ public class Map extends Entity implements Creatable {
     public void create() {
         onCreate();
         created = true;
+        background = new TiledDrawable(new TextureRegion(SGL.provide(SGLAssets.class).get("background/map.png", Texture.class)));
         for (Tile tile : floor) {
             tile.create();
             addActor(tile);
@@ -181,12 +187,16 @@ public class Map extends Entity implements Creatable {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
+        /*
         batch.end();
         SGL.provide(ShapeRenderer.class).begin(ShapeRenderer.ShapeType.Filled);
         SGL.provide(ShapeRenderer.class).setColor(0.498f, 0.165f, 0.251f, 1f);
         SGL.provide(ShapeRenderer.class).rect(getX(), getY(), getWidth(), getHeight());
         SGL.provide(ShapeRenderer.class).end();
         batch.begin();
+        */
+        batch.setColor(1, 1, 1, 1);
+        background.draw(batch, getX(), getY(), getWidth(), getHeight());
         for (Tile tile : floor) {
             tile.draw(batch, parentAlpha);
         }

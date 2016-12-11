@@ -31,24 +31,25 @@
             "type": "Metal",
             "x": 3,
             "y": 0,
-            "trigger": "message:Some rooms have locked blocks. You need a key to open them."
+            "trigger": "message:Some rooms have locked blocks. You need a key to open them.\nIf you picked up a key it will appear in the inventory."
         },
         {
-            "key": 2,
+            "key": 0,
+            "hole": 1,
             "type": "Metal",
             "x": 4,
             "y": 0,
-            "trigger": "message:If you picked up a key it will appear in the inventory."
+            "trigger": "message:You can use the keys from your inventory by walking over locked tiles."
         },
         {
-            "key": 4,
+            "key": 2,
             "type": "HPlank",
             "x": 5,
             "y": 0,
             "trigger": "message:Some tiles can only be entered for certain directions, otherwise you will fall!"
         },
         {
-            "key": 0,
+            "key": 4,
             "type": "Metal",
             "x": 6,
             "y": 0,
@@ -59,7 +60,14 @@
             "type": "Metal",
             "x": 7,
             "y": 0
+        },
+        {
+            "key": 0,
+            "hole": 7,
+            "type": "Metal",
+            "x": 8,
+            "y": 0
         }
     ],
-    "width": 8
+    "width": 9
 }

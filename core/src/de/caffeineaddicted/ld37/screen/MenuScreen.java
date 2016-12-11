@@ -81,11 +81,11 @@ public class MenuScreen extends SGLStagedScreen<LD37> {
     public void onCreate() {
         //stage().setDebugAll(true);
         SGL.provide(SGLScreenInputMultiplexer.class).removeProcessor(this);
-        Image background = new Image(SGL.provide(SGLAssets.class).get("background.png", Texture.class));
+        Image background = new Image(SGL.provide(SGLAssets.class).get("background/menu.png", Texture.class));
         background.setSize(getViewWidth(), getViewHeight());
         background.setZIndex(0);
         stage().addActor(background);
-        speechBackground = new TextureRegionDrawable(new TextureRegion(SGL.provide(SGLAssets.class).get("speech.png", Texture.class)));
+        speechBackground = new TextureRegionDrawable(new TextureRegion(SGL.provide(SGLAssets.class).get("ui/speech.png", Texture.class)));
         Label t1 = new Label("Hey! Welcome to \n.", SGL.provide(Skin.class));
         t1.setPosition(getViewWidth() / 2 - t1.getWidth() / 2, 100);
         //speechLabels.add(t1);
