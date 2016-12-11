@@ -88,12 +88,6 @@ public class Player extends UnitBase {
                 newTile = false;
                 if (tile != null) {
                     tile.walkOver();
-                    if (!tile.isTriggered()) {
-                        if (!tile.getTrigger().isEmpty()) {
-                            SGL.provide(GameScreen.class).showMessage(tile.getTrigger());
-                        }
-                        tile.setTriggered(true);
-                    }
                     if (tile.hasKey()) {
                         collectKey(tile.takeKey());
                     }
