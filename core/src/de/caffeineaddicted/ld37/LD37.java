@@ -6,6 +6,7 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import de.caffeineaddicted.ld37.screen.BackgroundScreen;
 import de.caffeineaddicted.ld37.screen.GameScreen;
 import de.caffeineaddicted.ld37.screen.MenuScreen;
 import de.caffeineaddicted.ld37.utils.Assets;
@@ -36,12 +37,13 @@ public class LD37 extends SGLGame {
 
     @Override
     protected void initScreens() {
-        GameScreen screen = new GameScreen();
-        supply(GameScreen.class, screen);
+        supply(BackgroundScreen.class, new BackgroundScreen());
+        supply(GameScreen.class, new GameScreen());
         supply(MenuScreen.class, new MenuScreen());
         supply(ShapeRenderer.class, new ShapeRenderer());
         supply(SpriteBatch.class, new SpriteBatch());
-        provide(SGLRootScreen.class).loadScreen(screen);
+        provide(SGLRootScreen.class).loadScreen(provide(BackgroundScreen.class));
+        provide(SGLRootScreen.class).loadScreen(provide(GameScreen.class));
         provide(SGLRootScreen.class).loadScreen(provide(MenuScreen.class));
 
     }
@@ -52,6 +54,7 @@ public class LD37 extends SGLGame {
         provide(SGLAssets.class).load();
         provide(SGLAssets.class).finishLoading();
         supply(Skin.class, provide(SGLAssets.class).get("skin/uiskin.json", Skin.class));
+        provide(SGLRootScreen.class).showScreen(BackgroundScreen.class, SGLRootScreen.ZINDEX.FAREST);
         provide(SGLRootScreen.class).showScreen(MenuScreen.class, SGLRootScreen.ZINDEX.NEAREST);
     }
 
