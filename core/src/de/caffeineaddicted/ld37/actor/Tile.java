@@ -35,6 +35,7 @@ public class Tile extends Entity implements Mortal, Creatable {
 
     private String trigger;
     private boolean triggered;
+    private boolean justUnlocked = false;
 
     public Tile(Tile.Type type) {
         this.type = type;
@@ -147,7 +148,10 @@ public class Tile extends Entity implements Mortal, Creatable {
         if (!(type.durability > 0 && stepsLeft < 1)) {
             setTexture();
         }
+        justUnlocked = false;
+    }
 
+    public void trigger(){
         if (!isTriggered()) {
             if (!trigger.isEmpty()) {
                 triggerAction(trigger);
@@ -157,14 +161,20 @@ public class Tile extends Entity implements Mortal, Creatable {
     }
 
     private void triggerAction(String action) {
-        String[] actionList = action.split(":");
-        String actionCall = actionList[0];
-        String[] actionParam = Arrays.copyOfRange(actionList, 1, actionList.length);
 
-        TileTriggerActions.call(actionCall, actionParam);
-    }
+        String[] actionList;
+        if(action.contains(";")) {
+            actionList = action.split(";");
+        } else {
+            actionList = new String[]{action};
+        }
+        for(String a: actionList){
+            String[] _actionList = a.split(":");
+            String type = _actionList[0];
+            String[] actionParam = Arrays.copyOfRange(_actionList, 1, _actionList.length);
 
-    private void triggerMessage(String message) {
+            TileTriggerActions.call(this, type, actionParam);
+        }
     }
 
     public boolean canAccess(int direction) {
@@ -257,6 +267,29 @@ public class Tile extends Entity implements Mortal, Creatable {
         this.keyHole = keyHole;
     }
 
+    public boolean isKeyHole() {
+        return keyHole > 0;
+    }
+
+    public boolean canAcceptKeys(int keys){
+        return (keys & keyHole) == keyHole;
+    }
+
+    public boolean isJustUnlocked() {
+        return justUnlocked;
+    }
+
+    public int fillKeyHole(int keys){
+        if(canAcceptKeys(keys)) {
+            int oldKeys = keys &~keyHole;
+            keyHole = 0;
+            justUnlocked = true;
+            setTexture();
+            return oldKeys;
+        }
+        return keys;
+    }
+
     public enum Type {
 
         Empty(0, false, 0, ACCESS_ALL, Key.KEY_NONE, "tiles/tile_empty.png"),
@@ -312,28 +345,37 @@ public class Tile extends Entity implements Mortal, Creatable {
     }
 
     public static class TileTriggerActions {
-        public static void call(String name, String[] params){
+        public static void call(Tile tile, String name, String[] params){
             if(name.equalsIgnoreCase("message")){
-                Message(params);
+                Message(tile, params);
             } else if(name.equalsIgnoreCase("replace")){
-                Replace(params);
+                Replace(tile, params);
+            } else if(name.equalsIgnoreCase("unlock")){
+                Unlock(tile, params);
             }
         }
-        public static void Message(String[] params){
+        public static void Message(Tile tile, String[] params){
             SGL.provide(GameScreen.class).showMessage(String.join(":", params));
         }
 
-        public static void Replace(String[] params){
+        public static void Replace(Tile tile, String[] params){
             for(int i = 0; i+2 < params.length; i+=3){
                 int x = Integer.parseInt(params[i+0]);
                 int y = Integer.parseInt(params[i+1]);
                 String t = params[i+2];
 
                 int idx = x*SGL.provide(GameScreen.class).getMap().height+y;
-                Tile tile = SGL.provide(GameScreen.class).getMap().getFloor()[idx];
-                if(tile != null){
-                    tile.setType(Tile.Type.getTypeByName(t));
+                Tile ttile = SGL.provide(GameScreen.class).getMap().getFloor()[idx];
+                if(ttile != null){
+                    ttile.setType(Tile.Type.getTypeByName(t));
                 }
+            }
+        }
+
+        public static void Unlock(Tile tile, String[] params){
+            if(tile.isJustUnlocked()){
+                String[] data =  Arrays.copyOfRange(params, 1, params.length);
+                call(tile, params[0],data);
             }
         }
     }

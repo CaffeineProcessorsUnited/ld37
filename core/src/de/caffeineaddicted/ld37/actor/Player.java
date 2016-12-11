@@ -92,6 +92,12 @@ public class Player extends UnitBase {
                     if (tile.hasKey()) {
                         collectKey(tile.takeKey());
                     }
+                    if(tile.isKeyHole()){
+                        if(tile.canAcceptKeys(keys)){
+                            keys = tile.fillKeyHole(keys);
+                        }
+                    }
+                    tile.trigger();
                 }
             }
             if (tile.getType().slipery && slipperyDir != null) {
