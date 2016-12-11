@@ -5,6 +5,7 @@ import traceback
 import sys
 import os
 import json
+from pprint import pprint
 
 class Map:
     def __init__(self, width, height):
@@ -16,6 +17,19 @@ class Map:
         self.tiles = [None]*(width*height)
         self.filename = None
         self.fill()
+
+    def load_file(self, filename):
+        data = ""
+        with open(filename, "r") as f:
+            data = json.load(f)
+
+        self.__init__(data["width"], data["height"])
+        self.start = (data["start_x"], data["start_y"])
+        self.end = (data["end_x"], data["end_y"])
+        for tile in data["tiles"]:
+            i = tile["x"]*self.height+tile["y"]
+            self.tiles[i] = tile
+        print("completed import of ", filename)
 
     def set_start_end(self, startx, starty, endx, endy):
         self.start = (startx, starty)
@@ -65,7 +79,7 @@ class Map:
 
     def set_key(self, posx, posy, type):
         i = posx * self.height + posy
-        if type == 1 or type == 2 or type == 4:
+        if type in [0, 1, 2, 4]:
             self.tiles[i]["key"] = type
             print("Set Key at ({}, {}) to {}".format(posx, posy, ["None","Gold","Pink","Dummy","Green"][type]))
 
@@ -129,10 +143,11 @@ def show_menu():
     print("\t Set start/exit [8]")
     print("\t Show [9]")
     print("\t Save as [s]")
+    print("\t Load from [l]")
     print("\t Quit [q]")
     while True:
         action = input("Choose your action :")
-        if action == "q"  or action == "s" or int(action) > 0:
+        if action in "qsl" or int(action) > 0:
             return action
         else:
             print("Invalid selection")
@@ -167,6 +182,9 @@ def main():
                 break
             if action == "s":
                 _map.save()
+            if action == "l":
+                fname = input("File to load: ")
+                _map.load_file(fname)
             if action == "1":
                 print("block types to choose from:")
                 print("\tWall")
