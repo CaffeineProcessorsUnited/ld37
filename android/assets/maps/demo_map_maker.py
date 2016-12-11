@@ -16,6 +16,10 @@ class Map:
         self.filename = None
         self.fill()
 
+    def set_start_end(self, startx, starty, endx, endy):
+        self.start = (startx, starty)
+        self.end = (endx, endy)
+
     def show(self):
         print("{:^3}".format(""),end="")
         for x in range(self.width):
@@ -114,26 +118,18 @@ def show_menu():
     print("Possible actions:")
     print("\t Set block type [1]")
     print("\t Draw block [2]")
-    print("\t Draw block movent [3]")
+    print("\t Draw block movement [3]")
     print("\t Fill [4]")
     print("\t Delete block [5]")
-    print("\t Set Key [6]")
-    print("\t Set Trigger [7]")
-    print("\t Show [8]")
-    print("\t Save as [9]")
+    print("\t Set key [6]")
+    print("\t Set trigger [7]")
+    print("\t Set start/exit [8]")
+    print("\t Show [9]")
+    print("\t Save as [10]")
     print("\t Quit [q]")
     while True:
         action = input("Choose your action :")
-        if action == "1" \
-                or action == "2" \
-                or action == "3" \
-                or action == "4" \
-                or action == "5" \
-                or action == "6" \
-                or action == "7" \
-                or action == "8" \
-                or action == "9" \
-                or action == "q":
+        if action == "q" or int(action) > 0:
             return action
         else:
             print("Invalid selection")
@@ -166,8 +162,10 @@ if __name__ == "__main__":
                 trigger = input("Enter trigger text: ")
                 map.set_trigger(*get_pos(2),trigger)
             if action == "8":
-                map.show()
+                map.set_start_end(*get_pos(4))
             if action == "9":
+                map.show()
+            if action == "10":
                 map.save()
         except IndexError as e:
             print(traceback.format_exception(None,  # <- type(e) by docs, but ignored
