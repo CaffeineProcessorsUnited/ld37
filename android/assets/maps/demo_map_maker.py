@@ -147,6 +147,14 @@ if __name__ == "__main__":
             if action == "s":
                 map.save()
             if action == "1":
+                print("block types to choose from:")
+                print("\tWall")
+                print("\tStone")
+                print("\tIce")
+                print("\tHPlank")
+                print("\tVPlank")
+                print("\tMetal")
+                print("\tEmpty")
                 type = input("Select block type: ")
                 map.set_block_type(type)
             if action == "2":

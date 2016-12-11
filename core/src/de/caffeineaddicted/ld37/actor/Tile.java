@@ -233,7 +233,10 @@ public class Tile extends Entity implements Mortal, Creatable {
         Empty(0, false, 0, ACCESS_ALL, "tiles/tile_empty.png"),
         Stone(2, false, 4, ACCESS_ALL, "tiles/stonebroke.png", "tiles/stonehalf.png", "tiles/stone.png"),
         Ice(1, true, 2, ACCESS_ALL, "tiles/icebroke.png", "tiles/ice.png"),
-        Wall(1, true, 2, ACCESS_NONE, "tiles/icebroke.png", "tiles/ice.png");// TODO: Assets
+        Wall(1, true, 2, ACCESS_NONE, "tiles/icebroke.png", "tiles/ice.png"),// TODO: Assets
+        HPlank(0, false, 2, ACCESS_HORIZONTAL, "tiles/woodplankhorizontal.png"),
+        VPlank(0, false, 2, ACCESS_VERTICAL, "tiles/woodplankvertical.png"),
+        Metal(0, false, 2, ACCESS_ALL, "tiles/metal.png");
 
         public final int durability;
         public final boolean slipery;
