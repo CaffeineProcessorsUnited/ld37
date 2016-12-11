@@ -125,11 +125,11 @@ def show_menu():
     print("\t Set trigger [7]")
     print("\t Set start/exit [8]")
     print("\t Show [9]")
-    print("\t Save as [10]")
+    print("\t Save as [s]")
     print("\t Quit [q]")
     while True:
         action = input("Choose your action :")
-        if action == "q" or int(action) > 0:
+        if action == "q"  or action == "s" or int(action) > 0:
             return action
         else:
             print("Invalid selection")
@@ -144,6 +144,8 @@ if __name__ == "__main__":
             action = show_menu()
             if action == "q":
                 break
+            if action == "s":
+                map.save()
             if action == "1":
                 type = input("Select block type: ")
                 map.set_block_type(type)
@@ -165,8 +167,7 @@ if __name__ == "__main__":
                 map.set_start_end(*get_pos(4))
             if action == "9":
                 map.show()
-            if action == "10":
-                map.save()
+
         except IndexError as e:
             print(traceback.format_exception(None,  # <- type(e) by docs, but ignored
                                              e, e.__traceback__),
