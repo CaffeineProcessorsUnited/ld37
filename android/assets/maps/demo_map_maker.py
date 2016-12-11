@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+
+import traceback
 import sys
 import json
 
@@ -50,6 +52,12 @@ class Map:
 
         print("Set block move from ({}, {}) to ({},{})".format(posx, posy, endx, endy))
 
+    def set_trigger(self, posx, posy, trigger):
+        i = posx*self.height+posy
+        self.tiles[i]["trigger"] = trigger
+
+        print("Set trigger for block ({}, {})".format(posx, posy))
+
     def set_key(self, posx, posy, type):
         i = posx * self.height + posy
         self.tiles[i]["key"] = type
@@ -61,9 +69,7 @@ class Map:
                 i = x * self.height + y
                 self.tiles[i] = {
                     "x": x,
-                    "x2": -1,
                     "y": y,
-                    "y2": -1,
                     "type": self.type,
                     "key": 0
                 }
@@ -92,6 +98,17 @@ class Map:
             with open(self.filename, "w+") as f:
                 json.dump(data, f, indent=4, sort_keys=True)
 
+def get_pos(count):
+    question = "x y"
+    if count > 1:
+        for i in range(2, count):
+            question += "x{} y{}".format(i,i)
+    pos = input("Select position ({}): ".format(question))
+    pos = pos.split()
+    pos = map(lambda x: int(x), pos)
+    return pos[:count]
+
+
 def show_menu():
     print("Possible actions:")
     print("\t Set block type [1]")
@@ -100,8 +117,9 @@ def show_menu():
     print("\t Fill [4]")
     print("\t Delete block [5]")
     print("\t Set Key [6]")
-    print("\t Show [7]")
-    print("\t Save as [8]")
+    print("\t Set Trigger [7]")
+    print("\t Show [8]")
+    print("\t Save as [9]")
     print("\t Quit [q]")
     while True:
         action = input("Choose your action :")
@@ -113,6 +131,7 @@ def show_menu():
                 or action == "6" \
                 or action == "7" \
                 or action == "8" \
+                or action == "9" \
                 or action == "q":
             return action
         else:
@@ -124,33 +143,34 @@ if __name__ == "__main__":
 
     map = Map(size_x, size_y)
     while True:
-        action = show_menu()
-        if action == "q":
-            break;
-        if action == "1":
-            type = input("Select block type: ")
-            map.set_block_type(type)
-        if action == "2":
-            pos = input("Select position (x y): ")
-            pos = pos.split()
-            map.set_block(int(pos[0]), int(pos[1]))
-        if action == "3":
-            pos = input("Select position (x y x2 y1): ")
-            pos = pos.split()
-            map.set_block_movement_end(int(pos[0]), int(pos[1]), int(pos[2]), int(pos[3]))
-        if action == "4":
-            map.fill()
-        if action == "5":
-            pos = input("Select position (x y): ")
-            pos = pos.split()
-            map.del_block(int(pos[0]), int(pos[1]))
-        if action == "6":
-            pos = input("Select position (x y): ")
-            type = int(input("Select key type(None[0]/Gold[1]/Pink[2]/Green[3]): "))
-            pos = pos.split()
-            map.set_key(int(pos[0]), int(pos[1]),type)
-        if action == "7":
-            map.show()
-        if action == "8":
-            map.save()
+        try:
+            action = show_menu()
+            if action == "q":
+                break
+            if action == "1":
+                type = input("Select block type: ")
+                map.set_block_type(type)
+            if action == "2":
+                map.set_block(*get_pos(2))
+            if action == "3":
+                map.set_block_movement_end(*get_pos(4))
+            if action == "4":
+                map.fill()
+            if action == "5":
+                map.del_block(*get_pos(2))
+            if action == "6":
+                type = int(input("Select key type(None[0]/Gold[1]/Pink[2]/Green[3]): "))
+                map.set_key(*get_pos(2),type)
+            if action == "7":
+                trigger = input("Enter trigger text: ")
+                map.set_trigger(*get_pos(2),trigger)
+            if action == "8":
+                map.show()
+            if action == "9":
+                map.save()
+        except IndexError as e:
+            print(traceback.format_exception(None,  # <- type(e) by docs, but ignored
+                                             e, e.__traceback__),
+                  file=sys.stderr, flush=True)
+            print()
     map.save()
