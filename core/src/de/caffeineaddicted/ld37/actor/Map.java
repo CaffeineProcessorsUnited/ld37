@@ -17,11 +17,17 @@ abstract public class Map extends Entity implements Creatable {
     int width;
     int height;
 
-    public Map(Vector2 start, Vector2 exit, int width, int height) {
-        this.start = start;
-        this.exit = exit;
+    public Map(int width, int height) {
         this.width = width;
         this.height = height;
+    }
+
+    public void setStart(Vector2 start){
+        this.start = start;
+    }
+
+    public void setExit(Vector2 exit){
+        this.exit = exit;
     }
 
     @Override

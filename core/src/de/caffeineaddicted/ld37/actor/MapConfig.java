@@ -20,6 +20,7 @@ public class MapConfig
         public int y2;
         public int key;
         public String type;
+        public String trigger;
 
         @Override
         public void write(Json json) {
@@ -33,6 +34,7 @@ public class MapConfig
             y2 = jsonData.getInt("y2", -1);
             key = jsonData.getInt("key",0);
             type = jsonData.getString("type", "Empty");
+            trigger = jsonData.getString("trigger", "");
         }
     }
 
@@ -51,25 +53,29 @@ public class MapConfig
         json.setElementType(MapConfigWrapper.class, "tiles", TileConfig.class);
         final MapConfigWrapper mapConfig = json.fromJson(MapConfigWrapper.class, mapData);
 
-        return new Map(new Vector2(mapConfig.start_x, mapConfig.start_y),
-                new Vector2(mapConfig.end_x, mapConfig.end_y),
-                mapConfig.width, mapConfig.height) {
+        Map map = new Map(mapConfig.width, mapConfig.height) {
             @Override
             public void onCreate() {
                 Tile[] tiles = new Tile[mapConfig.tiles.size()];
                 for(int i = 0; i < tiles.length; ++i){
                     TileConfig tileConfig = mapConfig.tiles.get(i);
-                    Vector2 end = null;
-                    if (tileConfig.x2 >= 0 && tileConfig.y2 >= 0) {
-                        end = new Vector2(tileConfig.x2, tileConfig.y2);
+                    Tile tile = new Tile(Tile.Type.getTypeByName(tileConfig.type));
+                    tile.setStart(new Vector2(tileConfig.x, tileConfig.y));
+                    if(tileConfig.x2 >= 0 && tileConfig.y2 >= 0){
+                        tile.setEnd(new Vector2(tileConfig.x2, tileConfig.y2));
                     }
-                    tiles[i] = new Tile(Tile.Type.getTypeByName(tileConfig.type),
-                            tileConfig.key,
-                            new Vector2(tileConfig.x, tileConfig.y), end);
+                    tile.setKey(tileConfig.key);
+                    tile.setTrigger(tileConfig.trigger);
+                    tiles[i] = tile;
                 }
 
                 setFloor(tiles);
             }
         };
+
+
+        map.setStart(new Vector2(mapConfig.start_x, mapConfig.start_y));
+        map.setExit(new Vector2(mapConfig.end_x, mapConfig.end_y));
+        return map;
     }
 }

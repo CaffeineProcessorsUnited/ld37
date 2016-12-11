@@ -19,29 +19,32 @@ public class Tile extends Entity implements Mortal, Creatable {
 
     private Vector2 start, end;
     private boolean dieing = false;
-
     private boolean dead = false;
 
-    public Tile(Tile.Type type, Vector2 start) {
-        this(type, 0, start, null);
-    }
+    private String trigger;
+    private boolean triggered;
 
-    public Tile(Tile.Type type, int key, Vector2 start) {
-        this(type, key, start, null);
-    }
-
-    public Tile(Tile.Type type, Vector2 start, Vector2 end) {
-        this(type, 0, start, end);
-    }
-
-    public Tile(Tile.Type type, int key, Vector2 start, Vector2 end) {
+    public Tile(Tile.Type type){
         this.type = type;
         stepsLeft = type.durability;
-        this.key = key;
-        this.start = start;
-        this.end = end;
+        key = 0;
         zindex(GameScreen.ZINDEX.Tile.idx);
+    }
 
+    public void setStart(Vector2 start){
+        this.start = start;
+    }
+
+    public void setEnd(Vector2 end){
+        this.end = end;
+    }
+
+    public void setKey(int key){
+        this.key = key;
+    }
+
+    public void setTrigger(String trigger){
+        this.trigger = trigger;
     }
 
     @Override
@@ -194,8 +197,7 @@ public class Tile extends Entity implements Mortal, Creatable {
         }
         String Texture = addTexture(type.assets[a]);
         if (hasKey()) {
-            switch (getKeyType())
-            {
+            switch (getKeyType()) {
                 case 1:
                     addActor(new UnitKey("keygold.png"));
                     break;
@@ -207,6 +209,18 @@ public class Tile extends Entity implements Mortal, Creatable {
                     break;
             }
         }
+    }
+
+    public boolean isTriggered() {
+        return triggered;
+    }
+
+    public String getTrigger() {
+        return trigger;
+    }
+
+    public void setTriggered(boolean triggered) {
+        this.triggered = triggered;
     }
 
     public enum Type {
