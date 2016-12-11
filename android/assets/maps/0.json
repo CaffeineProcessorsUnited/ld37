@@ -46,7 +46,7 @@
             "type": "Metal",
             "x": 4,
             "y": 0,
-            "trigger": "message:You can use the keys from your inventory by walking over locked tiles."
+            "trigger": "unlock:message:Interessant;message:You can use the keys from your inventory by walking over locked tiles."
         },
         {
             "key": 2,
@@ -70,10 +70,11 @@
         },
         {
             "key": 0,
-            "hole": 7,
+            "hole": 6,
             "type": "Metal",
             "x": 8,
-            "y": 0
+            "y": 0,
+            "trigger":"Unlock:Replace:1:5:Ice"
         }
     ],
     "width": 9
