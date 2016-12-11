@@ -1,6 +1,9 @@
 package de.caffeineaddicted.ld37.actor;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import de.caffeineaddicted.sgl.SGL;
 import de.caffeineaddicted.sgl.etities.Entity;
@@ -8,18 +11,20 @@ import de.caffeineaddicted.sgl.ui.interfaces.Creatable;
 
 import static java.lang.Math.abs;
 
-abstract public class Map extends Entity implements Creatable {
+public class Map extends Entity implements Creatable {
     public static int TileSize = 64;
     protected boolean created = false;
     int width;
     int height;
-    private Tile[] floor, wall;
+    private Tile[] floor = new Tile[0], wall;
     private Vector2 start;
     private Vector2 exit;
+    private MapConfig.MapConfigWrapper mapConfig;
 
-    public Map(int width, int height) {
+    public Map(int width, int height, MapConfig.MapConfigWrapper mapConfig) {
         this.width = width;
         this.height = height;
+        this.mapConfig = mapConfig;
         this.wall = new Tile[2 * width + 2 * height + 4];
     }
 
@@ -35,6 +40,31 @@ abstract public class Map extends Entity implements Creatable {
             tile.create();
             addActor(tile);
         }
+    }
+
+    @Override
+    public void onCreate() {
+        Tile[] tiles = new Tile[mapConfig.tiles.size()];
+        for (int i = 0; i < tiles.length; ++i) {
+            MapConfig.TileConfig tileConfig = mapConfig.tiles.get(i);
+            Tile tile = new Tile(Tile.Type.getTypeByName(tileConfig.type));
+            tile.setStart(new Vector2(tileConfig.x, tileConfig.y));
+            if (tileConfig.x2 >= 0 && tileConfig.y2 >= 0) {
+                tile.setEnd(new Vector2(tileConfig.x2, tileConfig.y2));
+            }
+            tile.setKey(tileConfig.key);
+            tile.setTrigger(tileConfig.trigger);
+            tiles[i] = tile;
+        }
+        setFloor(tiles);
+    }
+
+    public void reset() {
+        created = false;
+        floor = null;
+        setStart(new Vector2(mapConfig.start_x, mapConfig.start_y));
+        setExit(new Vector2(mapConfig.end_x, mapConfig.end_y));
+        create();
     }
 
     @Override
@@ -149,6 +179,12 @@ abstract public class Map extends Entity implements Creatable {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
+        batch.end();
+        SGL.provide(ShapeRenderer.class).begin(ShapeRenderer.ShapeType.Filled);
+        SGL.provide(ShapeRenderer.class).setColor(0.498f, 0.165f, 0.251f, 1f);
+        SGL.provide(ShapeRenderer.class).rect(getX(), getY(), getWidth(), getHeight());
+        SGL.provide(ShapeRenderer.class).end();
+        batch.begin();
         for (Tile tile : floor) {
             tile.draw(batch, parentAlpha);
         }
@@ -161,4 +197,5 @@ abstract public class Map extends Entity implements Creatable {
     public void act(float delta) {
         super.act(delta);
     }
+
 }
