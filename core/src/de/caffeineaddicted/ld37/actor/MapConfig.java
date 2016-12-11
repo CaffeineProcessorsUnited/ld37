@@ -36,7 +36,6 @@ public class MapConfig {
             }
         };
 
-
         map.setStart(new Vector2(mapConfig.start_x, mapConfig.start_y));
         map.setExit(new Vector2(mapConfig.end_x, mapConfig.end_y));
         return map;

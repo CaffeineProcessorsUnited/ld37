@@ -9,42 +9,33 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Array;
 
 public class MapLoader extends AsynchronousAssetLoader<MapWrapper, MapLoader.MapParameter> {
-    MapWrapper map;
+    private MapWrapper map;
 
     public MapLoader(FileHandleResolver resolver) {
-
         super(resolver);
-
     }
 
     @Override
     public void loadAsync(AssetManager manager, String fileName, FileHandle file, MapParameter parameter) {
-
         this.map = null;
         this.map = new MapWrapper(file);
-
     }
 
     @Override
     public MapWrapper loadSync(AssetManager manager, String fileName, FileHandle file, MapParameter parameter) {
-
         MapWrapper map = this.map;
         this.map = null;
 
         return map;
-
     }
 
     @SuppressWarnings("rawtypes")
     @Override
     public Array<AssetDescriptor> getDependencies(String fileName, FileHandle file, MapParameter parameter) {
-
         return null;
-
     }
 
     public static class MapParameter extends AssetLoaderParameters<MapWrapper> {
-
     }
 
 }
