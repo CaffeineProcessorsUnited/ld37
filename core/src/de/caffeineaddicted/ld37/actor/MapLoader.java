@@ -9,13 +9,13 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Array;
 
 public class MapLoader extends AsynchronousAssetLoader<MapWrapper, MapLoader.MapParameter> {
+    MapWrapper map;
+
     public MapLoader(FileHandleResolver resolver) {
 
         super(resolver);
 
     }
-
-    MapWrapper map;
 
     @Override
     public void loadAsync(AssetManager manager, String fileName, FileHandle file, MapParameter parameter) {

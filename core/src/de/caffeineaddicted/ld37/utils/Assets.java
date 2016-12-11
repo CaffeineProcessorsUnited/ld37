@@ -26,17 +26,17 @@ public class Assets extends SGLAssets {
 
     @Override
     public void onLoad() {
-        load("unicornwalk.png", Texture.class);
-        load("tile_empty.png", Texture.class);
-        load("stonebroke.png", Texture.class);
-        load("stonehalf.png", Texture.class);
-        load("stone.png", Texture.class);
-        load("icebroke.png", Texture.class);
-        load("ice.png", Texture.class);
+        load("player/unicornwalk.png", Texture.class);
+        load("tiles/tile_empty.png", Texture.class);
+        load("tiles/stonebroke.png", Texture.class);
+        load("tiles/stonehalf.png", Texture.class);
+        load("tiles/stone.png", Texture.class);
+        load("tiles/icebroke.png", Texture.class);
+        load("tiles/ice.png", Texture.class);
 
-        load("keygold.png", Texture.class);
-        load("keypink.png", Texture.class);
-        load("keygreen.png", Texture.class);
+        load("keys/keygold.png", Texture.class);
+        load("keys/keypink.png", Texture.class);
+        load("keys/keygreen.png", Texture.class);
 
         load("maps/01.json", MapWrapper.class);
         load("maps/02.json", MapWrapper.class);

@@ -1,15 +1,11 @@
 package de.caffeineaddicted.ld37.screen;
 
-import com.badlogic.gdx.math.Vector2;
 import de.caffeineaddicted.ld37.LD37;
 import de.caffeineaddicted.ld37.actor.Map;
-import de.caffeineaddicted.ld37.actor.MapConfig;
 import de.caffeineaddicted.ld37.actor.MapWrapper;
 import de.caffeineaddicted.ld37.actor.UnitPlayer;
-import de.caffeineaddicted.ld37.actor.maps.Map01;
 import de.caffeineaddicted.ld37.input.GameInputProcessor;
 import de.caffeineaddicted.ld37.message.FireEverythingMessage;
-import de.caffeineaddicted.ld37.utils.Assets;
 import de.caffeineaddicted.sgl.SGL;
 import de.caffeineaddicted.sgl.etities.Actor;
 import de.caffeineaddicted.sgl.input.SGLScreenInputMultiplexer;

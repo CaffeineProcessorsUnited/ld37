@@ -2,7 +2,6 @@ package de.caffeineaddicted.ld37.actor;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
-import de.caffeineaddicted.sgl.SGL;
 import de.caffeineaddicted.sgl.etities.Entity;
 import de.caffeineaddicted.sgl.ui.interfaces.Creatable;
 
@@ -11,11 +10,11 @@ import static java.lang.Math.abs;
 abstract public class Map extends Entity implements Creatable {
     public static int TileSize = 64;
     protected boolean created = false;
+    int width;
+    int height;
     private Tile[] floor;
     private Vector2 start;
     private Vector2 exit;
-    int width;
-    int height;
 
     public Map(Vector2 start, Vector2 exit, int width, int height) {
         this.start = start;
