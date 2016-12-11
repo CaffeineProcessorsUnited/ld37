@@ -259,7 +259,7 @@ public class GameScreen extends SGLStagedScreen<LD37> {
             if (map.getWidth() < getViewWidth()) {
                 // map is smaller than view width
                 if (map.getX() + x < 0 && map.getX() + map.getWidth() + x < getViewWidth()) {
-                    x = - map.getX();
+                    x = -map.getX();
                 }
             } else {
                 // map is wider than view width
@@ -283,7 +283,7 @@ public class GameScreen extends SGLStagedScreen<LD37> {
         if (y < 0) {
             if (map.getHeight() < getViewHeight()) {
                 if (map.getY() + y < 0 && map.getY() + map.getHeight() + y < getViewHeight()) {
-                    y = - map.getY();
+                    y = -map.getY();
                 }
             } else {
                 // map is wider than view width

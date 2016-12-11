@@ -58,13 +58,13 @@ public class HUD extends Entity {
         super.draw(batch, parentAlpha);
         batch.setColor(0.32f, 0.32f, 0.32f, 0.5f);
         background.draw(batch, getX(), getY(), getWidth(), getHeight());
-        if  (keyPink.isVisible()) {
+        if (keyPink.isVisible()) {
             keyPink.draw(batch, parentAlpha);
         }
-        if  (keyGold.isVisible()) {
+        if (keyGold.isVisible()) {
             keyGold.draw(batch, parentAlpha);
         }
-        if  (keyGreen.isVisible()) {
+        if (keyGreen.isVisible()) {
             keyGreen.draw(batch, parentAlpha);
         }
     }
