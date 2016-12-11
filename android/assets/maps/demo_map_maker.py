@@ -105,12 +105,12 @@ class Map:
 
 def get_pos(count):
     question = "x y"
-    if count > 1:
-        for i in range(2, count):
-            question += "x{} y{}".format(i,i)
+    if count > 2:
+        for i in range(1, int(count/2)):
+            question += " x{} y{}".format(i,i)
     pos = input("Select position ({}): ".format(question))
     pos = pos.split()
-    pos = map(lambda x: int(x), pos)
+    pos = list(map(lambda x: int(x), pos))
     return pos[:count]
 
 
@@ -134,7 +134,7 @@ def show_menu():
         else:
             print("Invalid selection")
 
-if __name__ == "__main__":
+def main():
     size_x = int(input("Enter Width: "))
     size_y = int(input("Enter Height: "))
 
@@ -182,3 +182,6 @@ if __name__ == "__main__":
                   file=sys.stderr, flush=True)
             print()
     map.save()
+
+if __name__ == "__main__":
+    main()
