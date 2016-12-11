@@ -43,6 +43,7 @@ public class Assets extends SGLAssets {
         load("keys/keypink.png", Texture.class);
         load("keys/keygreen.png", Texture.class);
 
+        load("maps/0.json", MapWrapper.class);
         load("maps/1.json", MapWrapper.class);
         load("maps/2.json", MapWrapper.class);
         load("maps/3.json", MapWrapper.class);
