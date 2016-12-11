@@ -60,8 +60,9 @@ class Map:
 
     def set_key(self, posx, posy, type):
         i = posx * self.height + posy
-        self.tiles[i]["key"] = type
-        print("Set Key at ({}, {}) to {}".format(posx, posy, ["None","Gold","Pink","Green"][type]))
+        if type == 1 or type == 2 or type == 4:
+            self.tiles[i]["key"] = type
+            print("Set Key at ({}, {}) to {}".format(posx, posy, ["None","Gold","Pink","Dummy","Green"][type]))
 
     def fill(self):
         for x in range(self.width):
@@ -159,7 +160,7 @@ if __name__ == "__main__":
             if action == "5":
                 map.del_block(*get_pos(2))
             if action == "6":
-                type = int(input("Select key type(None[0]/Gold[1]/Pink[2]/Green[3]): "))
+                type = int(input("Select key type(None[0]/Gold[1]/Pink[2]/Green[4]): "))
                 map.set_key(*get_pos(2),type)
             if action == "7":
                 trigger = input("Enter trigger text: ")
