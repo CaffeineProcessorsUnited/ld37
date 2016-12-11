@@ -132,8 +132,6 @@ class Map:
             self.filename = input("Save file as: ")
             self.save()
         else:
-            def f(data):
-                return data["type"] is not None
             data = {
                 "start_x":self.start[0],
                 "start_y":self.start[1],
@@ -141,7 +139,7 @@ class Map:
                 "end_y":self.end[1],
                 "width": self.width,
                 "height": self.height,
-                "tiles": list(filter(f, self.tiles))
+                "tiles":  self.tiles
             }
             with open(self.filename, "w+") as f:
                 json.dump(data, f, indent=4, sort_keys=True)
@@ -258,7 +256,7 @@ def main():
             if action == "6":
                 type = int(input("Select key type(None[0]/Gold[1]/Pink[2]/Green[4]): "))
                 _map.set_key(*get_pos(2),type)
-            if action == "6":
+            if action == "7":
                 type = int(input("Select key type(None[0]/Gold[1]/Pink[2]/Green[4]/bitflag): "))
                 _map.set_keyhole(*get_pos(2), type)
             if action == "8":

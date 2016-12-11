@@ -1,66 +1,108 @@
 {
     "end_x": 0,
-    "end_y": 7,
+    "end_y": 11,
     "height": 2,
     "start_x": 0,
     "start_y": 0,
     "tiles": [
         {
             "key": 0,
+            "trigger": "message:Hey there. This is Niels trying to escape the room. To continue move right...",
             "type": "Stone",
             "x": 0,
-            "y": 0,
-            "trigger": "message:Hey there. This is Niels trying to escape the room. To continue move right..."
+            "y": 0
+        },
+        {
+            "hole": 0,
+            "key": 0,
+            "type": null,
+            "x": 0,
+            "y": 1
         },
         {
             "key": 0,
+            "trigger": "message:Did you see this? The stone cracked behind you. You can walk two times over stones and one time over ice.\nYou can go left and right again without dropping.",
             "type": "Metal",
             "x": 1,
-            "y": 0,
-            "trigger": "message:Did you see this? The stone cracked behind you. You can walk two times over stones and one time over ice.\nYou can go left and right again without dropping."
+            "y": 0
+        },
+        {
+            "hole": 0,
+            "key": 0,
+            "type": null,
+            "x": 1,
+            "y": 1
         },
         {
             "key": 0,
+            "trigger": "message:Now you can't go back. Just continue to the right.",
             "type": "Ice",
             "x": 2,
-            "y": 0,
-            "trigger": "message:Now you can't go back. Just continue to the right."
+            "y": 0
+        },
+        {
+            "hole": 0,
+            "key": 0,
+            "type": null,
+            "x": 2,
+            "y": 1
         },
         {
             "key": 0,
+            "trigger": "message:Some rooms have locked blocks. You need a key to open them.\nIf you picked up a key it will appear in the inventory.",
             "type": "Stone",
             "x": 3,
-            "y": 0,
-            "trigger": "message:Some rooms have locked blocks. You need a key to open them.\nIf you picked up a key it will appear in the inventory."
+            "y": 0
         },
         {
             "key": 1,
+            "trigger": "message:If the way you would slide is blocked you will bounce back.",
             "type": "Ice",
             "x": 3,
-            "y": 1,
-            "trigger": "message:If the way you would slide is blocked you will bounce back."
+            "y": 1
         },
         {
-            "key": 0,
             "hole": 1,
+            "key": 0,
+            "trigger": "unlock:replace:9:0:Stone;message:You can use the keys from your inventory by walking over locked tiles.",
             "type": "Metal",
             "x": 4,
-            "y": 0,
-            "trigger": "unlock:message:Interessant;message:You can use the keys from your inventory by walking over locked tiles."
+            "y": 0
+        },
+        {
+            "hole": 0,
+            "key": 0,
+            "type": null,
+            "x": 4,
+            "y": 1
         },
         {
             "key": 2,
+            "trigger": "message:Some tiles can only be entered for certain directions, otherwise you will fall!",
             "type": "HPlank",
             "x": 5,
-            "y": 0,
-            "trigger": "message:Some tiles can only be entered for certain directions, otherwise you will fall!"
+            "y": 0
+        },
+        {
+            "hole": 0,
+            "key": 0,
+            "type": null,
+            "x": 5,
+            "y": 1
         },
         {
             "key": 4,
+            "trigger": "message:If you have all the required keys you can escape the room through the ladder. Go ahead.",
             "type": "Metal",
             "x": 6,
-            "y": 0,
-            "trigger": "message:If you have all the required keys you can escape the room through the ladder. Go ahead."
+            "y": 0
+        },
+        {
+            "hole": 0,
+            "key": 0,
+            "type": null,
+            "x": 6,
+            "y": 1
         },
         {
             "key": 0,
@@ -69,13 +111,69 @@
             "y": 0
         },
         {
+            "hole": 0,
             "key": 0,
+            "type": null,
+            "x": 7,
+            "y": 1
+        },
+        {
             "hole": 6,
+            "key": 0,
+            "trigger": "unlock:replace:10:0:Stone",
             "type": "Metal",
             "x": 8,
-            "y": 0,
-            "trigger":"Unlock:Replace:1:5:Ice"
+            "y": 0
+        },
+        {
+            "hole": 0,
+            "key": 0,
+            "type": null,
+            "x": 8,
+            "y": 1
+        },
+        {
+            "hole": 0,
+            "key": 0,
+            "type": "Empty",
+            "x": 9,
+            "y": 0
+        },
+        {
+            "hole": 0,
+            "key": 0,
+            "type": null,
+            "x": 9,
+            "y": 1
+        },
+        {
+            "hole": 0,
+            "key": 0,
+            "type": "Empty",
+            "x": 10,
+            "y": 0
+        },
+        {
+            "hole": 0,
+            "key": 0,
+            "type": null,
+            "x": 10,
+            "y": 1
+        },
+        {
+            "hole": 0,
+            "key": 0,
+            "type": "Goal",
+            "x": 11,
+            "y": 0
+        },
+        {
+            "hole": 0,
+            "key": 0,
+            "type": null,
+            "x": 11,
+            "y": 1
         }
     ],
-    "width": 9
+    "width": 12
 }
