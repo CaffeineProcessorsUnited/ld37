@@ -163,7 +163,7 @@
         {
             "hole": 0,
             "key": 0,
-            "type": "Goal",
+            "type": "Exit",
             "x": 11,
             "y": 0
         },
