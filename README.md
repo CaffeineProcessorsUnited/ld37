@@ -4,7 +4,8 @@
 Credits:
 Felix Richter(@felix5721): 
 Niels Bernlöhr(@k0rmarun): 
-Malte Heinzelmann(@hnzlmnn): 
+Malte Heinzelmann(@hnzlmnn):
+Maria Stepanov(@butterwelt) 
 
 ## Development
 
