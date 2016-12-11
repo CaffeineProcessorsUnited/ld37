@@ -56,7 +56,7 @@ public class HUD extends Entity {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        batch.setColor(0.32f, 0.32f, 0.32f, 1f);
+        batch.setColor(0.32f, 0.32f, 0.32f, 0.5f);
         background.draw(batch, getX(), getY(), getWidth(), getHeight());
         if  (keyPink.isVisible()) {
             keyPink.draw(batch, parentAlpha);

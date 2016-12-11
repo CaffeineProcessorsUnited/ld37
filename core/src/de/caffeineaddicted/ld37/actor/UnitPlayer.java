@@ -46,7 +46,7 @@ public class UnitPlayer extends UnitBase {
     }
 
     public boolean hasKey(int key) {
-        SGL.debug("has key " + key + "? " + ((keys & key) == key));
+        //SGL.debug("has key " + key + "? " + ((keys & key) == key));
         return (keys & key) == key;
     }
 

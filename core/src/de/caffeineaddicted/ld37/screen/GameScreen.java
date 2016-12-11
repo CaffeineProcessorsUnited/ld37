@@ -173,8 +173,6 @@ public class GameScreen extends SGLStagedScreen<LD37> {
 
     public void drag(float x, float y) {
         SGL.debug(x + "," + y);
-        //stage().getCamera().position.add(x, y, 0);
-        // TODO: Only if map is not in bounds
         if (x < 0) {
             if (map.getWidth() < getViewWidth()) {
                 // map is smaller than view width
@@ -189,7 +187,16 @@ public class GameScreen extends SGLStagedScreen<LD37> {
                 }
             }
         } else if (x > 0) {
-
+            if (map.getWidth() < getViewWidth()) {
+                if (map.getX() + map.getWidth() + x > getViewWidth()) {
+                    // dont go left, right border ist at screen border
+                    x = getViewWidth() - map.getWidth() - map.getX();
+                }
+            } else {
+                if (map.getX() + x > 0) {
+                    x = -map.getX();
+                }
+            }
         }
 
         if (y < 0) {
@@ -199,13 +206,22 @@ public class GameScreen extends SGLStagedScreen<LD37> {
                 }
             } else {
                 // map is wider than view width
-                if (map.getY() + map.getHeight() + x < getViewHeight()) {
+                if (map.getY() + map.getHeight() + y < getViewHeight()) {
                     // dont go left, right border ist at screen border
-                    x = getViewHeight() - map.getHeight() - map.getY();
+                    y = getViewHeight() - map.getHeight() - map.getY();
                 }
             }
         } else if (y > 0) {
-
+            if (map.getHeight() < getViewHeight()) {
+                if (map.getY() + map.getHeight() + y > getViewHeight()) {
+                    // dont go left, right border ist at screen border
+                    y = getViewHeight() - map.getHeight() - map.getY();
+                }
+            } else {
+                if (map.getY() + y > 0) {
+                    y = -map.getY();
+                }
+            }
         }
         moveMapBy(x, y);
     }
