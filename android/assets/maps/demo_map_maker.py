@@ -5,6 +5,7 @@ import traceback
 import sys
 import os
 import json
+import copy
 from pprint import pprint
 
 class Map:
@@ -17,6 +18,7 @@ class Map:
         self.tiles = [None]*(width*height)
         self.filename = None
         self.fill()
+        self.prevstate = None
 
     def load_file(self, filename):
         data = ""
@@ -60,16 +62,17 @@ class Map:
         self.type = type
 
     def set_block(self, posx, posy):
+        self.prevstate = copy.deepcopy(self.tiles)
         i = posx*self.height+posy
         self.tiles[i]["type"] = self.type
-        print("Set block at ({}, {}) to {}".format(posx, posy, self.type))
+        #print("Set block at ({}, {}) to {}".format(posx, posy, self.type))
 
     def set_block_movement_end(self, posx, posy, endx, endy):
         i = posx*self.height+posy
         self.tiles[i]["x2"] = endx
         self.tiles[i]["y2"] = endy
 
-        print("Set block move from ({}, {}) to ({},{})".format(posx, posy, endx, endy))
+        #print("Set block move from ({}, {}) to ({},{})".format(posx, posy, endx, endy))
 
     def set_trigger(self, posx, posy, trigger):
         i = posx*self.height+posy
@@ -98,6 +101,7 @@ class Map:
                                                       "Gold+Pink+Green"][type]))
 
     def fill(self, startx=0, starty=0, endx=-1, endy=-1):
+        self.prevstate = copy.deepcopy(self.tiles)
         if endx == -1:
             endx = self.width
         if endy == -1:
@@ -112,6 +116,11 @@ class Map:
                     "key": 0,
                     "hole":0
                 }
+
+    def undo(self):
+        loc = copy.deepcopy(self.tiles)
+        self.tiles = copy.deepcopy(self.prevstate)
+        self.prevstate = loc
 
     def del_block(self, posx, posy):
         i = posx*self.height+posy
@@ -181,8 +190,27 @@ def show_draw_block_menu():
         pos = pos.split()
         if len(pos) > 0 and pos[0] == "q":
             return
+        elif len(pos) == 1:
+            if pos[0] == "E":
+                _map.set_block_type("Empty")
+            elif pos[0] == "W":
+                _map.set_block_type("Wall")
+            elif pos[0] == "I":
+                _map.set_block_type("Ice")
+            elif pos[0] == "M":
+                _map.set_block_type("Metal")
+            elif pos[0] == "S":
+                _map.set_block_type("Stone")
+            elif pos[0] == "V":
+                _map.set_block_type("VPlank")
+            elif pos[0] == "H":
+                _map.set_block_type("HPlank")
+            elif pos[0] == "u":
+                _map.undo()
         elif len(pos) == 2:
             _map.set_block(int(pos[0]), int(pos[1]))
+        elif len(pos) == 4:
+            _map.fill(int(pos[0]), int(pos[1]), int(pos[2]), int(pos[3]))
         else:
             print("Invalid input. Retry")
 
