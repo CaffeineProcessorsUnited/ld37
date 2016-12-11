@@ -87,7 +87,7 @@
         },
         {
             "key": 0,
-            "type": "Stone",
+            "type": "HPlank",
             "x": 1,
             "x2": -1,
             "y": 0,
@@ -168,7 +168,7 @@
         },
         {
             "key": 0,
-            "type": "Stone",
+            "type": "Metal",
             "x": 2,
             "x2": -1,
             "y": 0,

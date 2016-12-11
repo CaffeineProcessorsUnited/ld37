@@ -8,7 +8,7 @@ import de.caffeineaddicted.ld37.screen.GameScreen;
 import de.caffeineaddicted.sgl.SGL;
 import de.caffeineaddicted.sgl.utils.SGLAssets;
 
-public class UnitPlayer extends UnitBase {
+public class Player extends UnitBase {
     final private float speed = 1;
     private String ACTOR_BASE;
     private MovementDirection movingDir = MovementDirection.NONE, slipperyDir, keyDir = MovementDirection.NONE;
@@ -16,7 +16,7 @@ public class UnitPlayer extends UnitBase {
     private boolean newTile = true;
     private int keys = Key.KEY_NONE;
 
-    public UnitPlayer() {
+    public Player() {
         zindex(GameScreen.ZINDEX.Player.idx);
         Animation animation = new Animation(SGL.provide(SGLAssets.class).get("player/unicornwalk.png", Texture.class), 4, 64, 64);
         animation.setFrameDuration(0.18f);
@@ -31,7 +31,6 @@ public class UnitPlayer extends UnitBase {
     }
 
     public void keyDown(MovementDirection dir) {
-        SGL.debug("Move: " + dir.name());
         keyDir = dir;
     }
 

@@ -1,7 +1,7 @@
 package de.caffeineaddicted.ld37.input;
 
 import com.badlogic.gdx.Input;
-import de.caffeineaddicted.ld37.actor.UnitPlayer;
+import de.caffeineaddicted.ld37.actor.Player;
 import de.caffeineaddicted.ld37.screen.GameScreen;
 import de.caffeineaddicted.sgl.SGL;
 import de.caffeineaddicted.sgl.input.SGLInputProcessor;
@@ -17,16 +17,16 @@ public class GameInputProcessor extends SGLInputProcessor {
     public boolean keyDown(int keycode) {
         switch (keycode) {
             case Input.Keys.UP:
-                SGL.provide(GameScreen.class).getPlayer().keyDown(UnitPlayer.MovementDirection.UP);
+                SGL.provide(GameScreen.class).getPlayer().keyDown(Player.MovementDirection.UP);
                 break;
             case Input.Keys.LEFT:
-                SGL.provide(GameScreen.class).getPlayer().keyDown(UnitPlayer.MovementDirection.LEFT);
+                SGL.provide(GameScreen.class).getPlayer().keyDown(Player.MovementDirection.LEFT);
                 break;
             case Input.Keys.DOWN:
-                SGL.provide(GameScreen.class).getPlayer().keyDown(UnitPlayer.MovementDirection.DOWN);
+                SGL.provide(GameScreen.class).getPlayer().keyDown(Player.MovementDirection.DOWN);
                 break;
             case Input.Keys.RIGHT:
-                SGL.provide(GameScreen.class).getPlayer().keyDown(UnitPlayer.MovementDirection.RIGHT);
+                SGL.provide(GameScreen.class).getPlayer().keyDown(Player.MovementDirection.RIGHT);
                 break;
         }
         return false;
@@ -36,16 +36,16 @@ public class GameInputProcessor extends SGLInputProcessor {
     public boolean keyUp(int keycode) {
         switch (keycode) {
             case Input.Keys.UP:
-                SGL.provide(GameScreen.class).getPlayer().keyUp(UnitPlayer.MovementDirection.UP);
+                SGL.provide(GameScreen.class).getPlayer().keyUp(Player.MovementDirection.UP);
                 break;
             case Input.Keys.LEFT:
-                SGL.provide(GameScreen.class).getPlayer().keyUp(UnitPlayer.MovementDirection.LEFT);
+                SGL.provide(GameScreen.class).getPlayer().keyUp(Player.MovementDirection.LEFT);
                 break;
             case Input.Keys.DOWN:
-                SGL.provide(GameScreen.class).getPlayer().keyUp(UnitPlayer.MovementDirection.DOWN);
+                SGL.provide(GameScreen.class).getPlayer().keyUp(Player.MovementDirection.DOWN);
                 break;
             case Input.Keys.RIGHT:
-                SGL.provide(GameScreen.class).getPlayer().keyUp(UnitPlayer.MovementDirection.RIGHT);
+                SGL.provide(GameScreen.class).getPlayer().keyUp(Player.MovementDirection.RIGHT);
                 break;
         }
         return false;

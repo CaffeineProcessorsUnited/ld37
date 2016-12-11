@@ -1,8 +1,11 @@
 package de.caffeineaddicted.ld37.screen;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -13,7 +16,7 @@ import de.caffeineaddicted.ld37.LD37;
 import de.caffeineaddicted.ld37.actor.HUD;
 import de.caffeineaddicted.ld37.actor.Map;
 import de.caffeineaddicted.ld37.actor.MapWrapper;
-import de.caffeineaddicted.ld37.actor.UnitPlayer;
+import de.caffeineaddicted.ld37.actor.Player;
 import de.caffeineaddicted.ld37.input.GameInputProcessor;
 import de.caffeineaddicted.ld37.message.FireEverythingMessage;
 import de.caffeineaddicted.sgl.SGL;
@@ -33,31 +36,62 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 public class GameScreen extends SGLStagedScreen<LD37> {
 
-    public static float height = 5;
     public ArrayList<Actor> deleteLater = new ArrayList<Actor>();
-    private UnitPlayer player;
+    private Player player;
     private Map map;
     private Queue<Label> messageQueue = new LinkedBlockingQueue<Label>();
     private Drawable speechBackground;
     private float speechPadding = 10;
-    private float timer = 0, speechAlpha = 0;
+    private int fade = 0;
+    private float timer = 0, fadeDuration = 1, fadeAlpha = 0, fadeAction = 0;
     private HUD hud;
+    private boolean dead = false;
+    private int currentMap;
 
 
     public void onBeforeAct(float delta) {
         for (Actor a : deleteLater) {
             stage().removeActor(a);
         }
-        if (player != null)
-            player.act(delta);
-
-        if (map != null)
-            map.act(delta);
+        if (fade == 1) {
+            timer += delta;
+            fadeAlpha = Math.min(timer / fadeDuration, 1f);
+            if (timer >= fadeDuration) {
+                timer = 0;
+                fade++;
+                if (fadeAction == 1) {
+                    int n = 1;
+                    loadPreviousMap(n);
+                    showMessage("You fell down and landed " + n + " level" + (n > 1 ? "s" : "") + " below.");
+                } else if (fadeAction == 2) {
+                    loadNextMap();
+                    showMessage("You climb the ladder and find another room.");
+                }
+            }
+        } else if (fade == 2) {
+            timer += delta;
+            fadeAlpha = 1 - Math.min(timer / fadeDuration, 1f);
+            if (timer >= fadeDuration) {
+                timer = 0;
+                fade = 0;
+                dead = false;
+            }
+        }
+        if (!dead) {
+            if (player != null) {
+                player.act(delta);
+            }
+            if (map != null) {
+                map.act(delta);
+            }
+            if (hud != null) {
+                hud.act(delta);
+            }
+        }
     }
 
     @Override
     public void onAfterAct(float delta) {
-        super.onAfterAct(delta);
         Label label = messageQueue.peek();
         if (label != null) {
             label.act(delta);
@@ -68,8 +102,25 @@ public class GameScreen extends SGLStagedScreen<LD37> {
     }
 
     @Override
+    public void onBeforeDraw() {
+        SGL.provide(SpriteBatch.class).begin();
+        map.draw(SGL.provide(SpriteBatch.class), 1f);
+        player.draw(SGL.provide(SpriteBatch.class), 1f);
+        hud.draw(SGL.provide(SpriteBatch.class), 1f);
+        SGL.provide(SpriteBatch.class).end();
+    }
+
+    @Override
     public void onAfterDraw() {
-        super.onAfterDraw();
+        if (fade > 0) {
+            Gdx.gl.glEnable(GL20.GL_BLEND);
+            Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+            SGL.provide(ShapeRenderer.class).begin(ShapeRenderer.ShapeType.Filled);
+            SGL.provide(ShapeRenderer.class).setColor(0, 0, 0, fadeAlpha);
+            SGL.provide(ShapeRenderer.class).rect(stage().getViewOrigX(), stage().getViewOrigY(), stage().getWidth(), stage().getHeight());
+            SGL.provide(ShapeRenderer.class).end();
+            Gdx.gl.glDisable(GL20.GL_BLEND);
+        }
         SGL.provide(SpriteBatch.class).begin();
         Label label = messageQueue.peek();
         if (label != null) {
@@ -103,14 +154,12 @@ public class GameScreen extends SGLStagedScreen<LD37> {
     @Override
     public void onCreate() {
         SGL.provide(SGLScreenInputMultiplexer.class).addProcessor(this, new GameInputProcessor());
-        player = new UnitPlayer();
-        map = SGL.provide(SGLAssets.class).get("maps/02.json", MapWrapper.class).getMap();
-        map.create();
+        loadMap(2);
         hud = new HUD();
         hud.setPosition(0, getViewHeight() - hud.getHeight());
-        addActor(player);
-        addActor(map);
-        addActor(hud);
+        //addActor(player);
+        //addActor(map);
+        //addActor(hud);
         /*MoveToAction a = new MoveToAction();
         a.setAlignment(Align.center);
         a.setPosition(200, 0);
@@ -124,6 +173,16 @@ public class GameScreen extends SGLStagedScreen<LD37> {
         });
 
         speechBackground = new TextureRegionDrawable(new TextureRegion(SGL.provide(SGLAssets.class).get("speech.png", Texture.class)));
+    }
+
+    public void loadMap(int i) {
+        int maxMaps = 10; // TODO: Check with some class
+        currentMap = Math.max(0, i);
+        currentMap = Math.min(maxMaps, i);
+        currentMap = i;
+        player = new Player();
+        map = SGL.provide(SGLAssets.class).get("maps/" + i + ".json", MapWrapper.class).getMap();
+        map.create();
     }
 
     @Override
@@ -146,7 +205,30 @@ public class GameScreen extends SGLStagedScreen<LD37> {
     }
 
     public void loseGame() {
+        dead = true;
+        fade = 1;
+        timer = 0;
+        fadeAction = 1;
+        messageQueue.clear();
+    }
 
+    public void winGame() {
+        dead = true;
+        fade = 1;
+        timer = 0;
+        fadeAction = 2;
+    }
+
+    public void loadPreviousMap() {
+        loadPreviousMap(1);
+    }
+
+    public void loadPreviousMap(int n) {
+        loadMap(currentMap - n);
+    }
+
+    public void loadNextMap() {
+        loadMap(currentMap + 1);
     }
 
     public void addActor(Actor actor) {
@@ -167,12 +249,12 @@ public class GameScreen extends SGLStagedScreen<LD37> {
         return count;
     }
 
-    public UnitPlayer getPlayer() {
+    public Player getPlayer() {
         return player;
     }
 
     public void drag(float x, float y) {
-        SGL.debug(x + "," + y);
+        //SGL.debug(x + "," + y);
         if (x < 0) {
             if (map.getWidth() < getViewWidth()) {
                 // map is smaller than view width
@@ -198,7 +280,6 @@ public class GameScreen extends SGLStagedScreen<LD37> {
                 }
             }
         }
-
         if (y < 0) {
             if (map.getHeight() < getViewHeight()) {
                 if (map.getY() + y < 0 && map.getY() + map.getHeight() + y < getViewHeight()) {
@@ -235,7 +316,7 @@ public class GameScreen extends SGLStagedScreen<LD37> {
         Label label = new Label(trigger, SGL.provide(Skin.class));
         label.setColor(1f, 1f, 1f, 0f);
         label.setPosition(getViewWidth() / 2, 100, Align.center);
-        label.addAction(Actions.sequence(Actions.alpha(1, 1), Actions.delay(4), Actions.alpha(0, 1)));
+        label.addAction(Actions.sequence(Actions.alpha(1, 0.5f), Actions.delay(2), Actions.alpha(0, 0.5f)));
         messageQueue.add(label);
     }
 

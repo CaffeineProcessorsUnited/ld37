@@ -35,14 +35,17 @@ public class Assets extends SGLAssets {
         load("tiles/stone.png", Texture.class);
         load("tiles/icebroke.png", Texture.class);
         load("tiles/ice.png", Texture.class);
+        load("tiles/woodplankhorizontal.png", Texture.class);
+        load("tiles/woodplankvertical.png", Texture.class);
+        load("tiles/metal.png", Texture.class);
 
         load("keys/keygold.png", Texture.class);
         load("keys/keypink.png", Texture.class);
         load("keys/keygreen.png", Texture.class);
 
-        load("maps/01.json", MapWrapper.class);
-        load("maps/02.json", MapWrapper.class);
-        load("maps/03.json", MapWrapper.class);
+        load("maps/1.json", MapWrapper.class);
+        load("maps/2.json", MapWrapper.class);
+        load("maps/3.json", MapWrapper.class);
 
     }
 }

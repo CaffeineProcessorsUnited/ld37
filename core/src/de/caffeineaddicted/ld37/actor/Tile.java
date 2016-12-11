@@ -191,6 +191,9 @@ public class Tile extends Entity implements Mortal, Creatable {
                 a = 1;
             }
         }
+        if (a >= type.assets.length) {
+            a = 0;
+        }
         String Texture = addTexture(type.assets[a]);
         if (hasKey()) {
             switch (getKeyType()) {
@@ -230,13 +233,20 @@ public class Tile extends Entity implements Mortal, Creatable {
 
     public enum Type {
 
-        Empty(0, false, 0, ACCESS_ALL, "tiles/tile_empty.png"),
-        Stone(2, false, 4, ACCESS_ALL, "tiles/stonebroke.png", "tiles/stonehalf.png", "tiles/stone.png"),
-        Ice(1, true, 2, ACCESS_ALL, "tiles/icebroke.png", "tiles/ice.png"),
-        Wall(1, true, 2, ACCESS_NONE, "tiles/icebroke.png", "tiles/ice.png"),// TODO: Assets
-        HPlank(0, false, 2, ACCESS_HORIZONTAL, "tiles/woodplankhorizontal.png"),
-        VPlank(0, false, 2, ACCESS_VERTICAL, "tiles/woodplankvertical.png"),
-        Metal(0, false, 2, ACCESS_ALL, "tiles/metal.png");
+        Empty(0, false, 0, ACCESS_ALL, Key.KEY_NONE, "tiles/tile_empty.png"),
+        Stone(2, false, 4, ACCESS_ALL, Key.KEY_NONE, "tiles/stonebroke.png", "tiles/stonehalf.png", "tiles/stone.png"),
+        Ice(1, true, 2, ACCESS_ALL, Key.KEY_NONE, "tiles/icebroke.png", "tiles/ice.png"),
+        // TODO: Parameter
+        Wall(1, true, 2, ACCESS_NONE, Key.KEY_NONE, "tiles/icebroke.png", "tiles/ice.png"),
+        HPlank(0, false, 2, ACCESS_HORIZONTAL, Key.KEY_NONE, "tiles/woodplankhorizontal.png"),
+        VPlank(0, false, 2, ACCESS_VERTICAL, Key.KEY_NONE, "tiles/woodplankvertical.png"),
+        // TODO: Parameter
+        DoorPink(0, false, 2, ACCESS_VERTICAL, Key.KEY_PINK, "tiles/metal.png"),
+        // TODO: Parameter
+        DoorGold(0, false, 2, ACCESS_VERTICAL, Key.KEY_GOLD, "tiles/metal.png"),
+        // TODO: Parameter
+        DoorGreen(0, false, 2, ACCESS_VERTICAL, Key.KEY_GREEN, "tiles/metal.png"),
+        Metal(0, false, 2, ACCESS_ALL, Key.KEY_NONE, "tiles/metal.png");
 
         public final int durability;
         public final boolean slipery;
@@ -244,7 +254,7 @@ public class Tile extends Entity implements Mortal, Creatable {
         public final int access;
         public final String[] assets;
 
-        Type(int durability, boolean slippery, float speed, int access, String... assets) {
+        Type(int durability, boolean slippery, float speed, int access, int keys, String... assets) {
             this.durability = durability;
             this.slipery = slippery;
             this.speed = speed;
