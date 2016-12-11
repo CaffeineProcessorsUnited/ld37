@@ -3,6 +3,7 @@
 
 import traceback
 import sys
+import os
 import json
 
 class Map:
@@ -141,6 +142,7 @@ def show_draw_block_menu():
     while True:
         _map.show()
         pos = input("Select position (x y): ")
+        os.system("clear")
         pos = pos.split()
         if len(pos) > 0 and pos[0] == "q":
             return
@@ -160,6 +162,7 @@ def main():
     while True:
         try:
             action = show_menu()
+            os.system("clear")
             if action == "q":
                 break
             if action == "s":
