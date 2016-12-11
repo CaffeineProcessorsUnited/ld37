@@ -26,6 +26,7 @@ public class Tile extends Entity implements Mortal, Creatable {
     private Tile.Type type;
     private int stepsLeft;
     private int key = 0;
+    private int keyHole = 0;
     private boolean created = false;
     private Vector2 move;
     private Vector2 moveLeft;
@@ -40,7 +41,7 @@ public class Tile extends Entity implements Mortal, Creatable {
     public Tile(Tile.Type type) {
         this.type = type;
         stepsLeft = type.durability;
-        key = 0;
+        key = keyHole = 0;
         zindex(GameScreen.ZINDEX.Tile.idx);
     }
 
@@ -259,6 +260,10 @@ public class Tile extends Entity implements Mortal, Creatable {
 
     public void setTrigger(String trigger) {
         this.trigger = trigger;
+    }
+
+    public void setKeyHole(int keyHole) {
+        this.keyHole = keyHole;
     }
 
     public enum Type {

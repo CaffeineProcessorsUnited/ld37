@@ -27,6 +27,7 @@ public class MapConfig {
         public int x2;
         public int y2;
         public int key;
+        public int hole;
         public String type;
         public String trigger;
 
@@ -41,6 +42,7 @@ public class MapConfig {
             x2 = jsonData.getInt("x2", -1);
             y2 = jsonData.getInt("y2", -1);
             key = jsonData.getInt("key", 0);
+            hole = jsonData.getInt("hole", 0);
             type = jsonData.getString("type", "Empty");
             trigger = jsonData.getString("trigger", "");
         }
