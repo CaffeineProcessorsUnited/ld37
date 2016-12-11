@@ -28,26 +28,18 @@ public class Tile extends Entity implements Mortal, Creatable {
     private boolean dieing = false;
     private boolean dead = false;
 
-    public Tile(Tile.Type type, Vector2 start) {
-        this(type, 0, start, null);
-    }
+    private String trigger;
+    private boolean triggered;
 
-    public Tile(Tile.Type type, int key, Vector2 start) {
-        this(type, key, start, null);
-    }
-
-    public Tile(Tile.Type type, Vector2 start, Vector2 end) {
-        this(type, 0, start, end);
-    }
-
-    public Tile(Tile.Type type, int key, Vector2 start, Vector2 end) {
+    public Tile(Tile.Type type) {
         this.type = type;
         stepsLeft = type.durability;
-        this.key = key;
-        this.start = start;
-        this.end = end;
+        key = 0;
         zindex(GameScreen.ZINDEX.Tile.idx);
+    }
 
+    public void setKey(int key) {
+        this.key = key;
     }
 
     @Override
@@ -91,8 +83,16 @@ public class Tile extends Entity implements Mortal, Creatable {
         return start;
     }
 
+    public void setStart(Vector2 start) {
+        this.start = start;
+    }
+
     public Vector2 getEnd() {
         return end;
+    }
+
+    public void setEnd(Vector2 end) {
+        this.end = end;
     }
 
     @Override
@@ -210,6 +210,22 @@ public class Tile extends Entity implements Mortal, Creatable {
     @Override
     public String toString() {
         return "Tile(" + getX(Align.center) + "," + getY(Align.center) + ")";
+    }
+
+    public boolean isTriggered() {
+        return triggered;
+    }
+
+    public void setTriggered(boolean triggered) {
+        this.triggered = triggered;
+    }
+
+    public String getTrigger() {
+        return trigger;
+    }
+
+    public void setTrigger(String trigger) {
+        this.trigger = trigger;
     }
 
     public enum Type {

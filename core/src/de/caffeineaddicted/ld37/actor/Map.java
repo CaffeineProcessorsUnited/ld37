@@ -16,9 +16,7 @@ abstract public class Map extends Entity implements Creatable {
     private Vector2 start;
     private Vector2 exit;
 
-    public Map(Vector2 start, Vector2 exit, int width, int height) {
-        this.start = start;
-        this.exit = exit;
+    public Map(int width, int height) {
         this.width = width;
         this.height = height;
     }
@@ -64,8 +62,16 @@ abstract public class Map extends Entity implements Creatable {
         return start;
     }
 
+    public void setStart(Vector2 start) {
+        this.start = start;
+    }
+
     public Vector2 getExit() {
         return exit;
+    }
+
+    public void setExit(Vector2 exit) {
+        this.exit = exit;
     }
 
     public Vector2 calPixCoord(Vector2 v) {
