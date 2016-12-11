@@ -12,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.scenes.scene2d.utils.TiledDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TransformDrawable;
 import com.badlogic.gdx.utils.Align;
 import de.caffeineaddicted.ld37.LD37;
 import de.caffeineaddicted.ld37.actor.HUD;
@@ -27,6 +27,7 @@ import de.caffeineaddicted.sgl.input.SGLScreenInputMultiplexer;
 import de.caffeineaddicted.sgl.messages.Message;
 import de.caffeineaddicted.sgl.messages.MessageReceiver;
 import de.caffeineaddicted.sgl.ui.screens.SGLStagedScreen;
+import de.caffeineaddicted.sgl.utils.MathUtils;
 import de.caffeineaddicted.sgl.utils.SGLAssets;
 
 import java.util.ArrayList;
@@ -45,12 +46,15 @@ public class GameScreen extends SGLStagedScreen<LD37> {
     private Drawable speechBackground;
     private float speechPadding = 10;
     private int fade = 0;
-    private float timer = 0, fadeDuration = 1, fadeAlpha = 0, fadeAction = 0;
+    private float timer = 0, fadeDuration = 0.5f, fadeAlpha = 0, fadeAction = 0;
     private HUD hud;
     private boolean dead = false;
     private int currentMap;
-    private float cameraBaseSpeed = 2, cameraSpeedX, cameraSpeedY;
+    private float cameraBaseSpeed = 256;
     private boolean cameraMovement = false;
+    private TransformDrawable unicornFallingDrawable, unicornClimbingDrawable;
+    private float unicornFallingDuration = 0.4f, unicornFalling = 0, unicornFallingX, unicornFallingScale, unicornFallingRotation;
+    private float unicornClimbingDuration = 2, unicornClimbing = 0, unicornClimbingX, unicornClimbingScale;
 
 
     public void onBeforeAct(float delta) {
@@ -67,12 +71,36 @@ public class GameScreen extends SGLStagedScreen<LD37> {
                     int n = 1;
                     loadPreviousMap(n);
                     showMessage("You fell down and landed " + n + " level" + (n > 1 ? "s" : "") + " below.");
+                    unicornFallingX = MathUtils.random((int) (getViewWidth() / 100) * 20, (int) (getViewWidth() - (getViewWidth() / 100) * 20));
+                    unicornFallingScale = (float) MathUtils.random(200, 400) / 100;
+                    unicornFallingRotation = (float) MathUtils.random(40, 180) * (MathUtils.random(0, 1) * -1);
+                    SGL.debug(unicornFallingX + "," + unicornFallingScale + "," + unicornFallingRotation);
                 } else if (fadeAction == 2) {
                     loadNextMap();
-                    showMessage("You climb the ladder and find another room.");
+                    showMessage("You climb the rainbow and find another room.");
+                    unicornClimbingX = MathUtils.random(64, (int) getViewWidth() - 128);
+                    unicornClimbingScale = MathUtils.random(50, 200) / 100;
                 }
             }
         } else if (fade == 2) {
+            timer += delta;
+            fadeAlpha = 1;
+            if (fadeAction == 1) {
+                unicornFalling = Math.min(timer / unicornFallingDuration, 1f);
+                if (timer >= unicornFallingDuration) {
+                    unicornFalling = 0;
+                    timer = 0;
+                    fade++;
+                }
+            } else if (fadeAction == 2) {
+                unicornClimbing = Math.min(timer / unicornClimbingDuration, 1f);
+                if (timer >= unicornClimbingDuration) {
+                    unicornClimbing = 0;
+                    timer = 0;
+                    fade++;
+                }
+            }
+        } else if (fade == 3) {
             timer += delta;
             fadeAlpha = 1 - Math.min(timer / fadeDuration, 1f);
             if (timer >= fadeDuration) {
@@ -108,20 +136,25 @@ public class GameScreen extends SGLStagedScreen<LD37> {
             cameraMovement = true;
             float dX = getViewWidth() / 2 - player.getX();
             float dY = getViewHeight() / 2 - player.getY();
-            if (cameraSpeedX == 0) {
+            /*
+            if (cameraSpeedX == 0 || Math.signum(dX) == cameraSpeedX) {
                 cameraSpeedX = dX / cameraBaseSpeed;
-            } else if (dX < 1f) {
+            } else if (Math.abs(dX) < 1f) {
                 cameraSpeedX = 0;
             }
-            if (cameraSpeedY == 0) {
+            if (cameraSpeedY == 0 || Math.signum(dY) == cameraSpeedY) {
                 cameraSpeedY = dY / cameraBaseSpeed;
-            } else if (dY < 1f) {
+            } else if (Math.abs(dY) < 1f) {
                 cameraSpeedY = 0;
             }
-            if (dX < 1f && dY < 1f) {
+            if (Math.abs(dX) < 1f && Math.abs(dY) < 1f) {
                 cameraMovement = false;
             }
-            moveMapBy(Math.min(dX, cameraSpeedX * delta), Math.min(dY, cameraSpeedY * delta));
+            */
+            if (Math.abs(dX) < 1 && Math.abs(dY) < 1) {
+                cameraMovement = false;
+            }
+            moveMapBy(Math.signum(dX) * Math.min(Math.abs(dX), Math.abs(cameraBaseSpeed) * delta), Math.signum(dY) * Math.min(Math.abs(dY), Math.abs(cameraBaseSpeed) * delta));
         }
     }
 
@@ -146,6 +179,36 @@ public class GameScreen extends SGLStagedScreen<LD37> {
             Gdx.gl.glDisable(GL20.GL_BLEND);
         }
         SGL.provide(SpriteBatch.class).begin();
+        if (fade == 2) {
+            SGL.provide(ShapeRenderer.class).setColor(1, 1, 1, fadeAlpha);
+            if (unicornFalling > 0) {
+                unicornFallingDrawable.draw(
+                        SGL.provide(SpriteBatch.class),
+                        unicornFallingX,
+                        getViewHeight() * (1 - unicornFalling),
+                        unicornFallingDrawable.getMinWidth() / 2,
+                        unicornFallingDrawable.getMinHeight() / 2,
+                        unicornFallingDrawable.getMinWidth(),
+                        unicornFallingDrawable.getMinHeight(),
+                        unicornFallingScale,
+                        unicornFallingScale,
+                        -unicornFallingRotation * unicornFalling);
+            }
+            if (unicornClimbing > 0) {
+                // TODO: Draw rainbow
+                unicornClimbingDrawable.draw(
+                        SGL.provide(SpriteBatch.class),
+                        unicornClimbingX,
+                        getViewHeight() * unicornClimbing,
+                        unicornClimbingDrawable.getMinWidth() / 2,
+                        unicornClimbingDrawable.getMinHeight() / 2,
+                        unicornClimbingDrawable.getMinWidth(),
+                        unicornClimbingDrawable.getMinHeight(),
+                        unicornClimbingScale,
+                        unicornClimbingScale,
+                        0f);
+            }
+        }
         Label label = messageQueue.peek();
         if (label != null) {
             SGL.provide(SpriteBatch.class).setColor(0.32f, 0.32f, 0.32f, label.getColor().a);
@@ -195,7 +258,8 @@ public class GameScreen extends SGLStagedScreen<LD37> {
 
             }
         });
-
+        unicornFallingDrawable = new TextureRegionDrawable(new TextureRegion(SGL.provide(SGLAssets.class).get("player/unicornfalling.png", Texture.class)));
+        unicornClimbingDrawable = new TextureRegionDrawable(new TextureRegion(SGL.provide(SGLAssets.class).get("player/unicornclimbing.png", Texture.class)));
         speechBackground = new TextureRegionDrawable(new TextureRegion(SGL.provide(SGLAssets.class).get("ui/speech.png", Texture.class)));
     }
 
@@ -214,10 +278,6 @@ public class GameScreen extends SGLStagedScreen<LD37> {
 
     private void reset() {
         speechPadding = 10;
-        fade = 0;
-        timer = 0;
-        fadeAlpha = 0;
-        fadeAction = 0;
         dead = false;
         float dX = getViewWidth() / 2 - player.getX();
         float dY = getViewHeight() / 2 - player.getY();

@@ -3,7 +3,6 @@ package de.caffeineaddicted.ld37.actor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveByAction;
 import de.caffeineaddicted.ld37.screen.GameScreen;
 import de.caffeineaddicted.sgl.SGL;
@@ -78,7 +77,7 @@ public class Player extends UnitBase {
             newTile = true;
         }
 
-        if (tile == null || tile.isDead() || (slipperyDir != null && !tile.canAccess(slipperyDir.flag()))) {
+        if (tile == null || tile.isDead() || (slipperyDir != null && !tile.canAccess(slipperyDir.flag()) && tile.getType().mode == Tile.MODE.FALLING)) {
             onDie();
             SGL.error("U DEAD");
             return;
@@ -92,12 +91,18 @@ public class Player extends UnitBase {
                     if (tile.hasKey()) {
                         collectKey(tile.takeKey());
                     }
+                    if (tile.isKeyHole()) {
+                        if (tile.canAcceptKeys(keys)) {
+                            keys = tile.fillKeyHole(keys);
+                        }
+                    }
+                    tile.trigger();
                 }
             }
             if (tile.getType().slipery && slipperyDir != null) {
-                createAction(slipperyDir);
+                createAction(slipperyDir, true);
             } else if (movingDir != MovementDirection.NONE) {
-                createAction(movingDir);
+                createAction(movingDir, false);
                 slipperyDir = movingDir;
                 movingDir = MovementDirection.NONE;
             } else {
@@ -112,7 +117,7 @@ public class Player extends UnitBase {
         currentTile = tile;
     }
 
-    public void createAction(MovementDirection dir) {
+    public void createAction(MovementDirection dir, boolean wasslippery) {
         MoveByAction action = new MoveByAction();
         switch (dir) {
             case UP:
@@ -130,9 +135,12 @@ public class Player extends UnitBase {
         }
         Vector2 newpos = getCenterPoint().cpy().add(action.getAmountX(), action.getAmountY());
         Tile newtile = SGL.provide(GameScreen.class).getMap().getTileAt(newpos);
-        if (newtile == null ) {//|| !newtile.canAccess(dir.flag())) {
-            // Cant move there
-            return;
+        if (newtile == null || (!newtile.canAccess(dir.flag()) && newtile.getType().mode == Tile.MODE.BLOCKING)) {
+            if (wasslippery) {
+                action.setAmount(-action.getAmountX(), -action.getAmountY());
+            } else {
+                return;
+            }
         }
         SGL.provide(GameScreen.class).nextMessage();
         action.setDuration(speed);

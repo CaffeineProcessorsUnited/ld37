@@ -1,11 +1,8 @@
 package de.caffeineaddicted.ld37.actor;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.utils.TiledDrawable;
 import de.caffeineaddicted.sgl.SGL;
@@ -86,7 +83,7 @@ public class Map extends Entity implements Creatable {
 
     public void setFloor(Tile... floor) {
         this.floor = floor;
-        for (Tile tile: this.floor) {
+        for (Tile tile : this.floor) {
             tile.getStart().add(1, 1);
         }
         start.add(1, 1);
@@ -142,6 +139,12 @@ public class Map extends Entity implements Creatable {
 
     public Tile getTileAt(float x, float y) {
         for (Tile tile : floor) {
+            if (abs(tile.getCenterPoint().x - x) < (TileSize / 2) &&
+                    abs(tile.getCenterPoint().y - y) < (TileSize / 2)) {
+                return tile;
+            }
+        }
+        for (Tile tile : wall) {
             if (abs(tile.getCenterPoint().x - x) < (TileSize / 2) &&
                     abs(tile.getCenterPoint().y - y) < (TileSize / 2)) {
                 return tile;

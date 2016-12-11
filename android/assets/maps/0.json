@@ -1,7 +1,7 @@
 {
     "end_x": 0,
     "end_y": 7,
-    "height": 1,
+    "height": 2,
     "start_x": 0,
     "start_y": 0,
     "tiles": [
@@ -27,11 +27,18 @@
             "trigger": "message:Now you can't go back. Just continue to the right."
         },
         {
-            "key": 1,
-            "type": "Metal",
+            "key": 0,
+            "type": "Stone",
             "x": 3,
             "y": 0,
             "trigger": "message:Some rooms have locked blocks. You need a key to open them.\nIf you picked up a key it will appear in the inventory."
+        },
+        {
+            "key": 1,
+            "type": "Ice",
+            "x": 3,
+            "y": 1,
+            "trigger": "message:If the way you would slide is blocked you will bounce back."
         },
         {
             "key": 0,
@@ -39,7 +46,7 @@
             "type": "Metal",
             "x": 4,
             "y": 0,
-            "trigger": "message:You can use the keys from your inventory by walking over locked tiles."
+            "trigger": "unlock:message:Interessant;message:You can use the keys from your inventory by walking over locked tiles."
         },
         {
             "key": 2,
@@ -63,10 +70,11 @@
         },
         {
             "key": 0,
-            "hole": 7,
+            "hole": 6,
             "type": "Metal",
             "x": 8,
-            "y": 0
+            "y": 0,
+            "trigger":"Unlock:Replace:1:5:Ice"
         }
     ],
     "width": 9
