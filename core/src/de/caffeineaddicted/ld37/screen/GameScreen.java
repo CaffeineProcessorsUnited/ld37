@@ -294,6 +294,9 @@ public class GameScreen extends SGLStagedScreen<LD37> {
 
     public void drag(float x, float y) {
         //SGL.debug(x + "," + y);
+        if (player.hasActions()) {
+            return;
+        }
         if (x < 0) {
             if (map.getWidth() < getViewWidth()) {
                 // map is smaller than view width
