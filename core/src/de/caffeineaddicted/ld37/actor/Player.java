@@ -135,7 +135,7 @@ public class Player extends UnitBase {
         }
         Vector2 newpos = getCenterPoint().cpy().add(action.getAmountX(), action.getAmountY());
         Tile newtile = SGL.provide(GameScreen.class).getMap().getTileAt(newpos);
-        if (newtile == null || (!newtile.canAccess(dir.flag()) && newtile.getType().mode == Tile.MODE.BLOCKING)) {
+        if (newtile == null || (!newtile.canAccess(dir.flag()) && newtile.getType().mode == Tile.MODE.BLOCKING) || !newtile.canAcceptKeys(keys)) {
             if (wasslippery) {
                 action.setAmount(-action.getAmountX(), -action.getAmountY());
             } else {

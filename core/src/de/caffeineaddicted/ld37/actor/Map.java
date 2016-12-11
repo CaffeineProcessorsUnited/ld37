@@ -47,10 +47,18 @@ public class Map extends Entity implements Creatable {
 
     @Override
     public void onCreate() {
+        Tile.Type type;
         Tile[] tiles = new Tile[mapConfig.tiles.size()];
         for (int i = 0; i < tiles.length; ++i) {
             MapConfig.TileConfig tileConfig = mapConfig.tiles.get(i);
-            Tile tile = new Tile(Tile.Type.getTypeByName(tileConfig.type));
+            if (mapConfig.start_x == tileConfig.x && mapConfig.start_y == tileConfig.y) {
+                type = Tile.Type.Entry;
+            } else if (mapConfig.end_x == tileConfig.x && mapConfig.end_y == tileConfig.y) {
+                type = Tile.Type.Exit;
+            } else {
+                type = Tile.Type.getTypeByName(tileConfig.type);
+            }
+            Tile tile = new Tile(type);
             tile.setStart(new Vector2(tileConfig.x, tileConfig.y));
             if (tileConfig.x2 >= 0 && tileConfig.y2 >= 0) {
                 tile.setEnd(new Vector2(tileConfig.x2, tileConfig.y2));
