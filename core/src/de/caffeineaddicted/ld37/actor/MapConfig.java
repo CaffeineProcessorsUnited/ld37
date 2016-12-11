@@ -31,7 +31,6 @@ public class MapConfig {
                     tile.setTrigger(tileConfig.trigger);
                     tiles[i] = tile;
                 }
-
                 setFloor(tiles);
             }
         };

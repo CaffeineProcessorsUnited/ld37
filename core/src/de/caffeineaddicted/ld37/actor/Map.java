@@ -2,6 +2,7 @@ package de.caffeineaddicted.ld37.actor;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
+import de.caffeineaddicted.sgl.SGL;
 import de.caffeineaddicted.sgl.etities.Entity;
 import de.caffeineaddicted.sgl.ui.interfaces.Creatable;
 
@@ -12,13 +13,14 @@ abstract public class Map extends Entity implements Creatable {
     protected boolean created = false;
     int width;
     int height;
-    private Tile[] floor;
+    private Tile[] floor, wall;
     private Vector2 start;
     private Vector2 exit;
 
     public Map(int width, int height) {
         this.width = width;
         this.height = height;
+        this.wall = new Tile[2 * width + 2 * height + 4];
     }
 
     @Override
@@ -26,6 +28,10 @@ abstract public class Map extends Entity implements Creatable {
         onCreate();
         created = true;
         for (Tile tile : floor) {
+            tile.create();
+            addActor(tile);
+        }
+        for (Tile tile : wall) {
             tile.create();
             addActor(tile);
         }
@@ -42,6 +48,54 @@ abstract public class Map extends Entity implements Creatable {
 
     public void setFloor(Tile... floor) {
         this.floor = floor;
+        for (Tile tile: this.floor) {
+            tile.getStart().add(1, 1);
+        }
+        start.add(1, 1);
+        exit.add(1, 1);
+        // calculate wall
+        int i = 0, y, x;
+        Tile tile;
+        Tile.Type type = Tile.Type.Wall;
+        for (y = 0; y < height + 2; y++) {
+            for (x = 0; x < width + 2; x++) {
+                if (y > 0 && y < height + 1 && x > 0 && x < width + 1) {
+                    continue;
+                }
+                if (y == 0) {
+                    type = Tile.Type.WallD;
+                } else if (y == height + 1) {
+                    type = Tile.Type.WallU;
+                } else {
+                    if (x == 0) {
+                        type = Tile.Type.WallL;
+                    } else {
+                        type = Tile.Type.WallR;
+                    }
+                }
+                if (x == 0) {
+                    if (y == 0) {
+                        type = Tile.Type.WallLD;
+                    }
+                    if (y == height + 1) {
+                        type = Tile.Type.WallLU;
+                    }
+                }
+                if (x == width + 1) {
+                    if (y == 0) {
+                        type = Tile.Type.WallRD;
+                    }
+                    if (y == height + 1) {
+                        type = Tile.Type.WallRU;
+                    }
+                }
+                tile = new Tile(type);
+                tile.setStart(new Vector2(x, y));
+                SGL.debug("i: " + i + " tile: " + tile.getStart().toString());
+                //wall[(y == -1 ? 0 : 1) * (width + 2) + (Math.max(y, 0) * 2) + x] = tile;;
+                wall[i++] = tile;
+            }
+        }
     }
 
     public Tile getTileAt(Vector2 pos) {
@@ -88,11 +142,17 @@ abstract public class Map extends Entity implements Creatable {
         for (Tile tile : floor) {
             tile.update();
         }
+        for (Tile tile : wall) {
+            tile.update();
+        }
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         for (Tile tile : floor) {
+            tile.draw(batch, parentAlpha);
+        }
+        for (Tile tile : wall) {
             tile.draw(batch, parentAlpha);
         }
     }

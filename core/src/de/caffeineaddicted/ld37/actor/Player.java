@@ -2,6 +2,7 @@ package de.caffeineaddicted.ld37.actor;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveByAction;
 import de.caffeineaddicted.ld37.screen.GameScreen;
@@ -77,7 +78,7 @@ public class Player extends UnitBase {
             newTile = true;
         }
 
-        if ((tile == null && currentTile != null) || tile.isDead() || (slipperyDir != null && !tile.canAccess(slipperyDir.flag()))) {
+        if (tile == null || tile.isDead() || (slipperyDir != null && !tile.canAccess(slipperyDir.flag()))) {
             onDie();
             SGL.error("U DEAD");
             return;
@@ -93,10 +94,10 @@ public class Player extends UnitBase {
                     }
                 }
             }
-            if (tile != null && tile.getType().slipery && slipperyDir != null) {
-                addAction(createAction(slipperyDir));
+            if (tile.getType().slipery && slipperyDir != null) {
+                createAction(slipperyDir);
             } else if (movingDir != MovementDirection.NONE) {
-                addAction(createAction(movingDir));
+                createAction(movingDir);
                 slipperyDir = movingDir;
                 movingDir = MovementDirection.NONE;
             } else {
@@ -111,7 +112,7 @@ public class Player extends UnitBase {
         currentTile = tile;
     }
 
-    public Action createAction(MovementDirection dir) {
+    public void createAction(MovementDirection dir) {
         MoveByAction action = new MoveByAction();
         switch (dir) {
             case UP:
@@ -127,8 +128,14 @@ public class Player extends UnitBase {
                 action.setAmount(Map.TileSize, 0);
                 break;
         }
+        Vector2 newpos = getCenterPoint().cpy().add(action.getAmountX(), action.getAmountY());
+        Tile newtile = SGL.provide(GameScreen.class).getMap().getTileAt(newpos);
+        if (newtile == null ) {//|| !newtile.canAccess(dir.flag())) {
+            // Cant move there
+            return;
+        }
         action.setDuration(speed);
-        return action;
+        addAction(action);
     }
 
     @Override
