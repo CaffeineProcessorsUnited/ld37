@@ -8,6 +8,12 @@ import de.caffeineaddicted.sgl.etities.Entity;
 import de.caffeineaddicted.sgl.ui.interfaces.Creatable;
 import de.caffeineaddicted.sgl.ui.interfaces.Mortal;
 
+import java.util.Arrays;
+
+import static de.caffeineaddicted.ld37.actor.Key.KEY_GOLD;
+import static de.caffeineaddicted.ld37.actor.Key.KEY_GREEN;
+import static de.caffeineaddicted.ld37.actor.Key.KEY_PINK;
+
 public class Tile extends Entity implements Mortal, Creatable {
     public final static int ACCESS_NONE = 0;
     public final static int ACCESS_LEFT = 1;
@@ -142,6 +148,24 @@ public class Tile extends Entity implements Mortal, Creatable {
         if (!(type.durability > 0 && stepsLeft < 1)) {
             setTexture();
         }
+
+        if (!isTriggered()) {
+            if (!trigger.isEmpty()) {
+                triggerAction(trigger);
+            }
+            setTriggered(true);
+        }
+    }
+
+    private void triggerAction(String action) {
+        String[] actionList = action.split(":");
+        String actionCall = actionList[0];
+        String[] actionParam = Arrays.copyOfRange(actionList, 1, actionList.length);
+
+        TileTriggerActions.call(actionCall, actionParam);
+    }
+
+    private void triggerMessage(String message) {
     }
 
     public boolean canAccess(int direction) {
@@ -197,17 +221,23 @@ public class Tile extends Entity implements Mortal, Creatable {
         String Texture = addTexture(type.assets[a]);
         if (hasKey()) {
             switch (getKeyType()) {
-                case 1:
+                case KEY_GOLD:
                     addActor(new Key("keys/keygold.png"));
                     break;
-                case 2:
+                case KEY_PINK:
                     addActor(new Key("keys/keypink.png"));
                     break;
-                case 3:
+                case KEY_GREEN:
                     addActor(new Key("keys/keygreen.png"));
                     break;
             }
         }
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+        stepsLeft = type.durability;
+        setTexture();
     }
 
     @Override
@@ -241,7 +271,7 @@ public class Tile extends Entity implements Mortal, Creatable {
         // TODO: Parameter
         DoorPink(0, false, 2, ACCESS_VERTICAL, Key.KEY_PINK, "tiles/metal.png"),
         // TODO: Parameter
-        DoorGold(0, false, 2, ACCESS_VERTICAL, Key.KEY_GOLD, "tiles/metal.png"),
+        DoorGold(0, false, 2, ACCESS_VERTICAL, KEY_GOLD, "tiles/metal.png"),
         // TODO: Parameter
         DoorGreen(0, false, 2, ACCESS_VERTICAL, Key.KEY_GREEN, "tiles/metal.png"),
         Metal(0, false, 2, ACCESS_ALL, Key.KEY_NONE, "tiles/metal.png"),
@@ -275,11 +305,38 @@ public class Tile extends Entity implements Mortal, Creatable {
 
         public static Type getTypeByName(String name) {
             for (Type type : values()) {
-                if (type.name().equals(name)) {
+                if (type.name().equalsIgnoreCase(name)) {
                     return type;
                 }
             }
             return null;
+        }
+    }
+
+    public static class TileTriggerActions {
+        public static void call(String name, String[] params){
+            if(name.equalsIgnoreCase("message")){
+                Message(params);
+            } else if(name.equalsIgnoreCase("replace")){
+                Replace(params);
+            }
+        }
+        public static void Message(String[] params){
+            SGL.provide(GameScreen.class).showMessage(String.join(":", params));
+        }
+
+        public static void Replace(String[] params){
+            for(int i = 0; i+2 < params.length; i+=3){
+                int x = Integer.parseInt(params[i+0]);
+                int y = Integer.parseInt(params[i+1]);
+                String t = params[i+2];
+
+                int idx = x*SGL.provide(GameScreen.class).getMap().height+y;
+                Tile tile = SGL.provide(GameScreen.class).getMap().getFloor()[idx];
+                if(tile != null){
+                    tile.setType(Tile.Type.getTypeByName(t));
+                }
+            }
         }
     }
 }

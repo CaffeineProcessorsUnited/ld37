@@ -87,15 +87,11 @@ public class Player extends UnitBase {
         if (!hasActions()) {
             if (newTile) {
                 newTile = false;
-                tile.walkOver();
-                if (!tile.isTriggered()) {
-                    if (!tile.getTrigger().isEmpty()) {
-                        SGL.provide(GameScreen.class).showMessage(tile.getTrigger());
+                if (tile != null) {
+                    tile.walkOver();
+                    if (tile.hasKey()) {
+                        collectKey(tile.takeKey());
                     }
-                    tile.setTriggered(true);
-                }
-                if (tile.hasKey()) {
-                    collectKey(tile.takeKey());
                 }
             }
             if (tile.getType().slipery && slipperyDir != null) {

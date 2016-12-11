@@ -19,7 +19,8 @@
             "x": 0,
             "x2": -1,
             "y": 1,
-            "y2": -1
+            "y2": -1,
+            "trigger":"Replace:1:2:Ice"
         },
         {
             "key": 0,
@@ -100,7 +101,7 @@
             "x2": -1,
             "y": 1,
             "y2": -1,
-            "trigger": "FUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU"
+            "trigger": "message:FUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU"
         },
         {
             "key": 0,
