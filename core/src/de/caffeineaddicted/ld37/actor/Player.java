@@ -10,7 +10,7 @@ import de.caffeineaddicted.sgl.SGL;
 import de.caffeineaddicted.sgl.utils.SGLAssets;
 
 public class Player extends UnitBase {
-    final private float speed = 1;
+    final private float speed = 0.3f;
     private String ACTOR_BASE;
     private MovementDirection movingDir = MovementDirection.NONE, slipperyDir, keyDir = MovementDirection.NONE;
     private Tile currentTile;
@@ -134,6 +134,7 @@ public class Player extends UnitBase {
             // Cant move there
             return;
         }
+        SGL.provide(GameScreen.class).nextMessage();
         action.setDuration(speed);
         addAction(action);
     }

@@ -48,6 +48,8 @@ public class GameScreen extends SGLStagedScreen<LD37> {
     private HUD hud;
     private boolean dead = false;
     private int currentMap;
+    private float cameraBaseSpeed = 2, cameraSpeedX, cameraSpeedY;
+    private boolean cameraMovement = false;
 
 
     public void onBeforeAct(float delta) {
@@ -99,6 +101,26 @@ public class GameScreen extends SGLStagedScreen<LD37> {
             if (!label.hasActions()) {
                 messageQueue.poll();
             }
+        }
+        // center player
+        if (player.hasActions() || cameraMovement) {
+            cameraMovement = true;
+            float dX = getViewWidth() / 2 - player.getX();
+            float dY = getViewHeight() / 2 - player.getY();
+            if (cameraSpeedX == 0) {
+                cameraSpeedX = dX / cameraBaseSpeed;
+            } else if (dX < 1f) {
+                cameraSpeedX = 0;
+            }
+            if (cameraSpeedY == 0) {
+                cameraSpeedY = dY / cameraBaseSpeed;
+            } else if (dY < 1f) {
+                cameraSpeedY = 0;
+            }
+            if (dX < 1f && dY < 1f) {
+                cameraMovement = false;
+            }
+            moveMapBy(Math.min(dX, cameraSpeedX * delta), Math.min(dY, cameraSpeedY * delta));
         }
     }
 
@@ -155,7 +177,7 @@ public class GameScreen extends SGLStagedScreen<LD37> {
     @Override
     public void onCreate() {
         SGL.provide(SGLScreenInputMultiplexer.class).addProcessor(this, new GameInputProcessor());
-        loadMap(2);
+        loadMap(0);
         hud = new HUD();
         hud.setPosition(0, getViewHeight() - hud.getHeight());
         //addActor(player);
@@ -179,14 +201,26 @@ public class GameScreen extends SGLStagedScreen<LD37> {
     public void loadMap(int i) {
         int maxMaps = 10; // TODO: Check with some class
         currentMap = Math.max(0, i);
-        currentMap = Math.min(maxMaps, i);
-        currentMap = i;
+        currentMap = Math.min(maxMaps, currentMap);
         player = new Player();
-        map = SGL.provide(SGLAssets.class).get("maps/" + i + ".json", MapWrapper.class).getMap();
-        map.create();
+        map = SGL.provide(SGLAssets.class).get("maps/" + currentMap + ".json", MapWrapper.class).getMap();
+        map.reset();
         Vector2 spawn = map.calPixCoord(map.getStart());
         SGL.debug("spawn " + spawn.toString());
-        player.setPosition(spawn.x, spawn.y);
+        player.setPosition(map.getX() + spawn.x, map.getY() + spawn.y);
+        reset();
+    }
+
+    private void reset() {
+        speechPadding = 10;
+        fade = 0;
+        timer = 0;
+        fadeAlpha = 0;
+        fadeAction = 0;
+        dead = false;
+        float dX = getViewWidth() / 2 - player.getX();
+        float dY = getViewHeight() / 2 - player.getY();
+        moveMapBy(dX, dY);
     }
 
     @Override
@@ -321,8 +355,12 @@ public class GameScreen extends SGLStagedScreen<LD37> {
         Label label = new Label(trigger, SGL.provide(Skin.class));
         label.setColor(1f, 1f, 1f, 0f);
         label.setPosition(getViewWidth() / 2, 100, Align.center);
-        label.addAction(Actions.sequence(Actions.alpha(1, 0.5f), Actions.delay(2), Actions.alpha(0, 0.5f)));
+        label.addAction(Actions.sequence(Actions.alpha(1, 0.4f), Actions.delay(Math.max(2, trigger.length() / 16)), Actions.alpha(0, 0.2f)));
         messageQueue.add(label);
+    }
+
+    public void nextMessage() {
+        messageQueue.poll();
     }
 
     public enum ZINDEX {
