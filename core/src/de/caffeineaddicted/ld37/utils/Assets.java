@@ -39,6 +39,16 @@ public class Assets extends SGLAssets {
         load("tiles/woodplankvertical.png", Texture.class);
         load("tiles/metal.png", Texture.class);
 
+        load("walls/wall.png", Texture.class);
+        load("walls/wallleft.png", Texture.class);
+        load("walls/wallright.png", Texture.class);
+        load("walls/wallup.png", Texture.class);
+        load("walls/walldown.png", Texture.class);
+        load("walls/wallcornerupperleft.png", Texture.class);
+        load("walls/wallcornerupperright.png", Texture.class);
+        load("walls/wallcornerlowerleft.png", Texture.class);
+        load("walls/wallcornerlowerright.png", Texture.class);
+
         load("keys/keygold.png", Texture.class);
         load("keys/keypink.png", Texture.class);
         load("keys/keygreen.png", Texture.class);

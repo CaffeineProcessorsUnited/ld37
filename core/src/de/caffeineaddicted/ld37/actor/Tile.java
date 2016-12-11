@@ -236,8 +236,6 @@ public class Tile extends Entity implements Mortal, Creatable {
         Empty(0, false, 0, ACCESS_ALL, Key.KEY_NONE, "tiles/tile_empty.png"),
         Stone(2, false, 4, ACCESS_ALL, Key.KEY_NONE, "tiles/stonebroke.png", "tiles/stonehalf.png", "tiles/stone.png"),
         Ice(1, true, 2, ACCESS_ALL, Key.KEY_NONE, "tiles/icebroke.png", "tiles/ice.png"),
-        // TODO: Parameter
-        Wall(1, true, 2, ACCESS_NONE, Key.KEY_NONE, "tiles/icebroke.png", "tiles/ice.png"),
         HPlank(0, false, 2, ACCESS_HORIZONTAL, Key.KEY_NONE, "tiles/woodplankhorizontal.png"),
         VPlank(0, false, 2, ACCESS_VERTICAL, Key.KEY_NONE, "tiles/woodplankvertical.png"),
         // TODO: Parameter
@@ -246,7 +244,20 @@ public class Tile extends Entity implements Mortal, Creatable {
         DoorGold(0, false, 2, ACCESS_VERTICAL, Key.KEY_GOLD, "tiles/metal.png"),
         // TODO: Parameter
         DoorGreen(0, false, 2, ACCESS_VERTICAL, Key.KEY_GREEN, "tiles/metal.png"),
-        Metal(0, false, 2, ACCESS_ALL, Key.KEY_NONE, "tiles/metal.png");
+        Metal(0, false, 2, ACCESS_ALL, Key.KEY_NONE, "tiles/metal.png"),
+
+
+        Wall(0, false, 2, ACCESS_NONE, Key.KEY_NONE, "walls/wall.png"),
+        WallL(0, false, 2, ACCESS_NONE, Key.KEY_NONE, "walls/wallleft.png"),
+        WallR(0, false, 2, ACCESS_NONE, Key.KEY_NONE, "walls/wallright.png"),
+        WallU(0, false, 2, ACCESS_NONE, Key.KEY_NONE, "walls/wallup.png"),
+        WallD(0, false, 2, ACCESS_NONE, Key.KEY_NONE, "walls/walldown.png"),
+        WallLU(0, false, 2, ACCESS_NONE, Key.KEY_NONE, "walls/wallcornerupperleft.png"),
+        WallRU(0, false, 2, ACCESS_NONE, Key.KEY_NONE, "walls/wallcornerupperright.png"),
+        WallLD(0, false, 2, ACCESS_NONE, Key.KEY_NONE, "walls/wallcornerlowerleft.png"),
+        WallRD(0, false, 2, ACCESS_NONE, Key.KEY_NONE, "walls/wallcornerlowerright.png"),
+
+        ;
 
         public final int durability;
         public final boolean slipery;

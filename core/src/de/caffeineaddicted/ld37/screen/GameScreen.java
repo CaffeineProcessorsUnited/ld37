@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -183,6 +184,9 @@ public class GameScreen extends SGLStagedScreen<LD37> {
         player = new Player();
         map = SGL.provide(SGLAssets.class).get("maps/" + i + ".json", MapWrapper.class).getMap();
         map.create();
+        Vector2 spawn = map.calPixCoord(map.getStart());
+        SGL.debug("spawn " + spawn.toString());
+        player.setPosition(spawn.x, spawn.y);
     }
 
     @Override
@@ -217,6 +221,7 @@ public class GameScreen extends SGLStagedScreen<LD37> {
         fade = 1;
         timer = 0;
         fadeAction = 2;
+        messageQueue.clear();
     }
 
     public void loadPreviousMap() {
