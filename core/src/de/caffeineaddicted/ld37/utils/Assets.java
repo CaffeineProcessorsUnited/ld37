@@ -1,6 +1,9 @@
 package de.caffeineaddicted.ld37.utils;
 
+import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import de.caffeineaddicted.ld37.actor.MapLoader;
 import de.caffeineaddicted.ld37.actor.MapWrapper;
 import de.caffeineaddicted.sgl.utils.SGLAssets;
 
@@ -9,12 +12,16 @@ public class Assets extends SGLAssets {
 
     @Override
     public void onSetup() {
-
+        setLoader(MapWrapper.class,
+                new MapLoader(new InternalFileHandleResolver())
+        );
     }
 
     @Override
     public void onPreload() {
-
+        load("skin/uiskin.json", Skin.class);
+        load("background.png", Texture.class);
+        load("speech.png", Texture.class);
     }
 
     @Override

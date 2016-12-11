@@ -56,13 +56,13 @@ public class GameInputProcessor extends SGLInputProcessor {
         SGL.debug("touchDown: " + screenX + "," + screenY);
         lastDragX = screenX;
         lastDragY = screenY;
-        return true;
+        return false;
     }
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         SGL.debug("touchUp: " + screenX + "," + screenY);
-        return true;
+        return false;
     }
 
     @Override
@@ -73,13 +73,13 @@ public class GameInputProcessor extends SGLInputProcessor {
         lastDragX = screenX;
         lastDragY = screenY;
         SGL.debug("x:" + lastDragX + " y:" + lastDragY);
-        return true;
+        return false;
     }
 
     @Override
     public boolean mouseMoved(int screenX, int screenY) {
         //SGL.debug("mouseMoved: " + screenX + "," + screenY);
-        return true;
+        return false;
     }
 
 
