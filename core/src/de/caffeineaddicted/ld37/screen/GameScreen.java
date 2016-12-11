@@ -57,7 +57,7 @@ public class GameScreen extends SGLStagedScreen<LD37> {
     public void onAfterAct(float delta) {
         super.onAfterAct(delta);
         Label label = messageQueue.peek();
-        if(label != null) {
+        if (label != null) {
             label.act(delta);
             if (!label.hasActions()) {
                 messageQueue.poll();
@@ -70,7 +70,7 @@ public class GameScreen extends SGLStagedScreen<LD37> {
         super.onAfterDraw();
         SGL.provide(SpriteBatch.class).begin();
         Label label = messageQueue.peek();
-        if(label != null) {
+        if (label != null) {
             SGL.provide(SpriteBatch.class).setColor(0.32f, 0.32f, 0.32f, label.getColor().a);
             speechBackground.draw(SGL.provide(SpriteBatch.class),
                     label.getX() - speechPadding,
@@ -175,9 +175,9 @@ public class GameScreen extends SGLStagedScreen<LD37> {
 
     public void showMessage(String trigger) {
         Label label = new Label(trigger, SGL.provide(Skin.class));
-        label.setColor(1f,1f,1f,0f);
-        label.setPosition(getViewWidth()/2,100, Align.center);
-        label.addAction(Actions.sequence(Actions.alpha(1,1),Actions.delay(4),Actions.alpha(0,1)));
+        label.setColor(1f, 1f, 1f, 0f);
+        label.setPosition(getViewWidth() / 2, 100, Align.center);
+        label.addAction(Actions.sequence(Actions.alpha(1, 1), Actions.delay(4), Actions.alpha(0, 1)));
         label.setZIndex(ZINDEX.Messages.idx);
 
         messageQueue.add(label);

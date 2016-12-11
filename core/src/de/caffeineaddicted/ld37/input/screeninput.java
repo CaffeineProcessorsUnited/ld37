@@ -96,7 +96,8 @@ public class screeninput extends SGLScreenInputMultiplexer {
     }
 
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        if (debug) SGL.debug("touchDown(screenX: " + screenX + ", screenY: " + screenY + ", pointer: " + pointer + ", button: " + button + ")");
+        if (debug)
+            SGL.debug("touchDown(screenX: " + screenX + ", screenY: " + screenY + ", pointer: " + pointer + ", button: " + button + ")");
         Set<SGLScreen> k = new HashSet<SGLScreen>(processors.keySet());
         for (SGLScreen s : k) {
             if (s.isVisible() && processors.get(s) != null) {
@@ -108,7 +109,8 @@ public class screeninput extends SGLScreenInputMultiplexer {
     }
 
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        if (debug) SGL.debug("touchUp(screenX: " + screenX + ", screenY: " + screenY + ", pointer: " + pointer + ", button: " + button + ")");
+        if (debug)
+            SGL.debug("touchUp(screenX: " + screenX + ", screenY: " + screenY + ", pointer: " + pointer + ", button: " + button + ")");
         Set<SGLScreen> k = new HashSet<SGLScreen>(processors.keySet());
         for (SGLScreen s : k) {
             if (s.isVisible() && processors.get(s) != null) {
@@ -120,7 +122,8 @@ public class screeninput extends SGLScreenInputMultiplexer {
     }
 
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        if (debug) SGL.debug("touchDragged(screenX: " + screenX + ", screenY: " + screenY + ", pointer: " + pointer + ")");
+        if (debug)
+            SGL.debug("touchDragged(screenX: " + screenX + ", screenY: " + screenY + ", pointer: " + pointer + ")");
         Set<SGLScreen> k = new HashSet<SGLScreen>(processors.keySet());
         for (SGLScreen s : k) {
             if (s.isVisible() && processors.get(s) != null) {
@@ -138,7 +141,8 @@ public class screeninput extends SGLScreenInputMultiplexer {
         for (SGLScreen s : k) {
             if (s.isVisible() && processors.get(s) != null) {
                 Vector3 unprojected = s.unproject(new Vector3(screenX, screenY, 0));
-                if (debug) SGL.debug(s.getClass().getSimpleName() + ": mouseMoved(screenX: " + screenX + ", screenY: " + screenY + ")");
+                if (debug)
+                    SGL.debug(s.getClass().getSimpleName() + ": mouseMoved(screenX: " + screenX + ", screenY: " + screenY + ")");
                 processors.get(s).mouseMoved((int) unprojected.x, (int) unprojected.y);
             }
         }

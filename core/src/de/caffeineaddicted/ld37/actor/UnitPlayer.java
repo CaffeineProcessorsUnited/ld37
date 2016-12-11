@@ -10,15 +10,15 @@ import de.caffeineaddicted.sgl.utils.SGLAssets;
 
 public class UnitPlayer extends UnitBase {
     final private float speed = 1;
-    private int collectedKeys;
     private String ACTOR_BASE;
     private MovementDirection movingDir = MovementDirection.NONE, slipperyDir, keyDir = MovementDirection.NONE;
     private Tile currentTile;
     private boolean newTile = true;
+    private int keys = Key.KEY_NONE;
 
     public UnitPlayer() {
         zindex(GameScreen.ZINDEX.Player.idx);
-        Animation animation = new Animation(SGL.provide(SGLAssets.class).get("unicornwalk.png", Texture.class), 4, 64, 64);
+        Animation animation = new Animation(SGL.provide(SGLAssets.class).get("player/unicornwalk.png", Texture.class), 4, 64, 64);
         animation.setFrameDuration(0.18f);
         ACTOR_BASE = addActor("unicorn", animation);
 
@@ -26,7 +26,6 @@ public class UnitPlayer extends UnitBase {
         getActor(ACTOR_BASE).setHeight(64);
         setWidth(getActor(ACTOR_BASE).getWidth());
         setHeight(getActor(ACTOR_BASE).getHeight());
-        collectedKeys = 0;
 
         update();
     }
@@ -43,12 +42,17 @@ public class UnitPlayer extends UnitBase {
     }
 
     public void collectKey() {
-        collectedKeys += 1;
+        int key = 1;
+        keys |= key;
     }
 
-    public boolean useKeys(int numKeys) {
-        if (numKeys <= collectedKeys) {
-            collectedKeys -= numKeys;
+    public boolean hasKey(int key) {
+        return (keys & key) == key;
+    }
+
+    public boolean useKeys(int key) {
+        if (hasKey(key)) {
+            keys &= ~key;
             return true;
         }
         return false;
@@ -85,8 +89,8 @@ public class UnitPlayer extends UnitBase {
                 newTile = false;
                 if (tile != null) {
                     tile.walkOver();
-                    if(!tile.isTriggered()){
-                        if(!tile.getTrigger().isEmpty()) {
+                    if (!tile.isTriggered()) {
+                        if (!tile.getTrigger().isEmpty()) {
                             SGL.provide(GameScreen.class).showMessage(tile.getTrigger());
                         }
                         tile.setTriggered(true);
@@ -99,8 +103,7 @@ public class UnitPlayer extends UnitBase {
             }
             if (tile != null && tile.getType().slipery && slipperyDir != null) {
                 addAction(createAction(slipperyDir));
-            } else
-            if (movingDir != MovementDirection.NONE) {
+            } else if (movingDir != MovementDirection.NONE) {
                 addAction(createAction(movingDir));
                 slipperyDir = movingDir;
                 movingDir = MovementDirection.NONE;

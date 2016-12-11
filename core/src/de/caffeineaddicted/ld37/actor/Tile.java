@@ -9,6 +9,14 @@ import de.caffeineaddicted.sgl.ui.interfaces.Creatable;
 import de.caffeineaddicted.sgl.ui.interfaces.Mortal;
 
 public class Tile extends Entity implements Mortal, Creatable {
+    public final static int ACCESS_NONE = 0;
+    public final static int ACCESS_LEFT = 1;
+    public final static int ACCESS_RIGHT = 2;
+    public final static int ACCESS_UP = 4;
+    public final static int ACCESS_DOWN = 8;
+    public final static int ACCESS_HORIZONTAL = ACCESS_LEFT + ACCESS_RIGHT;
+    public final static int ACCESS_VERTICAL = ACCESS_UP + ACCESS_DOWN;
+    public final static int ACCESS_ALL = ACCESS_LEFT + ACCESS_RIGHT + ACCESS_UP + ACCESS_DOWN;
     private Tile.Type type;
     private int stepsLeft;
     private int key = 0;
@@ -16,7 +24,6 @@ public class Tile extends Entity implements Mortal, Creatable {
     private Vector2 move;
     private Vector2 moveLeft;
     private boolean moveReversed = false;
-
     private Vector2 start, end;
     private boolean dieing = false;
     private boolean dead = false;
@@ -24,27 +31,15 @@ public class Tile extends Entity implements Mortal, Creatable {
     private String trigger;
     private boolean triggered;
 
-    public Tile(Tile.Type type){
+    public Tile(Tile.Type type) {
         this.type = type;
         stepsLeft = type.durability;
         key = 0;
         zindex(GameScreen.ZINDEX.Tile.idx);
     }
 
-    public void setStart(Vector2 start){
-        this.start = start;
-    }
-
-    public void setEnd(Vector2 end){
-        this.end = end;
-    }
-
-    public void setKey(int key){
+    public void setKey(int key) {
         this.key = key;
-    }
-
-    public void setTrigger(String trigger){
-        this.trigger = trigger;
     }
 
     @Override
@@ -88,8 +83,16 @@ public class Tile extends Entity implements Mortal, Creatable {
         return start;
     }
 
+    public void setStart(Vector2 start) {
+        this.start = start;
+    }
+
     public Vector2 getEnd() {
         return end;
+    }
+
+    public void setEnd(Vector2 end) {
+        this.end = end;
     }
 
     @Override
@@ -100,17 +103,20 @@ public class Tile extends Entity implements Mortal, Creatable {
     public boolean hasKey() {
         return key > 0;
     }
+
     public boolean hasKey(int type) {
         return type == key;
     }
 
-    public int getKeyType(){
+    public int getKeyType() {
         return key;
     }
 
-    public void takeKey() {
+    public int takeKey() {
+        int k = key;
         key = 0;
         setTexture();
+        return k;
     }
 
     public Tile.Type getType() {
@@ -137,16 +143,6 @@ public class Tile extends Entity implements Mortal, Creatable {
             setTexture();
         }
     }
-
-    public final static int ACCESS_NONE = 0;
-    public final static int ACCESS_LEFT = 1;
-    public final static int ACCESS_RIGHT = 2;
-    public final static int ACCESS_UP = 4;
-    public final static int ACCESS_DOWN = 8;
-
-    public final static int ACCESS_HORIZONTAL = ACCESS_LEFT + ACCESS_RIGHT;
-    public final static int ACCESS_VERTICAL = ACCESS_UP + ACCESS_DOWN;
-    public final static int ACCESS_ALL = ACCESS_LEFT + ACCESS_RIGHT + ACCESS_UP + ACCESS_DOWN;
 
     public boolean canAccess(int direction) {
         return (type.access & direction) == direction;
@@ -199,36 +195,45 @@ public class Tile extends Entity implements Mortal, Creatable {
         if (hasKey()) {
             switch (getKeyType()) {
                 case 1:
-                    addActor(new UnitKey("keygold.png"));
+                    addActor(new Key("keys/keygold.png"));
                     break;
                 case 2:
-                    addActor(new UnitKey("keypink.png"));
+                    addActor(new Key("keys/keypink.png"));
                     break;
                 case 3:
-                    addActor(new UnitKey("keygreen.png"));
+                    addActor(new Key("keys/keygreen.png"));
                     break;
             }
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Tile(" + getX(Align.center) + "," + getY(Align.center) + ")";
     }
 
     public boolean isTriggered() {
         return triggered;
     }
 
-    public String getTrigger() {
-        return trigger;
-    }
-
     public void setTriggered(boolean triggered) {
         this.triggered = triggered;
     }
 
+    public String getTrigger() {
+        return trigger;
+    }
+
+    public void setTrigger(String trigger) {
+        this.trigger = trigger;
+    }
+
     public enum Type {
 
-        Empty(0, false, 0, ACCESS_ALL, "tile_empty.png"),
-        Stone(2, false, 4, ACCESS_ALL, "stonebroke.png", "stonehalf.png", "stone.png"),
-        Ice(1, true, 2, ACCESS_ALL, "icebroke.png", "ice.png"),
-        Wall(1, true, 2, ACCESS_NONE, "icebroke.png", "ice.png");// TODO: Assets
+        Empty(0, false, 0, ACCESS_ALL, "tiles/tile_empty.png"),
+        Stone(2, false, 4, ACCESS_ALL, "tiles/stonebroke.png", "tiles/stonehalf.png", "tiles/stone.png"),
+        Ice(1, true, 2, ACCESS_ALL, "tiles/icebroke.png", "tiles/ice.png"),
+        Wall(1, true, 2, ACCESS_NONE, "tiles/icebroke.png", "tiles/ice.png");// TODO: Assets
 
         public final int durability;
         public final boolean slipery;
@@ -244,18 +249,13 @@ public class Tile extends Entity implements Mortal, Creatable {
             this.assets = assets;
         }
 
-        public static Type getTypeByName(String name){
-            for(Type type: values()){
-                if(type.name().equals(name)){
+        public static Type getTypeByName(String name) {
+            for (Type type : values()) {
+                if (type.name().equals(name)) {
                     return type;
                 }
             }
             return null;
         }
-    }
-
-    @Override
-    public String toString() {
-        return "Tile(" + getX(Align.center) + "," + getY(Align.center) + ")";
     }
 }
