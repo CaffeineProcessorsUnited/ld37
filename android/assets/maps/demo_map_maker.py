@@ -104,8 +104,12 @@ class Map:
         self.prevstate = copy.deepcopy(self.tiles)
         if endx == -1:
             endx = self.width
+        else:
+            endx += 1
         if endy == -1:
             endy = self.height
+        else:
+            endy += 1
         for x in range(startx, endx):
             for y in range(starty, endy):
                 i = x * self.height + y
