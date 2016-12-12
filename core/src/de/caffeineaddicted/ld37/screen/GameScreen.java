@@ -263,7 +263,7 @@ public class GameScreen extends SGLStagedScreen<LD37> {
         player = new Player();
         map = null;
         String fileName = "maps/" + currentMap + ".json";
-        if (useCustomMaps) {
+        if (useCustomMaps && currentMap >= 0) {
             FileHandle file = Gdx.files.local("./" + fileName);
             if (file.exists() && file.file().canRead()) {
                 try {
