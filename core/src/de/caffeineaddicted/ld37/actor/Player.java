@@ -99,7 +99,7 @@ public class Player extends UnitBase {
                     tile.trigger();
                 }
             }
-            if (tile.getType().slipery && slipperyDir != null) {
+            if (tile.getType().slipery && slipperyDir != null && slipperyDir != MovementDirection.NONE) {
                 createAction(slipperyDir, true);
             } else if (movingDir != MovementDirection.NONE) {
                 createAction(movingDir, false);
@@ -137,10 +137,9 @@ public class Player extends UnitBase {
         Tile newtile = SGL.provide(GameScreen.class).getMap().getTileAt(newpos);
         if (newtile == null || (!newtile.canAccess(dir.flag()) && newtile.getType().mode == Tile.MODE.BLOCKING) || !newtile.canAcceptKeys(keys)) {
             if (wasslippery) {
-                action.setAmount(-action.getAmountX(), -action.getAmountY());
-            } else {
-                return;
+                slipperyDir = MovementDirection.NONE;
             }
+            return;
         }
         SGL.provide(GameScreen.class).nextMessage();
         action.setDuration(speed);

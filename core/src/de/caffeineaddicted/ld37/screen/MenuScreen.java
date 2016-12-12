@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TiledDrawable;
 import de.caffeineaddicted.ld37.LD37;
 import de.caffeineaddicted.sgl.SGL;
 import de.caffeineaddicted.sgl.input.SGLScreenInputMultiplexer;
@@ -37,6 +38,7 @@ public class MenuScreen extends SGLStagedScreen<LD37> {
     };
     private ArrayList<Label> speechLabels = new ArrayList<Label>();
     private Drawable speechBackground;
+    private TiledDrawable background;
     private float speechPadding = 10;
     private float timer = 0, speechAlpha = 0;
 
@@ -81,10 +83,8 @@ public class MenuScreen extends SGLStagedScreen<LD37> {
     public void onCreate() {
         //stage().setDebugAll(true);
         SGL.provide(SGLScreenInputMultiplexer.class).removeProcessor(this);
-        Image background = new Image(SGL.provide(SGLAssets.class).get("background/menu.png", Texture.class));
-        background.setSize(getViewWidth(), getViewHeight());
-        background.setZIndex(0);
-        stage().addActor(background);
+        background = new TiledDrawable(new TextureRegionDrawable(new TextureRegion(SGL.provide(SGLAssets.class).get("background/menu.png", Texture.class))));
+
         speechBackground = new TextureRegionDrawable(new TextureRegion(SGL.provide(SGLAssets.class).get("ui/speech.png", Texture.class)));
         Label t1 = new Label("Hey! Welcome to \n.", SGL.provide(Skin.class));
         t1.setPosition(getViewWidth() / 2 - t1.getWidth() / 2, 100);
@@ -95,7 +95,7 @@ public class MenuScreen extends SGLStagedScreen<LD37> {
 
         btnStart = new TextButton("Start Game", SGL.provide(Skin.class), "blue");
         btnStart.setWidth(400);
-        btnStart.setPosition(getViewWidth() / 2 - btnStart.getWidth() / 2, 500);
+        btnStart.setPosition(getViewWidth() / 2 - btnStart.getWidth() / 2, getViewHeight() - 200);
         btnStart.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 SGL.provide(SGLRootScreen.class).hideScreen(MenuScreen.class);
@@ -106,7 +106,7 @@ public class MenuScreen extends SGLStagedScreen<LD37> {
 
         btnExit = new TextButton("Exit", SGL.provide(Skin.class));
         btnExit.setWidth(400);
-        btnExit.setPosition(getViewWidth() / 2 - btnExit.getWidth() / 2, 300);
+        btnExit.setPosition(getViewWidth() / 2 - btnExit.getWidth() / 2, getViewHeight() - 500);
         btnExit.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 Gdx.app.exit();
@@ -124,6 +124,10 @@ public class MenuScreen extends SGLStagedScreen<LD37> {
         SGL.provide(ShapeRenderer.class).rect(stage().getViewOrigX(), stage().getViewOrigY(), stage().getWidth(), stage().getHeight());
         SGL.provide(ShapeRenderer.class).end();
         Gdx.gl.glDisable(GL20.GL_BLEND);
+        SGL.provide(SpriteBatch.class).begin();
+        SGL.provide(SpriteBatch.class).setColor(1f, 1f, 1f, 1f);
+        background.draw(SGL.provide(SpriteBatch.class), 0, 0, getViewWidth(), getViewHeight());
+        SGL.provide(SpriteBatch.class).end();
     }
 
     @Override

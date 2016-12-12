@@ -54,7 +54,7 @@ public class GameScreen extends SGLStagedScreen<LD37> {
     private boolean cameraMovement = false;
     private TextureRegionDrawable unicornFallingDrawable, unicornClimbingDrawable, unicordLadderDrawable;
     private float unicornFallingDuration = 0.4f, unicornFalling = 0, unicornFallingX, unicornFallingScale, unicornFallingRotation;
-    private float unicornClimbingDuration = 2, unicornClimbing = 0, unicornClimbingX, unicornClimbingScale;
+    private float unicornClimbingDuration = 1.2f, unicornClimbing = 0, unicornClimbingX, unicornClimbingScale;
 
 
     public void onBeforeAct(float delta) {
@@ -180,8 +180,8 @@ public class GameScreen extends SGLStagedScreen<LD37> {
         }
         SGL.provide(SpriteBatch.class).begin();
         if (fade == 2) {
-            SGL.provide(SpriteBatch.class).setColor(1, 1, 1, 1);
             if (unicornFalling > 0) {
+                SGL.provide(SpriteBatch.class).setColor(1, 1, 1, 1);
                 unicornFallingDrawable.draw(
                         SGL.provide(SpriteBatch.class),
                         unicornFallingX,
@@ -195,6 +195,7 @@ public class GameScreen extends SGLStagedScreen<LD37> {
                         -unicornFallingRotation * unicornFalling);
             }
             if (unicornClimbing > 0) {
+                SGL.provide(SpriteBatch.class).setColor(1, 1, 1, 0.6f);
                 unicordLadderDrawable.draw(
                         SGL.provide(SpriteBatch.class),
                         unicornClimbingX - unicornClimbingDrawable.getMinWidth() / 2,
@@ -217,6 +218,7 @@ public class GameScreen extends SGLStagedScreen<LD37> {
                         unicornClimbingScale,
                         unicornClimbingScale,
                         0f);
+                SGL.provide(SpriteBatch.class).setColor(1, 1, 1, 1);
                 unicornClimbingDrawable.draw(
                         SGL.provide(SpriteBatch.class),
                         unicornClimbingX,
