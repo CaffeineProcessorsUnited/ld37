@@ -128,6 +128,8 @@ public class Tile extends Entity implements Mortal, Creatable {
     public void setType(Type type) {
         this.type = type;
         stepsLeft = type.durability;
+        dieing = false;
+        dead = false;
         setTexture();
     }
 
