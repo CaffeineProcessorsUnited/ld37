@@ -145,10 +145,10 @@ public class GameScreen extends SGLStagedScreen<LD37> {
             cameraMovement = true;
             float dX = getViewWidth() / 2 - player.getX();
             float dY = getViewHeight() / 2 - player.getY();
+            moveMapBy(Math.signum(dX) * Math.min(Math.abs(dX), Math.abs(cameraBaseSpeed) * delta), Math.signum(dY) * Math.min(Math.abs(dY), Math.abs(cameraBaseSpeed) * delta));
             if (Math.abs(dX) < 1 && Math.abs(dY) < 1) {
                 cameraMovement = false;
             }
-            moveMapBy(Math.signum(dX) * Math.min(Math.abs(dX), Math.abs(cameraBaseSpeed) * delta), Math.signum(dY) * Math.min(Math.abs(dY), Math.abs(cameraBaseSpeed) * delta));
         }
     }
 
@@ -235,6 +235,7 @@ public class GameScreen extends SGLStagedScreen<LD37> {
     @Override
     public void onBeauty() {
         hud.setPosition(0, getViewHeight() - hud.getHeight());
+        centerMap();
     }
 
     @Override
@@ -271,9 +272,7 @@ public class GameScreen extends SGLStagedScreen<LD37> {
 
     public void loadMap(int i) {
         loaded = false;
-        int maxMaps = 10; // TODO: Check with some class
         currentMap = Math.max(-1, i);
-        currentMap = Math.min(maxMaps, currentMap);
         player = new Player();
         map = null;
         String fileName = "maps/" + currentMap + ".json";
@@ -287,14 +286,14 @@ public class GameScreen extends SGLStagedScreen<LD37> {
                 }
             }
         } else {
-            SGL.provide(SGLAssets.class).isLoaded(fileName, MapWrapper.class) {
+            if (SGL.provide(SGLAssets.class).isLoaded(fileName, MapWrapper.class)) {
                 map = SGL.provide(SGLAssets.class).get(fileName, MapWrapper.class).getMap();
             }
         }
         if (map == null) {
             //loaded is false
             SGL.provide(SGLRootScreen.class).hideScreen(GameScreen.class);
-            SGL.provide(SGLRootScreen.class).showScreen(EndGameScreen.class);
+            SGL.provide(SGLRootScreen.class).showScreen(EndGameScreen.class, SGLRootScreen.ZINDEX.NEAREST);
             return;
         }
         loaded = true;
@@ -310,9 +309,7 @@ public class GameScreen extends SGLStagedScreen<LD37> {
         }
         speechPadding = 10;
         dead = false;
-        float dX = getViewWidth() / 2 - player.getX();
-        float dY = getViewHeight() / 2 - player.getY();
-        moveMapBy(dX, dY);
+        centerMap();
     }
 
     @Override
@@ -442,6 +439,12 @@ public class GameScreen extends SGLStagedScreen<LD37> {
             }
         }
         moveMapBy(x, y);
+    }
+
+    public void centerMap() {
+        float dX = getViewWidth() / 2 - player.getX();
+        float dY = getViewHeight() / 2 - player.getY();
+        moveMapBy(dX, dY);
     }
 
     public void moveMapBy(float x, float y) {

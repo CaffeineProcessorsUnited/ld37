@@ -148,7 +148,7 @@ public class LD37 extends SGLGame {
     private BitmapFont createFont(FreeTypeFontGenerator generator, float dp) {
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
 
-        int fontSize = (int)(dp * Gdx.graphics.getDensity());
+        int fontSize = (int) (provide(Viewport.class).getWorldWidth() * dp / 1920);
         parameter.size = fontSize;
 
         SGL.debug("Font size: " + fontSize + "px");

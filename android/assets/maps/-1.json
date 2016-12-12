@@ -10,7 +10,7 @@
             "type": "Metal",
             "x": 0,
             "y": 0,
-            "trigger": "message:DON'T MOVE;delay:5:teleport:0:1"
+            "trigger": "message:You lost the tutorial...Relax yourself for a few seconds. Don't move;delay:5:teleport:0:1"
         },
         {
             "key": 0,
@@ -30,28 +30,28 @@
             "type": "Metal",
             "x": 1,
             "y": 0,
-            "trigger": "teleport:3:0"
+            "trigger": "delay:1:teleport:3:0"
         },
         {
             "key": 0,
             "type": "Metal",
             "x": 3,
             "y": 0,
-            "trigger": "teleport:3:2"
+            "trigger": "delay:1:teleport:3:2"
         },
         {
             "key": 0,
             "type": "Metal",
             "x": 3,
             "y": 2,
-            "trigger": "teleport:1:2"
+            "trigger": "delay:1:teleport:1:2"
         },
         {
             "key": 0,
             "type": "Metal",
             "x": 1,
             "y": 2,
-            "trigger": "teleport:1:0"
+            "trigger": "delay:1:teleport:1:0"
         },
         {
             "key": 0,

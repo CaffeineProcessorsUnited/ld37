@@ -185,9 +185,9 @@ public class Tile extends Entity implements Mortal, Creatable {
         for (String a : actionList) {
             String[] _actionList = a.split(":");
             String type = _actionList[0];
-            String[] actionParam = Arrays.copyOfRange(_actionList, 1, _actionList.length);
+            String[] actionParams = Arrays.copyOfRange(_actionList, 1, _actionList.length);
 
-            TileTriggerActions.call(this, type, actionParam);
+            TileTriggerActions.call(this, type, actionParams);
         }
     }
 
@@ -235,10 +235,10 @@ public class Tile extends Entity implements Mortal, Creatable {
             a = 0;
         }
         String Texture = addTexture(type.assets[a]);
-        if (hasTrigger(TRIGGER_HINT)) {
+        if (type != Type.Empty && hasTrigger(TRIGGER_HINT)) {
             addActor(new HintMarker());
         }
-        if (hasTrigger(TRIGGER_ACTION)) {
+        if (type != Type.Empty && hasTrigger(TRIGGER_ACTION)) {
             addActor(new ActionMarker());
         }
         if (keyHole > 0) {
@@ -412,8 +412,7 @@ public class Tile extends Entity implements Mortal, Creatable {
                 int y = Integer.parseInt(params[i + 1]);
                 String t = params[i + 2];
 
-                int idx = x * SGL.provide(GameScreen.class).getMap().height + y;
-                Tile tile = SGL.provide(GameScreen.class).getMap().getFloor()[idx];
+                Tile tile = SGL.provide(GameScreen.class).getMap().getTile(x, y);
                 if (tile != null) {
                     tile.setType(Tile.Type.getTypeByName(t));
                 }
@@ -459,7 +458,7 @@ public class Tile extends Entity implements Mortal, Creatable {
             int x = Integer.parseInt(params[0]);
             int y = Integer.parseInt(params[1]);
 
-            SGL.provide(GameScreen.class).getPlayer().teleport(x + 1, y + 1); //Walls
+            SGL.provide(GameScreen.class).getPlayer().teleport(x + 1, y + 1); //Walls (todo: moving tiles)
         }
 
         public static void Visit(Tile tile, String[] params) {

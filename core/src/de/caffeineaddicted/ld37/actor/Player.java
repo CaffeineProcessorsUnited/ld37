@@ -79,8 +79,9 @@ public class Player extends UnitBase {
             currentTile.setTriggered(false);
             setPosition(pos.x, pos.y);
             teleportPosition = null;
+            slipperyDir = MovementDirection.NONE;
             clearActions();
-            SGL.provide(GameScreen.class).moveMapBy(0, 0);
+            SGL.provide(GameScreen.class).centerMap();
         }
 
         Tile tile = SGL.provide(GameScreen.class).getMap().getTileAt(getCenterPoint().x, getCenterPoint().y);
