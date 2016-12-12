@@ -39,7 +39,7 @@ public class MenuScreen extends SGLStagedScreen<LD37> {
             new Vector2(1280, 720),
             new Vector2(800, 600)
     };
-    private TextButton btnContinue, btnStart, btnCustomMap, btnResolution, btnExit;
+    private TextButton btnContinue, btnStart, btnDifficulty, btnCustomMap, btnResolution, btnExit;
     private Label btnCustomMapHelp;
     private int state = 0;
     private Float[] states = new Float[]{
@@ -55,11 +55,12 @@ public class MenuScreen extends SGLStagedScreen<LD37> {
     @Override
     public void onBeauty() {
         btnContinue.setPosition(getViewWidth() / 2 - btnContinue.getWidth() / 2, getViewHeight() - 200);
-        btnStart.setPosition(getViewWidth() / 2 - btnStart.getWidth() / 2, getViewHeight() - 250);
-        btnCustomMap.setPosition(getViewWidth() / 2 - btnCustomMap.getWidth() / 2, getViewHeight() - 300);
-        btnCustomMapHelp.setPosition(getViewWidth() / 2 - btnCustomMap.getWidth() / 2, getViewHeight() - 350);
-        btnResolution.setPosition(getViewWidth() / 2 - btnResolution.getWidth() / 2, getViewHeight() - 450);
-        btnExit.setPosition(getViewWidth() / 2 - btnExit.getWidth() / 2, getViewHeight() - 500);
+        btnStart.setPosition(getViewWidth() / 2 - btnStart.getWidth() / 2, btnContinue.getY() - btnContinue.getHeight() - 20);
+        btnDifficulty.setPosition(getViewWidth() / 2 - btnResolution.getWidth() / 2, btnStart.getY() - btnStart.getHeight() - 20);
+        btnCustomMap.setPosition(getViewWidth() / 2 - btnCustomMap.getWidth() / 2, btnDifficulty.getY() - btnDifficulty.getHeight() - 20);
+        btnCustomMapHelp.setPosition(getViewWidth() / 2 - btnCustomMap.getWidth() / 2, btnCustomMap.getY() - btnCustomMap.getHeight() - 20);
+        btnResolution.setPosition(getViewWidth() / 2 - btnResolution.getWidth() / 2, btnCustomMapHelp.getY() - btnCustomMapHelp.getHeight() - 20);
+        btnExit.setPosition(getViewWidth() / 2 - btnExit.getWidth() / 2, btnResolution.getY() - btnResolution.getHeight() - 20);
     }
 
     @Override
@@ -144,6 +145,17 @@ public class MenuScreen extends SGLStagedScreen<LD37> {
         });
         stage().addActor(btnStart);
 
+        btnDifficulty = new TextButton("", SGL.provide(Skin.class));
+        btnDifficulty.setWidth(400);
+        btnDifficulty.addListener(new ClickListener() {
+            public void clicked(InputEvent event, float x, float y) {
+                SGL.provide(GameScreen.class).toggleHardMode();
+                updateBtnDifficulty();
+            }
+        });
+        updateBtnDifficulty();
+        stage().addActor(btnDifficulty);
+
         btnCustomMap = new TextButton("", SGL.provide(Skin.class));
         btnCustomMap.setWidth(400);
         btnCustomMap.addListener(new ClickListener() {
@@ -198,6 +210,11 @@ public class MenuScreen extends SGLStagedScreen<LD37> {
         });
         stage().addActor(btnExit);
     }
+
+    public void updateBtnDifficulty() {
+        btnDifficulty.setText("Difficulty: " + (SGL.provide(GameScreen.class).isHardMode() ? "HARD" : "EASY"));
+    }
+
 
     public void updateBtnCustomMap() {
         btnCustomMap.setText("Use custom maps: " + (SGL.provide(GameScreen.class).getUseCustomMaps() ? "YES" : "NO"));

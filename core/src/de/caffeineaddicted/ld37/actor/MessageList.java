@@ -22,7 +22,7 @@ public class MessageList extends Entity {
     private Drawable background;
     private int history;
     private DelayedRemovalArray<Label> messages;
-    private float padding = 2;
+    private float padding = 2, margin = 5;
 
     public MessageList() {
         this(5);
@@ -42,6 +42,7 @@ public class MessageList extends Entity {
     }
 
     public void postMessage(String message) {
+        SGL.debug("" + SGL.provide(Skin.class).get("default", Label.LabelStyle.class).font.getLineHeight());
         messages.add(new Label(message, SGL.provide(Skin.class)));
         SGL.debug("size:" + messages.size);
         while (messages.size > history) {
@@ -53,9 +54,9 @@ public class MessageList extends Entity {
         float width = 0;
         for (int i = messages.size - 1; i >= 0; i--) {
             l = messages.get(i);
-            l.setPosition(padding, height);
-            height += l.getHeight() + padding;
-            width = Math.max(width, l.getWidth());
+            l.setPosition(margin + padding, height);
+            height += l.getHeight() +  2 * (padding) + margin;
+            width = Math.max(width, l.getWidth() + (2 * padding));
             SGL.debug("w:" + width + " h:" + height);
         }
         setWidth(width);
@@ -65,6 +66,10 @@ public class MessageList extends Entity {
 
     @Override
     public void update() {
+
+    }
+
+    public void updateSkin() {
 
     }
 
@@ -90,8 +95,8 @@ public class MessageList extends Entity {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         for (Label l: messages) {
-            batch.setColor(0.32f, 0.32f, 0.32f, 0.5f);
-            background.draw(batch, l.getX() - padding, l.getY(), getWidth() + 2 * padding, l.getHeight());
+            batch.setColor(1, 0.314f, 0.635f, l.getColor().a);
+            background.draw(batch, l.getX() - padding, l.getY(), getWidth() + 2 * padding, l.getHeight() + 2 * padding);
             batch.setColor(1, 1, 1, 1);
             l.draw(batch, parentAlpha);
         }

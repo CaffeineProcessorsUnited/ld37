@@ -48,6 +48,7 @@ public class GameScreen extends SGLStagedScreen<LD37> {
     private float unicornFallingDuration = 0.4f, unicornFalling = 0, unicornFallingX, unicornFallingScale, unicornFallingRotation;
     private float unicornClimbingDuration = 1.2f, unicornClimbing = 0, unicornClimbingX, unicornClimbingScale;
     private boolean useCustomMaps = false;
+    private boolean hardMode = true;
 
     public void onBeforeAct(float delta) {
         for (Actor a : deleteLater) {
@@ -60,9 +61,12 @@ public class GameScreen extends SGLStagedScreen<LD37> {
                 timer = 0;
                 fade++;
                 if (fadeAction == 1) {
-                    int n = 1;
-                    loadPreviousMap(n);
-                    showMessage("You fell down and landed " + n + " level" + (n > 1 ? "s" : "") + " below.");
+                    loadPreviousMap(isHardMode() ? 1 : 0);
+                    if (isHardMode()) {
+                        showMessage("You fell down and landed 1 level below...");
+                    } else {
+                        showMessage("You fell down...\nLuckily you could hold on to a cloud and return to the start.");
+                    }
                     unicornFallingX = MathUtils.random((int) (getViewWidth() / 100) * 20, (int) (getViewWidth() - (getViewWidth() / 100) * 20));
                     unicornFallingScale = (float) MathUtils.random(200, 400) / 100;
                     unicornFallingRotation = (float) MathUtils.random(40, 180) * (MathUtils.random(0, 1) * -1);
@@ -227,7 +231,8 @@ public class GameScreen extends SGLStagedScreen<LD37> {
 
     @Override
     public void onBeauty() {
-
+        hud.setPosition(0, getViewHeight() - hud.getHeight());
+        messages.updateSkin();
     }
 
     @Override
@@ -246,7 +251,6 @@ public class GameScreen extends SGLStagedScreen<LD37> {
         loadMap(0);
         messages = new MessageList();
         hud = new HUD();
-        hud.setPosition(0, getViewHeight() - hud.getHeight());
 
         SGL.registerMessageReceiver(FireEverythingMessage.class, new MessageReceiver() {
             @Override
@@ -450,6 +454,19 @@ public class GameScreen extends SGLStagedScreen<LD37> {
     public boolean setUseCustomMaps(boolean customMaps) {
         useCustomMaps = customMaps;
         return useCustomMaps;
+    }
+
+    public boolean toggleHardMode() {
+        return setHardMode(!isHardMode());
+    }
+
+    public boolean isHardMode() {
+        return hardMode;
+    }
+
+    public boolean setHardMode(boolean hardMode) {
+        this.hardMode = hardMode;
+        return hardMode;
     }
 
     public enum ZINDEX {

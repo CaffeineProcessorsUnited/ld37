@@ -3,8 +3,12 @@ package de.caffeineaddicted.ld37;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.*;
@@ -33,6 +37,7 @@ public class LD37 extends SGLGame {
                     .set(AttributeList.HEIGHT, 720)
                     .set(AttributeList.RESIZABLE, true);
     private boolean paused;
+    private FreeTypeFontGenerator generator;
 
     @Override
     protected void initGame() {
@@ -52,6 +57,8 @@ public class LD37 extends SGLGame {
 
             }
         });
+        generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/Roboto-Regular.ttf"));
+        updateFont();
     }
 
     @Override
@@ -89,7 +96,7 @@ public class LD37 extends SGLGame {
         provide(SGLAssets.class).load();
         provide(SGLAssets.class).finishLoading();
 
-        supply(Skin.class, provide(SGLAssets.class).get("skin/uiskin.json", Skin.class));
+        //supply(Skin.class, provide(SGLAssets.class).get("skin/uiskin.json", Skin.class));
         provide(SGLRootScreen.class).showScreen(BackgroundScreen.class, SGLRootScreen.ZINDEX.FAREST);
         provide(SGLRootScreen.class).showScreen(MenuScreen.class, SGLRootScreen.ZINDEX.NEAREST);
     }
@@ -123,9 +130,29 @@ public class LD37 extends SGLGame {
 
     }
 
+    public void updateFont() {
+        supply(Skin.class, new Skin());
+        provide(Skin.class).add("default-font", createFont(generator, 40), BitmapFont.class);
+        provide(Skin.class).addRegions(new TextureAtlas(Gdx.files.internal("skin/uiskin.atlas")));
+        provide(Skin.class).load(Gdx.files.internal("skin/uiskin.json"));
+        SGL.debug("" + provide(Skin.class).get(Label.LabelStyle.class).font.getLineHeight());
+    }
+
     @Override
     public void onResize(int width, int height) {
         SGL.debug("resize");
+        updateFont();
+    }
+
+    private BitmapFont createFont(FreeTypeFontGenerator generator, float dp) {
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+
+        int fontSize = (int)(dp * Gdx.graphics.getDensity());
+        parameter.size = fontSize;
+
+        SGL.debug("Font size: " + fontSize + "px");
+
+        return generator.generateFont(parameter);
     }
 
     public static class CONSTANTS {
