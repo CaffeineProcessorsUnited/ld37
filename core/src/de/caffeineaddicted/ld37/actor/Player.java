@@ -13,7 +13,7 @@ public class Player extends UnitBase {
     private String ACTOR_BASE;
     private MovementDirection movingDir = MovementDirection.NONE, slipperyDir, keyDir = MovementDirection.NONE;
     private Tile currentTile;
-    private boolean newTile = true;
+    private boolean newTile = true, dieOnChange = false;
     private int keys = Key.KEY_NONE;
 
     private Vector2 teleportPosition;
@@ -92,7 +92,8 @@ public class Player extends UnitBase {
             newTile = true;
         }
 
-        if (tile.isDead() || (slipperyDir != null && !tile.canAccess(slipperyDir.flag()) && tile.getType().mode == Tile.MODE.FALLING)) {
+        if (tile.isDead() || (newTile && dieOnChange) || (slipperyDir != null && !tile.canAccess(slipperyDir.flag()) && tile.getType().mode == Tile.MODE.FALLING)) {
+            dieOnChange = false;
             onDie();
             SGL.error("U DEAD");
             return;
@@ -132,18 +133,23 @@ public class Player extends UnitBase {
 
     public void createAction(MovementDirection dir, boolean wasslippery) {
         MoveByAction action = new MoveByAction();
+        int accessflag = 0;
         switch (dir) {
             case UP:
                 action.setAmount(0, Map.TileSize);
+                accessflag = Tile.ACCESS_DOWN;
                 break;
             case DOWN:
                 action.setAmount(0, -Map.TileSize);
+                accessflag = Tile.ACCESS_UP;
                 break;
             case LEFT:
                 action.setAmount(-Map.TileSize, 0);
+                accessflag = Tile.ACCESS_RIGHT;
                 break;
             case RIGHT:
                 action.setAmount(Map.TileSize, 0);
+                accessflag = Tile.ACCESS_LEFT;
                 break;
         }
         Vector2 newpos = getCenterPoint().cpy().add(action.getAmountX(), action.getAmountY());
@@ -153,6 +159,9 @@ public class Player extends UnitBase {
                 slipperyDir = MovementDirection.NONE;
             }
             return;
+        }
+        if (!newtile.canAccess(accessflag) && newtile.getType().mode == Tile.MODE.FALLING) {
+            dieOnChange = true;
         }
         if (!wasslippery) {
             SGL.provide(GameScreen.class).nextMessage();

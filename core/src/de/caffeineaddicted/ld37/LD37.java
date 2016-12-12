@@ -27,6 +27,7 @@ import de.caffeineaddicted.sgl.input.SGLScreenInputMultiplexer;
 import de.caffeineaddicted.sgl.messages.Message;
 import de.caffeineaddicted.sgl.messages.MessageReceiver;
 import de.caffeineaddicted.sgl.ui.screens.SGLRootScreen;
+import de.caffeineaddicted.sgl.utils.MathUtils;
 import de.caffeineaddicted.sgl.utils.SGLAssets;
 
 public class LD37 extends SGLGame {

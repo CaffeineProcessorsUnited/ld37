@@ -69,10 +69,6 @@ public class MessageList extends Entity {
 
     }
 
-    public void updateSkin() {
-
-    }
-
     @Override
     public void act(float delta) {
         for (Label l: messages) {
@@ -96,7 +92,7 @@ public class MessageList extends Entity {
     public void draw(Batch batch, float parentAlpha) {
         for (Label l: messages) {
             batch.setColor(1, 0.314f, 0.635f, l.getColor().a);
-            background.draw(batch, l.getX() - padding, l.getY(), getWidth() + 2 * padding, l.getHeight() + 2 * padding);
+            background.draw(batch, l.getX() - padding, l.getY() - padding, getWidth() + 2 * padding, l.getHeight() + 2 * padding);
             batch.setColor(1, 1, 1, 1);
             l.draw(batch, parentAlpha);
         }

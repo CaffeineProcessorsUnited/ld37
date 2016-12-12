@@ -69,8 +69,7 @@ public class GameScreen extends SGLStagedScreen<LD37> {
                     }
                     unicornFallingX = MathUtils.random((int) (getViewWidth() / 100) * 20, (int) (getViewWidth() - (getViewWidth() / 100) * 20));
                     unicornFallingScale = (float) MathUtils.random(200, 400) / 100;
-                    unicornFallingRotation = (float) MathUtils.random(40, 180) * (MathUtils.random(0, 1) * -1);
-                    SGL.debug(unicornFallingX + "," + unicornFallingScale + "," + unicornFallingRotation);
+                    unicornFallingRotation = (float) MathUtils.random(40, 180) * ((MathUtils.random(0, 1) == 0 ? 1 : -1));
                 } else if (fadeAction == 2) {
                     loadNextMap();
                     showMessage("You climb the rainbow and find another room.");
@@ -232,7 +231,6 @@ public class GameScreen extends SGLStagedScreen<LD37> {
     @Override
     public void onBeauty() {
         hud.setPosition(0, getViewHeight() - hud.getHeight());
-        messages.updateSkin();
     }
 
     @Override

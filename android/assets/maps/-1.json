@@ -16,7 +16,8 @@
             "key": 0,
             "type": "UPlank",
             "x": 0,
-            "y": 1
+            "y": 1,
+            "trigger": "message:After this break you are relaxed and can continue playing..."
         },
         {
             "key": 0,

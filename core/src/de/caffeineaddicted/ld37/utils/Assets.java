@@ -21,6 +21,7 @@ public class Assets extends SGLAssets {
     @Override
     public void onPreload() {
         //load("skin/uiskin.json", Skin.class);
+        load("title.png", Texture.class);
         load("background/menu.png", Texture.class);
         load("ui/speech.png", Texture.class);
 

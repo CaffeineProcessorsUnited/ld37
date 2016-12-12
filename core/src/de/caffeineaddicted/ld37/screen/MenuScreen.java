@@ -20,12 +20,12 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import de.caffeineaddicted.ld37.LD37;
 import de.caffeineaddicted.sgl.SGL;
+import de.caffeineaddicted.sgl.etities.Image;
 import de.caffeineaddicted.sgl.input.SGLScreenInputMultiplexer;
 import de.caffeineaddicted.sgl.ui.screens.SGLRootScreen;
 import de.caffeineaddicted.sgl.ui.screens.SGLStagedScreen;
 import de.caffeineaddicted.sgl.utils.SGLAssets;
 
-import javax.swing.*;
 import java.util.ArrayList;
 
 /**
@@ -40,7 +40,8 @@ public class MenuScreen extends SGLStagedScreen<LD37> {
             new Vector2(800, 600)
     };
     private TextButton btnContinue, btnStart, btnDifficulty, btnCustomMap, btnResolution, btnExit;
-    private Label btnCustomMapHelp;
+    private Label lblCustomMapHelp, lblCredits;
+    private Image imgTitle;
     private int state = 0;
     private Float[] states = new Float[]{
             0.5f, 2f, 0.5f,
@@ -52,15 +53,24 @@ public class MenuScreen extends SGLStagedScreen<LD37> {
     private float speechPadding = 10;
     private float timer = 0, speechAlpha = 0;
 
+    private String creditsText = "Credits:\n" +
+            "- Felix Richter(@felix5721): Heavy map design\n" +
+            "- Niels Bernlöhr(@k0rmarun): Game code, map design\n" +
+            "- Malte Heinzelmann(@hnzlmnn): Game code, SGL library code\n" +
+            "- Maria Stepanov(@butterwelt): Beautiful assets";
+
     @Override
     public void onBeauty() {
         btnContinue.setPosition(getViewWidth() / 2 - btnContinue.getWidth() / 2, getViewHeight() - 200);
-        btnStart.setPosition(getViewWidth() / 2 - btnStart.getWidth() / 2, btnContinue.getY() - btnContinue.getHeight() - 20);
-        btnDifficulty.setPosition(getViewWidth() / 2 - btnResolution.getWidth() / 2, btnStart.getY() - btnStart.getHeight() - 20);
-        btnCustomMap.setPosition(getViewWidth() / 2 - btnCustomMap.getWidth() / 2, btnDifficulty.getY() - btnDifficulty.getHeight() - 20);
-        btnCustomMapHelp.setPosition(getViewWidth() / 2 - btnCustomMap.getWidth() / 2, btnCustomMap.getY() - btnCustomMap.getHeight() - 20);
-        btnResolution.setPosition(getViewWidth() / 2 - btnResolution.getWidth() / 2, btnCustomMapHelp.getY() - btnCustomMapHelp.getHeight() - 20);
+        btnStart.setPosition(getViewWidth() / 2 - btnStart.getWidth() / 2, btnContinue.getY() - btnStart.getHeight() - 20);
+        btnDifficulty.setPosition(getViewWidth() / 2 - btnResolution.getWidth() / 2, btnStart.getY() - btnResolution.getHeight() - 20);
+        btnCustomMap.setPosition(getViewWidth() / 2 - btnCustomMap.getWidth() / 2, btnDifficulty.getY() - btnCustomMap.getHeight() - 20);
+        lblCustomMapHelp.setPosition(getViewWidth() / 2 - btnCustomMap.getWidth() / 2, btnCustomMap.getY() - lblCustomMapHelp.getHeight() - 20);
+        btnResolution.setPosition(getViewWidth() / 2 - btnResolution.getWidth() / 2, lblCustomMapHelp.getY() - btnResolution.getHeight() - 20);
         btnExit.setPosition(getViewWidth() / 2 - btnExit.getWidth() / 2, btnResolution.getY() - btnResolution.getHeight() - 20);
+
+        lblCredits.setPosition(20, 20);
+        imgTitle.setPosition(getViewWidth() / 2 - imgTitle.getWidth() / 2, getViewHeight() - imgTitle.getHeight() - 40);
     }
 
     @Override
@@ -86,7 +96,7 @@ public class MenuScreen extends SGLStagedScreen<LD37> {
         if (SGL.provide(GameScreen.class).isCreated()) {
             btnStart.setText("Restart Game");
         }
-        btnCustomMapHelp.setVisible(SGL.provide(GameScreen.class).getUseCustomMaps());
+        lblCustomMapHelp.setVisible(SGL.provide(GameScreen.class).getUseCustomMaps());
 
         if (state < states.length) {
             timer += delta;
@@ -140,7 +150,7 @@ public class MenuScreen extends SGLStagedScreen<LD37> {
             public void clicked(InputEvent event, float x, float y) {
                 SGL.provide(SGLRootScreen.class).hideScreen(MenuScreen.class);
                 SGL.provide(SGLRootScreen.class).showScreen(GameScreen.class, SGLRootScreen.ZINDEX.NEAR);
-                SGL.provide(GameScreen.class).loadMap(5);
+                SGL.provide(GameScreen.class).loadMap(-1);
             }
         });
         stage().addActor(btnStart);
@@ -167,10 +177,10 @@ public class MenuScreen extends SGLStagedScreen<LD37> {
         updateBtnCustomMap();
         stage().addActor(btnCustomMap);
 
-        btnCustomMapHelp = new Label("Put your maps (0.json, 1.json, ...) into a folder\n\"maps\" in the same directory as your jar file", SGL.provide(Skin.class));
-        btnCustomMapHelp.setWidth(400);
-        btnCustomMapHelp.setAlignment(Align.center);
-        stage().addActor(btnCustomMapHelp);
+        lblCustomMapHelp = new Label("Put your maps (0.json, 1.json, ...) into a folder\n\"maps\" in the same directory as your jar file", SGL.provide(Skin.class));
+        lblCustomMapHelp.setWidth(400);
+        lblCustomMapHelp.setAlignment(Align.center);
+        stage().addActor(lblCustomMapHelp);
 
         btnResolution = new TextButton("", SGL.provide(Skin.class));
         btnResolution.setWidth(400);
@@ -188,7 +198,7 @@ public class MenuScreen extends SGLStagedScreen<LD37> {
                 if (r == null) {
                     r = resolutions[resolutions.length - 1];
                 } else {
-                    r = resolutions[(i + 1) % resolutions.length];
+                    r = resolutions[(resolutions.length + i - 1) % resolutions.length];
                 }
                 //SGL.game().resize((int) r.x, (int) r.y);
                 SGL.provide(Viewport.class).setWorldSize((int) r.x, (int) r.y);
@@ -200,6 +210,11 @@ public class MenuScreen extends SGLStagedScreen<LD37> {
         updateBtnResolution();
         stage().addActor(btnResolution);
 
+        lblCredits = new Label(creditsText, SGL.provide(Skin.class).get("small", Label.LabelStyle.class));
+        stage().addActor(lblCredits);
+
+        imgTitle = new Image("title.png");
+        stage().addActor(imgTitle);
 
         btnExit = new TextButton("Exit", SGL.provide(Skin.class));
         btnExit.setWidth(400);
@@ -235,7 +250,7 @@ public class MenuScreen extends SGLStagedScreen<LD37> {
         SGL.provide(ShapeRenderer.class).end();
         Gdx.gl.glDisable(GL20.GL_BLEND);
         SGL.provide(SpriteBatch.class).begin();
-        SGL.provide(SpriteBatch.class).setColor(0.7f, 0.7f, 0.7f, 1f);
+        SGL.provide(SpriteBatch.class).setColor(0.4f, 0.4f, 0.4f, 1f);
         background.draw(SGL.provide(SpriteBatch.class), 0, 0, getViewWidth(), getViewHeight());
         SGL.provide(SpriteBatch.class).end();
     }
