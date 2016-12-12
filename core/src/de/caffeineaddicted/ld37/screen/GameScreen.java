@@ -72,7 +72,7 @@ public class GameScreen extends SGLStagedScreen<LD37> {
                     unicornFallingRotation = (float) MathUtils.random(40, 180) * ((MathUtils.random(0, 1) == 0 ? 1 : -1));
                 } else if (fadeAction == 2) {
                     loadNextMap();
-                    showMessage("You climb the rainbow and find another room.");
+                    showMessage("You climb the rainbow and arrive at the next level.");
                     unicornClimbingX = MathUtils.random((int) (getViewWidth() / 100) * 20, (int) (getViewWidth() - (getViewWidth() / 100) * 20));
                     unicornClimbingScale = MathUtils.random(200, 400) / 100;
                 }
@@ -246,7 +246,7 @@ public class GameScreen extends SGLStagedScreen<LD37> {
     @Override
     public void onCreate() {
         SGL.provide(SGLScreenInputMultiplexer.class).addProcessor(this, new GameInputProcessor());
-        loadMap(0);
+        loadMap(5);
         messages = new MessageList();
         hud = new HUD();
 
