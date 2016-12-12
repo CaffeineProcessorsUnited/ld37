@@ -276,7 +276,11 @@ public class Tile extends Entity implements Mortal, Creatable {
         if (trigger.contains("message:")) {
             triggerflags += TRIGGER_HINT;
         }
-        if (trigger.contains("teleport:")) {
+        if (trigger.contains("teleport:") ||
+                trigger.contains("replace:") ||
+                trigger.contains("key:") ||
+                trigger.contains("hole:"))
+        {
             triggerflags += TRIGGER_ACTION;
         }
     }
