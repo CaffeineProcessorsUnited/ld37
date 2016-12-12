@@ -265,7 +265,7 @@ public class GameScreen extends SGLStagedScreen<LD37> {
 
     public void loadMap(int i) {
         int maxMaps = 10; // TODO: Check with some class
-        currentMap = Math.max(0, i);
+        currentMap = Math.max(-1, i);
         currentMap = Math.min(maxMaps, currentMap);
         player = new Player();
         map = null;
