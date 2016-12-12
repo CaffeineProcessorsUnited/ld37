@@ -37,6 +37,7 @@ public class Tile extends Entity implements Mortal, Creatable {
     private boolean dead = false;
     private String trigger;
     private boolean triggered;
+    private int visitCounter = 0;
 
     private boolean justUnlocked = false;
 
@@ -164,6 +165,7 @@ public class Tile extends Entity implements Mortal, Creatable {
 
     public void trigger() {
         if (!isTriggered()) {
+            visitCounter++;
             if (!trigger.isEmpty()) {
                 triggerAction(trigger);
             }
@@ -295,6 +297,10 @@ public class Tile extends Entity implements Mortal, Creatable {
         return keys;
     }
 
+    public int getVisitCounter() {
+        return visitCounter;
+    }
+
     public enum MODE {
         BLOCKING, FALLING
     }
@@ -370,6 +376,8 @@ public class Tile extends Entity implements Mortal, Creatable {
                 KeyHole(params);
             } else if(name.equalsIgnoreCase("teleport")){
                 Teleport(params);
+            } else if(name.equalsIgnoreCase("visit")){
+                Visit(tile, params);
             }
         }
 
@@ -430,6 +438,14 @@ public class Tile extends Entity implements Mortal, Creatable {
             int y = Integer.parseInt(params[1]);
 
             SGL.provide(GameScreen.class).getPlayer().teleport(x+1,y+1); //Walls
+        }
+        
+        public static void Visit(Tile tile, String[] params){
+            int count = Integer.parseInt(params[0]);
+            if(tile.getVisitCounter() == count){
+                String[] data = Arrays.copyOfRange(params, 2, params.length);
+                call(tile, params[1], data);
+            }
         }
     }
 }
