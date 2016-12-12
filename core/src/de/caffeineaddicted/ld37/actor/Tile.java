@@ -393,6 +393,8 @@ public class Tile extends Entity implements Mortal, Creatable {
                 Teleport(params);
             } else if (name.equalsIgnoreCase("visit")) {
                 Visit(tile, params);
+            } else if(name.equalsIgnoreCase("delay")){
+                Delay(tile, params);
             }
         }
 
@@ -462,6 +464,24 @@ public class Tile extends Entity implements Mortal, Creatable {
                 String[] data = Arrays.copyOfRange(params, 2, params.length);
                 call(tile, params[1], data);
             }
+        }
+
+        public static void Delay(Tile tile, String[] params){
+            int count = Integer.parseInt(params[0]);
+            new Thread(new Runnable() {
+                public void run() {
+                    try {
+                        Thread.sleep(1000*count);
+                    } catch (InterruptedException e) {
+                    }
+                    Vector2 pos = SGL.provide(GameScreen.class).getPlayer().getCenterPoint();
+                    Tile ttile = SGL.provide(GameScreen.class).getMap().getTileAt(pos.x, pos.y);
+                    if(tile == ttile) {
+                        String[] data = Arrays.copyOfRange(params, 2, params.length);
+                        call(tile, params[1], data);
+                    }
+                }
+            }).start();
         }
     }
 }
