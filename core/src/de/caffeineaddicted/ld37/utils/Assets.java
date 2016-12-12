@@ -46,6 +46,7 @@ public class Assets extends SGLAssets {
         load("player/unicornwalk.png", Texture.class);
         load("player/unicornfalling.png", Texture.class);
         load("player/unicornclimbing.png", Texture.class);
+        load("player/unicornendgame.png", Texture.class);
         load("player/ladder.png", Texture.class);
 
         load("background/map.png", Texture.class);

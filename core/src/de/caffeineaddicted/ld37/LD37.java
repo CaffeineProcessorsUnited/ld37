@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.viewport.*;
 import de.caffeineaddicted.ld37.input.GlobalInputProcessor;
 import de.caffeineaddicted.ld37.message.MainMenuMessage;
 import de.caffeineaddicted.ld37.screen.BackgroundScreen;
+import de.caffeineaddicted.ld37.screen.EndGameScreen;
 import de.caffeineaddicted.ld37.screen.GameScreen;
 import de.caffeineaddicted.ld37.screen.MenuScreen;
 import de.caffeineaddicted.ld37.utils.Assets;
@@ -66,11 +67,13 @@ public class LD37 extends SGLGame {
     protected void initScreens() {
         supply(BackgroundScreen.class, new BackgroundScreen());
         supply(GameScreen.class, new GameScreen());
+        supply(EndGameScreen.class, new EndGameScreen());
         supply(MenuScreen.class, new MenuScreen());
         supply(ShapeRenderer.class, new ShapeRenderer());
         supply(SpriteBatch.class, new SpriteBatch());
         provide(SGLRootScreen.class).loadScreen(provide(BackgroundScreen.class));
         provide(SGLRootScreen.class).loadScreen(provide(GameScreen.class));
+        provide(SGLRootScreen.class).loadScreen(provide(EndGameScreen.class));
         provide(SGLRootScreen.class).loadScreen(provide(MenuScreen.class));
 
     }
