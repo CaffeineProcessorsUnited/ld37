@@ -56,7 +56,7 @@
         },
         {
             "key": 1,
-            "trigger": "message:If the way you would slide is blocked you will bounce back.",
+            "trigger": "message:You got the golden key. Now you can open the lock.",
             "type": "Ice",
             "x": 3,
             "y": 1

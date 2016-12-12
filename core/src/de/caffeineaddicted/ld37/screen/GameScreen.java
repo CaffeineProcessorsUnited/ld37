@@ -10,9 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.scenes.scene2d.utils.TransformDrawable;
 import com.badlogic.gdx.utils.Align;
 import de.caffeineaddicted.ld37.LD37;
 import de.caffeineaddicted.ld37.actor.HUD;
@@ -55,7 +53,6 @@ public class GameScreen extends SGLStagedScreen<LD37> {
     private TextureRegionDrawable unicornFallingDrawable, unicornClimbingDrawable, unicordLadderDrawable;
     private float unicornFallingDuration = 0.4f, unicornFalling = 0, unicornFallingX, unicornFallingScale, unicornFallingRotation;
     private float unicornClimbingDuration = 1.2f, unicornClimbing = 0, unicornClimbingX, unicornClimbingScale;
-
 
     public void onBeforeAct(float delta) {
         for (Actor a : deleteLater) {
@@ -136,21 +133,6 @@ public class GameScreen extends SGLStagedScreen<LD37> {
             cameraMovement = true;
             float dX = getViewWidth() / 2 - player.getX();
             float dY = getViewHeight() / 2 - player.getY();
-            /*
-            if (cameraSpeedX == 0 || Math.signum(dX) == cameraSpeedX) {
-                cameraSpeedX = dX / cameraBaseSpeed;
-            } else if (Math.abs(dX) < 1f) {
-                cameraSpeedX = 0;
-            }
-            if (cameraSpeedY == 0 || Math.signum(dY) == cameraSpeedY) {
-                cameraSpeedY = dY / cameraBaseSpeed;
-            } else if (Math.abs(dY) < 1f) {
-                cameraSpeedY = 0;
-            }
-            if (Math.abs(dX) < 1f && Math.abs(dY) < 1f) {
-                cameraMovement = false;
-            }
-            */
             if (Math.abs(dX) < 1 && Math.abs(dY) < 1) {
                 cameraMovement = false;
             }
@@ -267,14 +249,7 @@ public class GameScreen extends SGLStagedScreen<LD37> {
         loadMap(1);
         hud = new HUD();
         hud.setPosition(0, getViewHeight() - hud.getHeight());
-        //addActor(player);
-        //addActor(map);
-        //addActor(hud);
-        /*MoveToAction a = new MoveToAction();
-        a.setAlignment(Align.center);
-        a.setPosition(200, 0);
-        a.setDuration(2);
-        map.addAction(a);*/
+
         SGL.registerMessageReceiver(FireEverythingMessage.class, new MessageReceiver() {
             @Override
             public void receiveMessage(Message message) {
@@ -295,7 +270,6 @@ public class GameScreen extends SGLStagedScreen<LD37> {
         map = SGL.provide(SGLAssets.class).get("maps/" + currentMap + ".json", MapWrapper.class).getMap();
         map.reset();
         Vector2 spawn = map.calPixCoord(map.getStart());
-        SGL.debug("spawn " + spawn.toString());
         player.setPosition(map.getX() + spawn.x, map.getY() + spawn.y);
         reset();
     }

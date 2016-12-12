@@ -6,14 +6,19 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import de.caffeineaddicted.ld37.input.GlobalInputProcessor;
+import de.caffeineaddicted.ld37.message.MainMenuMessage;
 import de.caffeineaddicted.ld37.screen.BackgroundScreen;
 import de.caffeineaddicted.ld37.screen.GameScreen;
 import de.caffeineaddicted.ld37.screen.MenuScreen;
 import de.caffeineaddicted.ld37.utils.Assets;
 import de.caffeineaddicted.sgl.ApplicationConfiguration;
 import de.caffeineaddicted.sgl.AttributeList;
+import de.caffeineaddicted.sgl.SGL;
 import de.caffeineaddicted.sgl.SGLGame;
 import de.caffeineaddicted.sgl.input.SGLScreenInputMultiplexer;
+import de.caffeineaddicted.sgl.messages.Message;
+import de.caffeineaddicted.sgl.messages.MessageReceiver;
 import de.caffeineaddicted.sgl.ui.screens.SGLRootScreen;
 import de.caffeineaddicted.sgl.utils.SGLAssets;
 
@@ -33,6 +38,15 @@ public class LD37 extends SGLGame {
         supply(InputMultiplexer.class, new InputMultiplexer());
         Gdx.input.setInputProcessor(provide(InputMultiplexer.class));
         provide(InputMultiplexer.class).addProcessor(provide(SGLScreenInputMultiplexer.class));
+        provide(InputMultiplexer.class).addProcessor(new GlobalInputProcessor());
+        SGL.registerMessageReceiver(MainMenuMessage.class, new MessageReceiver() {
+            @Override
+            public void receiveMessage(Message message) {
+                provide(SGLRootScreen.class).hideScreen(GameScreen.class);
+                provide(SGLRootScreen.class).showScreen(MenuScreen.class, SGLRootScreen.ZINDEX.NEAREST);
+
+            }
+        });
     }
 
     @Override

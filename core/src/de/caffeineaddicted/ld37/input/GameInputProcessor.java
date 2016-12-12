@@ -7,7 +7,7 @@ import de.caffeineaddicted.sgl.SGL;
 import de.caffeineaddicted.sgl.input.SGLInputProcessor;
 
 /**
- * Created by niels on 20.08.16.
+ * @author Malte Heinzelmann
  */
 public class GameInputProcessor extends SGLInputProcessor {
 
@@ -53,7 +53,7 @@ public class GameInputProcessor extends SGLInputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        SGL.debug("touchDown: " + screenX + "," + screenY);
+        //SGL.debug("touchDown: " + screenX + "," + screenY);
         lastDragX = screenX;
         lastDragY = screenY;
         return false;
@@ -61,18 +61,16 @@ public class GameInputProcessor extends SGLInputProcessor {
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        SGL.debug("touchUp: " + screenX + "," + screenY);
+        //SGL.debug("touchUp: " + screenX + "," + screenY);
         return false;
     }
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        SGL.debug("touchDragged: " + screenX + "," + screenY + " distance: " + (screenX - lastDragX) + "," + (screenY - lastDragY));
-        SGL.debug("x:" + lastDragX + " y:" + lastDragY);
+        //SGL.debug("touchDragged: " + screenX + "," + screenY + " distance: " + (screenX - lastDragX) + "," + (screenY - lastDragY));
         SGL.provide(GameScreen.class).drag(screenX - lastDragX, screenY - lastDragY);
         lastDragX = screenX;
         lastDragY = screenY;
-        SGL.debug("x:" + lastDragX + " y:" + lastDragY);
         return false;
     }
 

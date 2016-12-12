@@ -73,11 +73,14 @@ public class Player extends UnitBase {
 
         Tile tile = SGL.provide(GameScreen.class).getMap().getTileAt(getCenterPoint().x, getCenterPoint().y);
 
+        if (tile == null)
+            return;
+
         if (currentTile != tile) {
             newTile = true;
         }
 
-        if (tile == null || tile.isDead() || (slipperyDir != null && !tile.canAccess(slipperyDir.flag()) && tile.getType().mode == Tile.MODE.FALLING)) {
+        if (tile.isDead() || (slipperyDir != null && !tile.canAccess(slipperyDir.flag()) && tile.getType().mode == Tile.MODE.FALLING)) {
             onDie();
             SGL.error("U DEAD");
             return;
@@ -86,18 +89,16 @@ public class Player extends UnitBase {
         if (!hasActions()) {
             if (newTile) {
                 newTile = false;
-                if (tile != null) {
-                    tile.walkOver();
-                    if (tile.hasKey()) {
-                        collectKey(tile.takeKey());
-                    }
-                    if (tile.isKeyHole()) {
-                        if (tile.canAcceptKeys(keys)) {
-                            keys = tile.fillKeyHole(keys);
-                        }
-                    }
-                    tile.trigger();
+                tile.walkOver();
+                if (tile.hasKey()) {
+                    collectKey(tile.takeKey());
                 }
+                if (tile.isKeyHole()) {
+                    if (tile.canAcceptKeys(keys)) {
+                        keys = tile.fillKeyHole(keys);
+                    }
+                }
+                tile.trigger();
             }
             if (tile.getType().slipery && slipperyDir != null && slipperyDir != MovementDirection.NONE) {
                 createAction(slipperyDir, true);
@@ -141,7 +142,9 @@ public class Player extends UnitBase {
             }
             return;
         }
-        SGL.provide(GameScreen.class).nextMessage();
+        if (!wasslippery) {
+            SGL.provide(GameScreen.class).nextMessage();
+        }
         action.setDuration(speed);
         addAction(action);
     }

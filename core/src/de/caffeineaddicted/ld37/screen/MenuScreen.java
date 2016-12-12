@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -30,7 +29,7 @@ import java.util.ArrayList;
  */
 public class MenuScreen extends SGLStagedScreen<LD37> {
 
-    TextButton btnStart, btnExit;
+    TextButton btnContinue, btnStart, btnExit;
     private int state = 0;
     private Float[] states = new Float[]{
             0.5f, 2f, 0.5f,
@@ -77,6 +76,7 @@ public class MenuScreen extends SGLStagedScreen<LD37> {
         if (timer >= states[state]) {
             timer -= states[state++];
         }
+        btnContinue.setDisabled(!SGL.provide(GameScreen.class).isCreated());
     }
 
     @Override
@@ -93,9 +93,23 @@ public class MenuScreen extends SGLStagedScreen<LD37> {
         t2.setPosition(getViewWidth() / 2 - t2.getWidth() / 2, 100);
         //speechLabels.add(t2);
 
-        btnStart = new TextButton("Start Game", SGL.provide(Skin.class), "blue");
+        btnContinue = new TextButton("Continue", SGL.provide(Skin.class));
+        btnContinue.setWidth(400);
+        btnContinue.setPosition(getViewWidth() / 2 - btnContinue.getWidth() / 2, getViewHeight() - 200);
+        btnContinue.addListener(new ClickListener() {
+            public void clicked(InputEvent event, float x, float y) {
+                if (((TextButton) event.getListenerActor()).isDisabled()) {
+                    return;
+                }
+                SGL.provide(SGLRootScreen.class).hideScreen(MenuScreen.class);
+                SGL.provide(SGLRootScreen.class).showScreen(GameScreen.class, SGLRootScreen.ZINDEX.NEAR);
+            }
+        });
+        stage().addActor(btnContinue);
+
+        btnStart = new TextButton("Start Game", SGL.provide(Skin.class));
         btnStart.setWidth(400);
-        btnStart.setPosition(getViewWidth() / 2 - btnStart.getWidth() / 2, getViewHeight() - 200);
+        btnStart.setPosition(getViewWidth() / 2 - btnStart.getWidth() / 2, getViewHeight() - 250);
         btnStart.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 SGL.provide(SGLRootScreen.class).hideScreen(MenuScreen.class);
