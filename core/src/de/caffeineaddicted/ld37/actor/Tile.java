@@ -23,6 +23,12 @@ public class Tile extends Entity implements Mortal, Creatable {
     public final static int ACCESS_HORIZONTAL = ACCESS_LEFT + ACCESS_RIGHT;
     public final static int ACCESS_VERTICAL = ACCESS_UP + ACCESS_DOWN;
     public final static int ACCESS_ALL = ACCESS_LEFT + ACCESS_RIGHT + ACCESS_UP + ACCESS_DOWN;
+
+    public final static int TRIGGER_NONE = 0;
+    public final static int TRIGGER_HINT = 1;
+    public final static int TRIGGER_ACTION = 2;
+    public final static int TRIGGER_ALL = TRIGGER_HINT + TRIGGER_ACTION;
+
     private Tile.Type type;
     private int stepsLeft;
     private int key = 0;
@@ -33,6 +39,7 @@ public class Tile extends Entity implements Mortal, Creatable {
     private boolean dead = false;
     private String trigger;
     private boolean triggered;
+    private int triggerflags;
     private int visitCounter = 0;
 
     private boolean justUnlocked = false;
@@ -228,7 +235,10 @@ public class Tile extends Entity implements Mortal, Creatable {
             a = 0;
         }
         String Texture = addTexture(type.assets[a]);
-        if (trigger != null && trigger.length() > 0) {
+        if (hasTrigger(TRIGGER_HINT)) {
+            addActor(new HintMarker());
+        }
+        if (hasTrigger(TRIGGER_ACTION)) {
             addActor(new ActionMarker());
         }
         if (keyHole > 0) {
@@ -237,6 +247,10 @@ public class Tile extends Entity implements Mortal, Creatable {
         if (hasKey()) {
             addActor(new Key(getKeyType()));
         }
+    }
+
+    public boolean hasTrigger(int flags) {
+        return (triggerflags & flags) == flags;
     }
 
     @Override
@@ -258,6 +272,13 @@ public class Tile extends Entity implements Mortal, Creatable {
 
     public void setTrigger(String trigger) {
         this.trigger = trigger;
+        // TODO: Catch all
+        if (trigger.contains("message:")) {
+            triggerflags += TRIGGER_HINT;
+        }
+        if (trigger.contains("teleport:")) {
+            triggerflags += TRIGGER_ACTION;
+        }
     }
 
     public boolean isKeyHole() {

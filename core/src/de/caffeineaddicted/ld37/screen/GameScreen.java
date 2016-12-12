@@ -461,7 +461,7 @@ public class GameScreen extends SGLStagedScreen<LD37> {
     }
 
     public enum ZINDEX {
-        Tile(10), ActionMarker(15), KeyHole(20), Key(30), Player(40), Hud(50), Messages(100);
+        Tile(10), Marker(15), KeyHole(20), Key(30), Player(40), Hud(50), Messages(100);
 
         public final int idx;
 
