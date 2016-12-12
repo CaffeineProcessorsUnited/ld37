@@ -11,6 +11,7 @@ public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
         SGLGame game = new LD37();
+        config.fullscreen = true;
         config.width = SGL.game().config().get(AttributeList.WIDTH) + 100;
         config.height = SGL.game().config().get(AttributeList.HEIGHT);
         config.resizable = SGL.game().config().get(AttributeList.RESIZABLE);

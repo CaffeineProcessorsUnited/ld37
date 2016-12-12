@@ -262,7 +262,7 @@ public class GameScreen extends SGLStagedScreen<LD37> {
     @Override
     public void onCreate() {
         SGL.provide(SGLScreenInputMultiplexer.class).addProcessor(this, new GameInputProcessor());
-        loadMap(0);
+        loadMap(1);
         hud = new HUD();
         hud.setPosition(0, getViewHeight() - hud.getHeight());
         //addActor(player);
