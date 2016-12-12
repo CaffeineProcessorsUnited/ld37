@@ -79,6 +79,8 @@ public class Player extends UnitBase {
             pos.add(SGL.provide(GameScreen.class).getMap().getX(), SGL.provide(GameScreen.class).getMap().getY());
             setPosition(pos.x, pos.y);
             teleportPosition = null;
+            clearActions();
+            SGL.provide(GameScreen.class).moveMapBy(0,0);
         }
 
         Tile tile = SGL.provide(GameScreen.class).getMap().getTileAt(getCenterPoint().x, getCenterPoint().y);
