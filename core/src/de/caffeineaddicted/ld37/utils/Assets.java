@@ -82,12 +82,12 @@ public class Assets extends SGLAssets {
         load("keys/lock6.png", Texture.class);
         load("keys/lock7.png", Texture.class);
 
+        load("maps/-1.json", MapWrapper.class);
         load("maps/0.json", MapWrapper.class);
         load("maps/1.json", MapWrapper.class);
-        load("maps/10.json", MapWrapper.class);
-        load("maps/9.json", MapWrapper.class);
         load("maps/2.json", MapWrapper.class);
         load("maps/3.json", MapWrapper.class);
+        load("maps/4.json", MapWrapper.class);
 
     }
 }
