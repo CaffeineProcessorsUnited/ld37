@@ -224,6 +224,9 @@ public class Tile extends Entity implements Mortal, Creatable {
             a = 0;
         }
         String Texture = addTexture(type.assets[a]);
+        if (trigger != null && trigger.length() > 0) {
+            addActor(new ActionMarker());
+        }
         if (keyHole > 0) {
             addActor(new KeyHole(keyHole));
         }

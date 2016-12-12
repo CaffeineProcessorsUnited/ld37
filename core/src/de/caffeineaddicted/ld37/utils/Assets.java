@@ -47,6 +47,7 @@ public class Assets extends SGLAssets {
         load("tiles/metal.png", Texture.class);
         load("tiles/entry.png", Texture.class);
         load("tiles/exit.png", Texture.class);
+        load("tiles/action.png", Texture.class);
 
         load("walls/wall.png", Texture.class);
         load("walls/wallleft.png", Texture.class);
