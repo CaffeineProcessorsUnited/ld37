@@ -165,13 +165,14 @@ public class Map extends Entity implements Creatable {
 
     /**
      * Tile at map coordiantes x and y
+     *
      * @param x x coordinate
      * @param y y coordinate
      * @return Tile or null
      */
     public Tile getTile(int x, int y) {
         for (Tile tile : floor) {
-            if (tile.getStart().x -1 == x && tile.getStart().y -1 == y) {
+            if (tile.getStart().x - 1 == x && tile.getStart().y - 1 == y) {
                 return tile;
             }
         }

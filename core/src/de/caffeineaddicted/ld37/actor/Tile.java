@@ -54,7 +54,7 @@ public class Tile extends Entity implements Mortal, Creatable {
 
     public void setKey(int key) {
         this.key = key;
-        if(isCreated()){
+        if (isCreated()) {
             setTexture();
         }
     }
@@ -279,8 +279,7 @@ public class Tile extends Entity implements Mortal, Creatable {
         if (trigger.contains("teleport:") ||
                 trigger.contains("replace:") ||
                 trigger.contains("key:") ||
-                trigger.contains("hole:"))
-        {
+                trigger.contains("hole:")) {
             triggerflags += TRIGGER_ACTION;
         }
     }
@@ -324,7 +323,7 @@ public class Tile extends Entity implements Mortal, Creatable {
 
         Empty(0, false, 0, ACCESS_NONE, MODE.FALLING, Key.KEY_NONE, "tiles/tile_empty.png"),
         Stone(2, false, 4, ACCESS_ALL, MODE.BLOCKING, Key.KEY_NONE, "tiles/stonebroke.png", "tiles/stonehalf.png", "tiles/stone.png"),
-        DamagedStone(1, false, 4, ACCESS_ALL, MODE.BLOCKING, Key.KEY_NONE, "tiles/stonebroke.png","tiles/stonehalf.png"),
+        DamagedStone(1, false, 4, ACCESS_ALL, MODE.BLOCKING, Key.KEY_NONE, "tiles/stonebroke.png", "tiles/stonehalf.png"),
         Ice(1, true, 2, ACCESS_ALL, MODE.BLOCKING, Key.KEY_NONE, "tiles/icebroke.png", "tiles/ice.png"),
 
         HPlank(0, false, 2, ACCESS_HORIZONTAL, MODE.FALLING, Key.KEY_NONE, "tiles/woodplankhorizontal.png"),
@@ -397,7 +396,7 @@ public class Tile extends Entity implements Mortal, Creatable {
                 Teleport(params);
             } else if (name.equalsIgnoreCase("visit")) {
                 Visit(tile, params);
-            } else if(name.equalsIgnoreCase("delay")){
+            } else if (name.equalsIgnoreCase("delay")) {
                 Delay(tile, params);
             }
         }
@@ -469,17 +468,17 @@ public class Tile extends Entity implements Mortal, Creatable {
             }
         }
 
-        public static void Delay(Tile tile, String[] params){
+        public static void Delay(Tile tile, String[] params) {
             int count = Integer.parseInt(params[0]);
             new Thread(new Runnable() {
                 public void run() {
                     try {
-                        Thread.sleep(1000*count);
+                        Thread.sleep(1000 * count);
                     } catch (InterruptedException e) {
                     }
                     Vector2 pos = SGL.provide(GameScreen.class).getPlayer().getCenterPoint();
                     Tile ttile = SGL.provide(GameScreen.class).getMap().getTileAt(pos.x, pos.y);
-                    if(tile == ttile) {
+                    if (tile == ttile) {
                         String[] data = Arrays.copyOfRange(params, 2, params.length);
                         call(tile, params[1], data);
                     }

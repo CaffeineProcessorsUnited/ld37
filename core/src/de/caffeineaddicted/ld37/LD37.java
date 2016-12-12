@@ -10,8 +10,8 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.utils.Scaling;
-import com.badlogic.gdx.utils.viewport.*;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import de.caffeineaddicted.ld37.input.GlobalInputProcessor;
 import de.caffeineaddicted.ld37.message.MainMenuMessage;
 import de.caffeineaddicted.ld37.screen.BackgroundScreen;
@@ -28,7 +28,6 @@ import de.caffeineaddicted.sgl.input.SGLScreenInputMultiplexer;
 import de.caffeineaddicted.sgl.messages.Message;
 import de.caffeineaddicted.sgl.messages.MessageReceiver;
 import de.caffeineaddicted.sgl.ui.screens.SGLRootScreen;
-import de.caffeineaddicted.sgl.utils.MathUtils;
 import de.caffeineaddicted.sgl.utils.SGLAssets;
 
 public class LD37 extends SGLGame {

@@ -164,9 +164,6 @@ public class Player extends UnitBase {
         if (!newtile.canAccess(accessflag) && newtile.getType().mode == Tile.MODE.FALLING) {
             dieOnChange = true;
         }
-        if (!wasslippery) {
-            SGL.provide(GameScreen.class).nextMessage();
-        }
 
         if (action.getAmountX() >= 0) {
             getActor(ACTOR_BASE).setScaleX(1);

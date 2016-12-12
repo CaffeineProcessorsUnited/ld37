@@ -33,7 +33,7 @@ import java.util.ArrayList;
  */
 public class MenuScreen extends SGLStagedScreen<LD37> {
 
-    private static Vector2[] resolutions = new Vector2[] {
+    private static Vector2[] resolutions = new Vector2[]{
             new Vector2(1920, 1080),
             new Vector2(1600, 900),
             new Vector2(1280, 720),

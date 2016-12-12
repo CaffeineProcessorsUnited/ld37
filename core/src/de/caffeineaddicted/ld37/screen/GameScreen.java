@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import de.caffeineaddicted.ld37.LD37;
 import de.caffeineaddicted.ld37.actor.*;
@@ -25,9 +24,6 @@ import de.caffeineaddicted.sgl.utils.MathUtils;
 import de.caffeineaddicted.sgl.utils.SGLAssets;
 
 import java.util.ArrayList;
-import java.util.Queue;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.logging.FileHandler;
 
 /**
  * @author Malte Heinzelmann
@@ -37,9 +33,7 @@ public class GameScreen extends SGLStagedScreen<LD37> {
     public ArrayList<Actor> deleteLater = new ArrayList<Actor>();
     private Player player;
     private Map map;
-    private Queue<Label> messageQueue = new LinkedBlockingQueue<Label>();
     private MessageList messages;
-    private float speechPadding = 10;
     private int fade = 0;
     private float timer = 0, fadeDuration = 0.5f, fadeAlpha = 0, fadeAction = 0;
     private HUD hud;
@@ -133,13 +127,6 @@ public class GameScreen extends SGLStagedScreen<LD37> {
 
     @Override
     public void onAfterAct(float delta) {
-        Label label = messageQueue.peek();
-        if (label != null) {
-            label.act(delta);
-            if (!label.hasActions()) {
-                messageQueue.poll();
-            }
-        }
         // center player
         if (player.hasActions() || cameraMovement) {
             cameraMovement = true;
@@ -307,7 +294,6 @@ public class GameScreen extends SGLStagedScreen<LD37> {
         if (messages != null) {
             messages.clear();
         }
-        speechPadding = 10;
         dead = false;
         centerMap();
     }
@@ -336,7 +322,6 @@ public class GameScreen extends SGLStagedScreen<LD37> {
         fade = 1;
         timer = 0;
         fadeAction = 1;
-        messageQueue.clear();
     }
 
     public void winGame() {
@@ -344,7 +329,6 @@ public class GameScreen extends SGLStagedScreen<LD37> {
         fade = 1;
         timer = 0;
         fadeAction = 2;
-        messageQueue.clear();
     }
 
     public void loadPreviousMap() {
@@ -455,10 +439,6 @@ public class GameScreen extends SGLStagedScreen<LD37> {
 
     public void showMessage(String message) {
         messages.postMessage(message);
-    }
-
-    public void nextMessage() {
-        messageQueue.poll();
     }
 
     public boolean toggleUseCustomMaps() {
