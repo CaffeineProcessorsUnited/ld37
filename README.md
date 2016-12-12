@@ -8,22 +8,14 @@ Your mission is to beat your way through all levels and reach the top of the tow
 
 **But beware!** If you make a bad move you will fall down and hopefully land on a lower level.
 
-
-
 ## Credits
 
-* Felix Richter(@felix5721): Map design
-* Niels Bernlöhr(@k0rmarun): Coding
-* Malte Heinzelmann(@hnzlmnn): Coding
-* Maria Stepanov(@butterwelt): Assets
+* Felix Richter(@felix5721): Heavy map design
+* Niels Bernlöhr(@k0rmarun): Game code
+* Malte Heinzelmann(@hnzlmnn): Game code, [SGL](https://github.com/CaffeineProcessorsUnited/superior-game-library) library code
+* Maria Stepanov(@butterwelt): Beautiful assets
 
 ## Development
-
-### Setup
-Create a file named `local.properties` and insert
-```
-sdk.dir=PATH-TO-YOUR-ANDROID-SDK
-```
 
 ## Running
 
