@@ -1,6 +1,6 @@
 {
-    "end_x": 0,
-    "end_y": 11,
+    "end_x": 11,
+    "end_y": 0,
     "height": 2,
     "start_x": 0,
     "start_y": 0,
@@ -163,7 +163,7 @@
         {
             "hole": 0,
             "key": 0,
-            "type": "Exit",
+            "type": "Stone",
             "x": 11,
             "y": 0
         },

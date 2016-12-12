@@ -158,6 +158,9 @@ public class Tile extends Entity implements Mortal, Creatable {
             setTexture();
         }
         justUnlocked = false;
+        if (type == Type.Exit) {
+            SGL.provide(GameScreen.class).winGame();
+        }
     }
 
     public void trigger() {
@@ -325,7 +328,7 @@ public class Tile extends Entity implements Mortal, Creatable {
         WallRD(0, false, 2, ACCESS_NONE, MODE.BLOCKING, Key.KEY_NONE, "walls/wallcornerlowerright.png"),
 
         Entry(0, false, 0, ACCESS_ALL, MODE.BLOCKING, KEY_NONE, "tiles/entry.png"),
-        Exit(0, false, 0, ACCESS_ALL, MODE.BLOCKING, KEY_NONE, "tiles/entry.png"),;
+        Exit(0, false, 0, ACCESS_ALL, MODE.BLOCKING, KEY_NONE, "tiles/exit.png"),;
 
         public final int durability;
         public final boolean slipery;

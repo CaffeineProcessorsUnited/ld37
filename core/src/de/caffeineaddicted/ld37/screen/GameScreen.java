@@ -43,7 +43,7 @@ public class GameScreen extends SGLStagedScreen<LD37> {
     private Player player;
     private Map map;
     private Queue<Label> messageQueue = new LinkedBlockingQueue<Label>();
-    private Drawable speechBackground;
+    private TextureRegionDrawable speechBackground;
     private float speechPadding = 10;
     private int fade = 0;
     private float timer = 0, fadeDuration = 0.5f, fadeAlpha = 0, fadeAction = 0;
@@ -52,7 +52,7 @@ public class GameScreen extends SGLStagedScreen<LD37> {
     private int currentMap;
     private float cameraBaseSpeed = 256;
     private boolean cameraMovement = false;
-    private TransformDrawable unicornFallingDrawable, unicornClimbingDrawable;
+    private TextureRegionDrawable unicornFallingDrawable, unicornClimbingDrawable, unicordLadderDrawable;
     private float unicornFallingDuration = 0.4f, unicornFalling = 0, unicornFallingX, unicornFallingScale, unicornFallingRotation;
     private float unicornClimbingDuration = 2, unicornClimbing = 0, unicornClimbingX, unicornClimbingScale;
 
@@ -180,7 +180,7 @@ public class GameScreen extends SGLStagedScreen<LD37> {
         }
         SGL.provide(SpriteBatch.class).begin();
         if (fade == 2) {
-            SGL.provide(ShapeRenderer.class).setColor(1, 1, 1, fadeAlpha);
+            SGL.provide(SpriteBatch.class).setColor(1, 1, 1, 1);
             if (unicornFalling > 0) {
                 unicornFallingDrawable.draw(
                         SGL.provide(SpriteBatch.class),
@@ -195,7 +195,28 @@ public class GameScreen extends SGLStagedScreen<LD37> {
                         -unicornFallingRotation * unicornFalling);
             }
             if (unicornClimbing > 0) {
-                // TODO: Draw rainbow
+                unicordLadderDrawable.draw(
+                        SGL.provide(SpriteBatch.class),
+                        unicornClimbingX - unicornClimbingDrawable.getMinWidth() / 2,
+                        0,
+                        unicordLadderDrawable.getMinWidth() / 2,
+                        unicordLadderDrawable.getMinHeight() / 2,
+                        unicornClimbingDrawable.getMinWidth(),
+                        getViewHeight(),
+                        unicornClimbingScale,
+                        unicornClimbingScale,
+                        0f);
+                unicordLadderDrawable.draw(
+                        SGL.provide(SpriteBatch.class),
+                        unicornClimbingX + unicornClimbingDrawable.getMinWidth() / 2,
+                        0,
+                        unicordLadderDrawable.getMinWidth() / 2,
+                        unicordLadderDrawable.getMinHeight() / 2,
+                        unicornClimbingDrawable.getMinWidth(),
+                        getViewHeight(),
+                        unicornClimbingScale,
+                        unicornClimbingScale,
+                        0f);
                 unicornClimbingDrawable.draw(
                         SGL.provide(SpriteBatch.class),
                         unicornClimbingX,
@@ -260,6 +281,7 @@ public class GameScreen extends SGLStagedScreen<LD37> {
         });
         unicornFallingDrawable = new TextureRegionDrawable(new TextureRegion(SGL.provide(SGLAssets.class).get("player/unicornfalling.png", Texture.class)));
         unicornClimbingDrawable = new TextureRegionDrawable(new TextureRegion(SGL.provide(SGLAssets.class).get("player/unicornclimbing.png", Texture.class)));
+        unicordLadderDrawable = new TextureRegionDrawable(new TextureRegion(SGL.provide(SGLAssets.class).get("player/ladder.png", Texture.class)));
         speechBackground = new TextureRegionDrawable(new TextureRegion(SGL.provide(SGLAssets.class).get("ui/speech.png", Texture.class)));
     }
 
