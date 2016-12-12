@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TiledDrawable;
+import com.badlogic.gdx.utils.Align;
 import de.caffeineaddicted.ld37.LD37;
 import de.caffeineaddicted.sgl.SGL;
 import de.caffeineaddicted.sgl.input.SGLScreenInputMultiplexer;
@@ -29,7 +30,8 @@ import java.util.ArrayList;
  */
 public class MenuScreen extends SGLStagedScreen<LD37> {
 
-    TextButton btnContinue, btnStart, btnExit;
+    private TextButton btnContinue, btnStart, btnCustomMap, btnExit;
+    private Label btnCustomMapHelp;
     private int state = 0;
     private Float[] states = new Float[]{
             0.5f, 2f, 0.5f,
@@ -58,25 +60,29 @@ public class MenuScreen extends SGLStagedScreen<LD37> {
 
     @Override
     public void onBeforeAct(float delta) {
-        if (state >= states.length) {
-            return;
-        }
-        timer += delta;
-        switch (state % 3) {
-            case 0:
-                speechAlpha = Math.min(timer / states[state], 1f);
-                break;
-            case 1:
-                speechAlpha = 1f;
-                break;
-            case 2:
-                speechAlpha = 1 - Math.min(timer / states[state], 1f);
-                break;
-        }
-        if (timer >= states[state]) {
-            timer -= states[state++];
-        }
         btnContinue.setDisabled(!SGL.provide(GameScreen.class).isCreated());
+        if (SGL.provide(GameScreen.class).isCreated()) {
+            btnStart.setText("Restart Game");
+        }
+        btnCustomMapHelp.setVisible(SGL.provide(GameScreen.class).getUseCustomMaps());
+
+        if (state < states.length) {
+            timer += delta;
+            switch (state % 3) {
+                case 0:
+                    speechAlpha = Math.min(timer / states[state], 1f);
+                    break;
+                case 1:
+                    speechAlpha = 1f;
+                    break;
+                case 2:
+                    speechAlpha = 1 - Math.min(timer / states[state], 1f);
+                    break;
+            }
+            if (timer >= states[state]) {
+                timer -= states[state++];
+            }
+        }
     }
 
     @Override
@@ -114,9 +120,28 @@ public class MenuScreen extends SGLStagedScreen<LD37> {
             public void clicked(InputEvent event, float x, float y) {
                 SGL.provide(SGLRootScreen.class).hideScreen(MenuScreen.class);
                 SGL.provide(SGLRootScreen.class).showScreen(GameScreen.class, SGLRootScreen.ZINDEX.NEAR);
+                SGL.provide(GameScreen.class).loadMap(0);
             }
         });
         stage().addActor(btnStart);
+
+        btnCustomMap = new TextButton("", SGL.provide(Skin.class));
+        btnCustomMap.setWidth(400);
+        btnCustomMap.setPosition(getViewWidth() / 2 - btnCustomMap.getWidth() / 2, getViewHeight() - 300);
+        btnCustomMap.addListener(new ClickListener() {
+            public void clicked(InputEvent event, float x, float y) {
+                SGL.provide(GameScreen.class).toggleUseCustomMaps();
+                updateBtnCustomMap();
+            }
+        });
+        updateBtnCustomMap();
+        stage().addActor(btnCustomMap);
+
+        btnCustomMapHelp = new Label("Put your maps (0.json, 1.json, ...) into a folder\n\"maps\" in the same directory as your jar file", SGL.provide(Skin.class));
+        btnCustomMapHelp.setWidth(400);
+        btnCustomMapHelp.setPosition(getViewWidth() / 2 - btnCustomMap.getWidth() / 2, getViewHeight() - 350);
+        btnCustomMapHelp.setAlignment(Align.center);
+        stage().addActor(btnCustomMapHelp);
 
         btnExit = new TextButton("Exit", SGL.provide(Skin.class));
         btnExit.setWidth(400);
@@ -129,6 +154,10 @@ public class MenuScreen extends SGLStagedScreen<LD37> {
         stage().addActor(btnExit);
     }
 
+    public void updateBtnCustomMap() {
+        btnCustomMap.setText("Use custom maps: " + (SGL.provide(GameScreen.class).getUseCustomMaps() ? "YES" : "NO"));
+    }
+
     @Override
     public void onBeforeDraw() {
         Gdx.gl.glEnable(GL20.GL_BLEND);
@@ -139,7 +168,7 @@ public class MenuScreen extends SGLStagedScreen<LD37> {
         SGL.provide(ShapeRenderer.class).end();
         Gdx.gl.glDisable(GL20.GL_BLEND);
         SGL.provide(SpriteBatch.class).begin();
-        SGL.provide(SpriteBatch.class).setColor(1f, 1f, 1f, 1f);
+        SGL.provide(SpriteBatch.class).setColor(0.8f, 0.8f, 0.8f, 1f);
         background.draw(SGL.provide(SpriteBatch.class), 0, 0, getViewWidth(), getViewHeight());
         SGL.provide(SpriteBatch.class).end();
     }

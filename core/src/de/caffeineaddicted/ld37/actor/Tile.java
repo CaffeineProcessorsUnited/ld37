@@ -199,7 +199,6 @@ public class Tile extends Entity implements Mortal, Creatable {
         setCenterPosition(vecstart.x, vecstart.y);
         setTexture();
         sizeChanged();
-        SGL.debug(getWidth() + "," + getHeight());
         created = true;
     }
 
@@ -365,9 +364,9 @@ public class Tile extends Entity implements Mortal, Creatable {
                 Key(params);
             } else if (name.equalsIgnoreCase("hole")) {
                 KeyHole(params);
-            } else if(name.equalsIgnoreCase("teleport")){
+            } else if (name.equalsIgnoreCase("teleport")) {
                 Teleport(params);
-            } else if(name.equalsIgnoreCase("visit")){
+            } else if (name.equalsIgnoreCase("visit")) {
                 Visit(tile, params);
             }
         }
@@ -424,16 +423,17 @@ public class Tile extends Entity implements Mortal, Creatable {
                 }
             }
         }
+
         public static void Teleport(String[] params) {
             int x = Integer.parseInt(params[0]);
             int y = Integer.parseInt(params[1]);
 
-            SGL.provide(GameScreen.class).getPlayer().teleport(x+1,y+1); //Walls
+            SGL.provide(GameScreen.class).getPlayer().teleport(x + 1, y + 1); //Walls
         }
-        
-        public static void Visit(Tile tile, String[] params){
+
+        public static void Visit(Tile tile, String[] params) {
             int count = Integer.parseInt(params[0]);
-            if(tile.getVisitCounter() == count){
+            if (tile.getVisitCounter() == count) {
                 String[] data = Arrays.copyOfRange(params, 2, params.length);
                 call(tile, params[1], data);
             }

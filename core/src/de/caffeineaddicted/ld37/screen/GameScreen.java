@@ -53,6 +53,7 @@ public class GameScreen extends SGLStagedScreen<LD37> {
     private TextureRegionDrawable unicornFallingDrawable, unicornClimbingDrawable, unicordLadderDrawable;
     private float unicornFallingDuration = 0.4f, unicornFalling = 0, unicornFallingX, unicornFallingScale, unicornFallingRotation;
     private float unicornClimbingDuration = 1.2f, unicornClimbing = 0, unicornClimbingX, unicornClimbingScale;
+    private boolean useCustomMaps = false;
 
     public void onBeforeAct(float delta) {
         for (Actor a : deleteLater) {
@@ -267,7 +268,17 @@ public class GameScreen extends SGLStagedScreen<LD37> {
         currentMap = Math.max(0, i);
         currentMap = Math.min(maxMaps, currentMap);
         player = new Player();
-        map = SGL.provide(SGLAssets.class).get("maps/" + currentMap + ".json", MapWrapper.class).getMap();
+        map = null;
+        if (useCustomMaps) {
+            try {
+                map = new MapWrapper(Gdx.files.local("./maps/" + currentMap + ".json")).getMap();
+            } catch (Exception e) {
+                SGL.error("Could not load the custom map in \"maps/" + currentMap + ".json\"! Using default maps.");
+            }
+        }
+        if (map == null) {
+            map = SGL.provide(SGLAssets.class).get("maps/" + currentMap + ".json", MapWrapper.class).getMap();
+        }
         map.reset();
         Vector2 spawn = map.calPixCoord(map.getStart());
         player.setPosition(map.getX() + spawn.x, map.getY() + spawn.y);
@@ -326,7 +337,11 @@ public class GameScreen extends SGLStagedScreen<LD37> {
     }
 
     public void loadNextMap() {
-        loadMap(currentMap + 1);
+        loadNextMap(1);
+    }
+
+    public void loadNextMap(int n) {
+        loadMap(currentMap + n);
     }
 
     public void addActor(Actor actor) {
@@ -424,6 +439,19 @@ public class GameScreen extends SGLStagedScreen<LD37> {
 
     public void nextMessage() {
         messageQueue.poll();
+    }
+
+    public boolean toggleUseCustomMaps() {
+        return setUseCustomMaps(!getUseCustomMaps());
+    }
+
+    public boolean getUseCustomMaps() {
+        return useCustomMaps;
+    }
+
+    public boolean setUseCustomMaps(boolean customMaps) {
+        useCustomMaps = customMaps;
+        return useCustomMaps;
     }
 
     public enum ZINDEX {

@@ -1,6 +1,5 @@
 package de.caffeineaddicted.ld37.actor;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
@@ -74,14 +73,14 @@ public class Player extends UnitBase {
     public void act(float delta) {
         super.act(delta);
 
-        if(teleportPosition != null){
+        if (teleportPosition != null) {
             Vector2 pos = SGL.provide(GameScreen.class).getMap().calPixCoord(teleportPosition);
             pos.add(SGL.provide(GameScreen.class).getMap().getX(), SGL.provide(GameScreen.class).getMap().getY());
             currentTile.setTriggered(false);
             setPosition(pos.x, pos.y);
             teleportPosition = null;
             clearActions();
-            SGL.provide(GameScreen.class).moveMapBy(0,0);
+            SGL.provide(GameScreen.class).moveMapBy(0, 0);
         }
 
         Tile tile = SGL.provide(GameScreen.class).getMap().getTileAt(getCenterPoint().x, getCenterPoint().y);
@@ -169,7 +168,7 @@ public class Player extends UnitBase {
     }
 
     public void teleport(int x, int y) {
-        teleportPosition = new Vector2(x,y);
+        teleportPosition = new Vector2(x, y);
     }
 
     public enum MovementDirection {

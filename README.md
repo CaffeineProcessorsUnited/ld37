@@ -1,11 +1,24 @@
-# Ludum Dare 37: TBA
+# Ludum Dare 37: One Room
+
+## Story
+
+You are trapped in a gigantic tower.
+All levels are connected and form a big room.
+Your mission is to beat your way through all levels and reach the top of the tower.
+
+**But beware!** If you make a bad move you will fall down and hopefully land on a lower level.
 
 
-Credits:
-Felix Richter(@felix5721): 
-Niels Bernlöhr(@k0rmarun): 
-Malte Heinzelmann(@hnzlmnn):
-Maria Stepanov(@butterwelt) 
+
+## Credits
+
+Felix Richter(@felix5721): Map design
+
+Niels Bernlöhr(@k0rmarun): Coding
+
+Malte Heinzelmann(@hnzlmnn): Coding
+
+Maria Stepanov(@butterwelt): Assets
 
 ## Development
 
