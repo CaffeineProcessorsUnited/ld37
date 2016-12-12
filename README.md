@@ -11,7 +11,7 @@ Your mission is to beat your way through all levels and reach the top of the tow
 ## Credits
 
 * Felix Richter(@felix5721): Heavy map design
-* Niels Bernlöhr(@k0rmarun): Game code
+* Niels Bernlöhr(@k0rmarun): Game code, map design
 * Malte Heinzelmann(@hnzlmnn): Game code, [SGL](https://github.com/CaffeineProcessorsUnited/superior-game-library) library code
 * Maria Stepanov(@butterwelt): Beautiful assets
 
@@ -24,7 +24,7 @@ To run the jar file make sure you have a JRE installed and added to your PATH va
 ```
 java -version
 ```
-if it returs information about your Java installation, you're good to go if an error is returned download and install [Java](https://www.java.com/de/download/)
+If the command returns information about your Java installation, you're good to go. If an error is returned download and install [Java](https://www.java.com/de/download/).
 
 ### Execute
 If you have JRE installed simply run
