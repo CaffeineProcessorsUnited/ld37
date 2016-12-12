@@ -168,7 +168,7 @@ public class MenuScreen extends SGLStagedScreen<LD37> {
         SGL.provide(ShapeRenderer.class).end();
         Gdx.gl.glDisable(GL20.GL_BLEND);
         SGL.provide(SpriteBatch.class).begin();
-        SGL.provide(SpriteBatch.class).setColor(0.8f, 0.8f, 0.8f, 1f);
+        SGL.provide(SpriteBatch.class).setColor(0.7f, 0.7f, 0.7f, 1f);
         background.draw(SGL.provide(SpriteBatch.class), 0, 0, getViewWidth(), getViewHeight());
         SGL.provide(SpriteBatch.class).end();
     }

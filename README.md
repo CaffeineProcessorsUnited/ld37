@@ -12,13 +12,10 @@ Your mission is to beat your way through all levels and reach the top of the tow
 
 ## Credits
 
-Felix Richter(@felix5721): Map design
-
-Niels Bernlöhr(@k0rmarun): Coding
-
-Malte Heinzelmann(@hnzlmnn): Coding
-
-Maria Stepanov(@butterwelt): Assets
+* Felix Richter(@felix5721): Map design
+* Niels Bernlöhr(@k0rmarun): Coding
+* Malte Heinzelmann(@hnzlmnn): Coding
+* Maria Stepanov(@butterwelt): Assets
 
 ## Development
 
