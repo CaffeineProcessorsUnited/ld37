@@ -75,8 +75,8 @@ public class GameScreen extends SGLStagedScreen<LD37> {
                 } else if (fadeAction == 2) {
                     loadNextMap();
                     showMessage("You climb the rainbow and find another room.");
-                    unicornClimbingX = MathUtils.random(64, (int) getViewWidth() - 128);
-                    unicornClimbingScale = MathUtils.random(50, 200) / 100;
+                    unicornClimbingX = MathUtils.random((int) (getViewWidth() / 100) * 20, (int) (getViewWidth() - (getViewWidth() / 100) * 20));
+                    unicornClimbingScale = MathUtils.random(200, 400) / 100;
                 }
             }
         } else if (fade == 2) {
@@ -246,7 +246,7 @@ public class GameScreen extends SGLStagedScreen<LD37> {
     @Override
     public void onCreate() {
         SGL.provide(SGLScreenInputMultiplexer.class).addProcessor(this, new GameInputProcessor());
-        loadMap(10);
+        loadMap(0);
         hud = new HUD();
         hud.setPosition(0, getViewHeight() - hud.getHeight());
 
