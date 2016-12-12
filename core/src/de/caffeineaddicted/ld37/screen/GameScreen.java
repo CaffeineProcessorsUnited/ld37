@@ -7,16 +7,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Align;
 import de.caffeineaddicted.ld37.LD37;
-import de.caffeineaddicted.ld37.actor.HUD;
-import de.caffeineaddicted.ld37.actor.Map;
-import de.caffeineaddicted.ld37.actor.MapWrapper;
-import de.caffeineaddicted.ld37.actor.Player;
+import de.caffeineaddicted.ld37.actor.*;
 import de.caffeineaddicted.ld37.input.GameInputProcessor;
 import de.caffeineaddicted.ld37.message.FireEverythingMessage;
 import de.caffeineaddicted.sgl.SGL;
@@ -41,6 +35,7 @@ public class GameScreen extends SGLStagedScreen<LD37> {
     private Player player;
     private Map map;
     private Queue<Label> messageQueue = new LinkedBlockingQueue<Label>();
+    private MessageList messages;
     private TextureRegionDrawable speechBackground;
     private float speechPadding = 10;
     private int fade = 0;
@@ -114,6 +109,9 @@ public class GameScreen extends SGLStagedScreen<LD37> {
             if (map != null) {
                 map.act(delta);
             }
+            if (messages != null) {
+                messages.act(delta);
+            }
             if (hud != null) {
                 hud.act(delta);
             }
@@ -146,6 +144,7 @@ public class GameScreen extends SGLStagedScreen<LD37> {
         SGL.provide(SpriteBatch.class).begin();
         map.draw(SGL.provide(SpriteBatch.class), 1f);
         player.draw(SGL.provide(SpriteBatch.class), 1f);
+        messages.draw(SGL.provide(SpriteBatch.class), 1f);
         hud.draw(SGL.provide(SpriteBatch.class), 1f);
         SGL.provide(SpriteBatch.class).end();
     }
@@ -248,6 +247,7 @@ public class GameScreen extends SGLStagedScreen<LD37> {
     public void onCreate() {
         SGL.provide(SGLScreenInputMultiplexer.class).addProcessor(this, new GameInputProcessor());
         loadMap(0);
+        messages = new MessageList();
         hud = new HUD();
         hud.setPosition(0, getViewHeight() - hud.getHeight());
 
@@ -286,6 +286,9 @@ public class GameScreen extends SGLStagedScreen<LD37> {
     }
 
     private void reset() {
+        if (messages != null) {
+            messages.clear();
+        }
         speechPadding = 10;
         dead = false;
         float dX = getViewWidth() / 2 - player.getX();
@@ -429,12 +432,15 @@ public class GameScreen extends SGLStagedScreen<LD37> {
         SGL.provide(BackgroundScreen.class).moveBy(x, y);
     }
 
-    public void showMessage(String trigger) {
+    public void showMessage(String message) {
+        /*
         Label label = new Label(trigger, SGL.provide(Skin.class));
         label.setColor(1f, 1f, 1f, 0f);
         label.setPosition(getViewWidth() / 2, 100, Align.center);
         label.addAction(Actions.sequence(Actions.alpha(1, 0.4f), Actions.delay(Math.max(2, trigger.length() / 16)), Actions.alpha(0, 0.2f)));
         messageQueue.add(label);
+        */
+        messages.postMessage(message);
     }
 
     public void nextMessage() {

@@ -38,6 +38,7 @@ public class Assets extends SGLAssets {
     @Override
     public void onLoad() {
         load("ui/hud.png", Texture.class);
+        load("ui/message.png", Texture.class);
 
         load("player/unicornwalk.png", Texture.class);
         load("player/unicornfalling.png", Texture.class);
