@@ -16,6 +16,9 @@ public class GlobalInputProcessor extends SGLInputProcessor {
             case Input.Keys.ESCAPE:
                 SGL.message(new MainMenuMessage());
                 break;
+            case Input.Keys.F11:
+                SGL.game().toggleFullscreen();
+                break;
         }
         return false;
     }

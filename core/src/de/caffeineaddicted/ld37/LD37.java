@@ -6,6 +6,8 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.Scaling;
+import com.badlogic.gdx.utils.viewport.*;
 import de.caffeineaddicted.ld37.input.GlobalInputProcessor;
 import de.caffeineaddicted.ld37.message.MainMenuMessage;
 import de.caffeineaddicted.ld37.screen.BackgroundScreen;
@@ -34,6 +36,8 @@ public class LD37 extends SGLGame {
 
     @Override
     protected void initGame() {
+        supply(Viewport.class, new FitViewport(applicationConfiguration.get(AttributeList.WIDTH), applicationConfiguration.get(AttributeList.HEIGHT)));
+        //supply(Viewport.class, new ScreenViewport());
         Gdx.app.setLogLevel(Application.LOG_DEBUG);
         supply(SGLAssets.class, new Assets());
         supply(InputMultiplexer.class, new InputMultiplexer());
@@ -121,7 +125,7 @@ public class LD37 extends SGLGame {
 
     @Override
     public void onResize(int width, int height) {
-
+        SGL.debug("resize");
     }
 
     public static class CONSTANTS {

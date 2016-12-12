@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -16,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TiledDrawable;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import de.caffeineaddicted.ld37.LD37;
 import de.caffeineaddicted.sgl.SGL;
 import de.caffeineaddicted.sgl.input.SGLScreenInputMultiplexer;
@@ -23,6 +25,7 @@ import de.caffeineaddicted.sgl.ui.screens.SGLRootScreen;
 import de.caffeineaddicted.sgl.ui.screens.SGLStagedScreen;
 import de.caffeineaddicted.sgl.utils.SGLAssets;
 
+import javax.swing.*;
 import java.util.ArrayList;
 
 /**
@@ -30,7 +33,13 @@ import java.util.ArrayList;
  */
 public class MenuScreen extends SGLStagedScreen<LD37> {
 
-    private TextButton btnContinue, btnStart, btnCustomMap, btnExit;
+    private static Vector2[] resolutions = new Vector2[] {
+            new Vector2(1920, 1080),
+            new Vector2(1600, 900),
+            new Vector2(1280, 720),
+            new Vector2(800, 600)
+    };
+    private TextButton btnContinue, btnStart, btnCustomMap, btnResolution, btnExit;
     private Label btnCustomMapHelp;
     private int state = 0;
     private Float[] states = new Float[]{
@@ -45,7 +54,12 @@ public class MenuScreen extends SGLStagedScreen<LD37> {
 
     @Override
     public void onBeauty() {
-
+        btnContinue.setPosition(getViewWidth() / 2 - btnContinue.getWidth() / 2, getViewHeight() - 200);
+        btnStart.setPosition(getViewWidth() / 2 - btnStart.getWidth() / 2, getViewHeight() - 250);
+        btnCustomMap.setPosition(getViewWidth() / 2 - btnCustomMap.getWidth() / 2, getViewHeight() - 300);
+        btnCustomMapHelp.setPosition(getViewWidth() / 2 - btnCustomMap.getWidth() / 2, getViewHeight() - 350);
+        btnResolution.setPosition(getViewWidth() / 2 - btnResolution.getWidth() / 2, getViewHeight() - 450);
+        btnExit.setPosition(getViewWidth() / 2 - btnExit.getWidth() / 2, getViewHeight() - 500);
     }
 
     @Override
@@ -56,6 +70,13 @@ public class MenuScreen extends SGLStagedScreen<LD37> {
     @Override
     public void onDispose() {
 
+    }
+
+    @Override
+    public void resize(int width, int height) {
+        super.resize(width, height);
+        camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
+        dirty();
     }
 
     @Override
@@ -101,7 +122,6 @@ public class MenuScreen extends SGLStagedScreen<LD37> {
 
         btnContinue = new TextButton("Continue", SGL.provide(Skin.class));
         btnContinue.setWidth(400);
-        btnContinue.setPosition(getViewWidth() / 2 - btnContinue.getWidth() / 2, getViewHeight() - 200);
         btnContinue.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 if (((TextButton) event.getListenerActor()).isDisabled()) {
@@ -115,7 +135,6 @@ public class MenuScreen extends SGLStagedScreen<LD37> {
 
         btnStart = new TextButton("Start Game", SGL.provide(Skin.class));
         btnStart.setWidth(400);
-        btnStart.setPosition(getViewWidth() / 2 - btnStart.getWidth() / 2, getViewHeight() - 250);
         btnStart.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 SGL.provide(SGLRootScreen.class).hideScreen(MenuScreen.class);
@@ -127,7 +146,6 @@ public class MenuScreen extends SGLStagedScreen<LD37> {
 
         btnCustomMap = new TextButton("", SGL.provide(Skin.class));
         btnCustomMap.setWidth(400);
-        btnCustomMap.setPosition(getViewWidth() / 2 - btnCustomMap.getWidth() / 2, getViewHeight() - 300);
         btnCustomMap.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 SGL.provide(GameScreen.class).toggleUseCustomMaps();
@@ -139,13 +157,40 @@ public class MenuScreen extends SGLStagedScreen<LD37> {
 
         btnCustomMapHelp = new Label("Put your maps (0.json, 1.json, ...) into a folder\n\"maps\" in the same directory as your jar file", SGL.provide(Skin.class));
         btnCustomMapHelp.setWidth(400);
-        btnCustomMapHelp.setPosition(getViewWidth() / 2 - btnCustomMap.getWidth() / 2, getViewHeight() - 350);
         btnCustomMapHelp.setAlignment(Align.center);
         stage().addActor(btnCustomMapHelp);
 
+        btnResolution = new TextButton("", SGL.provide(Skin.class));
+        btnResolution.setWidth(400);
+        btnResolution.addListener(new ClickListener() {
+            public void clicked(InputEvent event, float x, float y) {
+                int i = 0;
+                Vector2 r = null;
+                for (i = 0; i < resolutions.length; i++) {
+                    r = resolutions[i];
+                    if (r.x == SGL.provide(Viewport.class).getWorldWidth() && r.y == SGL.provide(Viewport.class).getWorldHeight()) {
+                        break;
+                    }
+                    r = null;
+                }
+                if (r == null) {
+                    r = resolutions[resolutions.length - 1];
+                } else {
+                    r = resolutions[(i + 1) % resolutions.length];
+                }
+                //SGL.game().resize((int) r.x, (int) r.y);
+                SGL.provide(Viewport.class).setWorldSize((int) r.x, (int) r.y);
+                SGL.provide(Viewport.class).apply(true);
+                SGL.game().resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+                updateBtnResolution();
+            }
+        });
+        updateBtnResolution();
+        stage().addActor(btnResolution);
+
+
         btnExit = new TextButton("Exit", SGL.provide(Skin.class));
         btnExit.setWidth(400);
-        btnExit.setPosition(getViewWidth() / 2 - btnExit.getWidth() / 2, getViewHeight() - 500);
         btnExit.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 Gdx.app.exit();
@@ -158,13 +203,18 @@ public class MenuScreen extends SGLStagedScreen<LD37> {
         btnCustomMap.setText("Use custom maps: " + (SGL.provide(GameScreen.class).getUseCustomMaps() ? "YES" : "NO"));
     }
 
+    public void updateBtnResolution() {
+        btnResolution.setText("Resolution: " + (int) SGL.provide(Viewport.class).getWorldWidth() + "x" + (int) SGL.provide(Viewport.class).getWorldHeight());
+    }
+
     @Override
     public void onBeforeDraw() {
         Gdx.gl.glEnable(GL20.GL_BLEND);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+        SGL.provide(ShapeRenderer.class).setProjectionMatrix(camera.combined);
         SGL.provide(ShapeRenderer.class).begin(ShapeRenderer.ShapeType.Filled);
         SGL.provide(ShapeRenderer.class).setColor(0f, 0f, 0f, 0.6f);
-        SGL.provide(ShapeRenderer.class).rect(stage().getViewOrigX(), stage().getViewOrigY(), stage().getWidth(), stage().getHeight());
+        SGL.provide(ShapeRenderer.class).rect(stage().getViewOrigX(), stage().getViewOrigY(), getViewWidth(), getViewHeight());
         SGL.provide(ShapeRenderer.class).end();
         Gdx.gl.glDisable(GL20.GL_BLEND);
         SGL.provide(SpriteBatch.class).begin();

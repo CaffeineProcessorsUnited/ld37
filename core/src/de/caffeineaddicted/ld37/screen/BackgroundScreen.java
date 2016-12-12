@@ -40,6 +40,13 @@ public class BackgroundScreen extends SGLStagedScreen<LD37> {
 
 
     @Override
+    public void resize(int width, int height) {
+        super.resize(width, height);
+        camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
+        dirty();
+    }
+
+    @Override
     public void onCreate() {
         texture = SGL.provide(SGLAssets.class).get("background/game.png", Texture.class);
         background = new TiledDrawable(new TextureRegion(texture));

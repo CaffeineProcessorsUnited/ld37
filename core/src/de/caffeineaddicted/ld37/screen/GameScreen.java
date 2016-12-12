@@ -36,7 +36,6 @@ public class GameScreen extends SGLStagedScreen<LD37> {
     private Map map;
     private Queue<Label> messageQueue = new LinkedBlockingQueue<Label>();
     private MessageList messages;
-    private TextureRegionDrawable speechBackground;
     private float speechPadding = 10;
     private int fade = 0;
     private float timer = 0, fadeDuration = 0.5f, fadeAlpha = 0, fadeAction = 0;
@@ -119,6 +118,13 @@ public class GameScreen extends SGLStagedScreen<LD37> {
     }
 
     @Override
+    public void resize(int width, int height) {
+        super.resize(width, height);
+        camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
+        dirty();
+    }
+
+    @Override
     public void onAfterAct(float delta) {
         Label label = messageQueue.peek();
         if (label != null) {
@@ -147,6 +153,7 @@ public class GameScreen extends SGLStagedScreen<LD37> {
         messages.draw(SGL.provide(SpriteBatch.class), 1f);
         hud.draw(SGL.provide(SpriteBatch.class), 1f);
         SGL.provide(SpriteBatch.class).end();
+        Gdx.gl.glEnable(GL20.GL_BLEND);
     }
 
     @Override
@@ -154,9 +161,10 @@ public class GameScreen extends SGLStagedScreen<LD37> {
         if (fade > 0) {
             Gdx.gl.glEnable(GL20.GL_BLEND);
             Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+            SGL.provide(ShapeRenderer.class).setProjectionMatrix(camera.combined);
             SGL.provide(ShapeRenderer.class).begin(ShapeRenderer.ShapeType.Filled);
             SGL.provide(ShapeRenderer.class).setColor(0, 0, 0, fadeAlpha);
-            SGL.provide(ShapeRenderer.class).rect(stage().getViewOrigX(), stage().getViewOrigY(), stage().getWidth(), stage().getHeight());
+            SGL.provide(ShapeRenderer.class).rect(0, 0, getViewWidth(), getViewHeight());
             SGL.provide(ShapeRenderer.class).end();
             Gdx.gl.glDisable(GL20.GL_BLEND);
         }
@@ -214,17 +222,6 @@ public class GameScreen extends SGLStagedScreen<LD37> {
                         0f);
             }
         }
-        Label label = messageQueue.peek();
-        if (label != null) {
-            SGL.provide(SpriteBatch.class).setColor(0.32f, 0.32f, 0.32f, label.getColor().a);
-            speechBackground.draw(SGL.provide(SpriteBatch.class),
-                    label.getX() - speechPadding,
-                    label.getY() - speechPadding,
-                    label.getWidth() + 2 * speechPadding,
-                    label.getHeight() + 2 * speechPadding
-            );
-            messageQueue.peek().draw(SGL.provide(SpriteBatch.class), 1f);
-        }
         SGL.provide(SpriteBatch.class).end();
     }
 
@@ -260,7 +257,10 @@ public class GameScreen extends SGLStagedScreen<LD37> {
         unicornFallingDrawable = new TextureRegionDrawable(new TextureRegion(SGL.provide(SGLAssets.class).get("player/unicornfalling.png", Texture.class)));
         unicornClimbingDrawable = new TextureRegionDrawable(new TextureRegion(SGL.provide(SGLAssets.class).get("player/unicornclimbing.png", Texture.class)));
         unicordLadderDrawable = new TextureRegionDrawable(new TextureRegion(SGL.provide(SGLAssets.class).get("player/ladder.png", Texture.class)));
-        speechBackground = new TextureRegionDrawable(new TextureRegion(SGL.provide(SGLAssets.class).get("ui/speech.png", Texture.class)));
+    }
+
+    public void reloadMap() {
+        loadMap(currentMap);
     }
 
     public void loadMap(int i) {
@@ -370,7 +370,6 @@ public class GameScreen extends SGLStagedScreen<LD37> {
     }
 
     public void drag(float x, float y) {
-        //SGL.debug(x + "," + y);
         if (player.hasActions()) {
             return;
         }
@@ -433,13 +432,6 @@ public class GameScreen extends SGLStagedScreen<LD37> {
     }
 
     public void showMessage(String message) {
-        /*
-        Label label = new Label(trigger, SGL.provide(Skin.class));
-        label.setColor(1f, 1f, 1f, 0f);
-        label.setPosition(getViewWidth() / 2, 100, Align.center);
-        label.addAction(Actions.sequence(Actions.alpha(1, 0.4f), Actions.delay(Math.max(2, trigger.length() / 16)), Actions.alpha(0, 0.2f)));
-        messageQueue.add(label);
-        */
         messages.postMessage(message);
     }
 

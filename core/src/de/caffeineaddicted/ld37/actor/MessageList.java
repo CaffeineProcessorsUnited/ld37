@@ -53,7 +53,7 @@ public class MessageList extends Entity {
         float width = 0;
         for (int i = messages.size - 1; i >= 0; i--) {
             l = messages.get(i);
-            l.setPosition(0, height);
+            l.setPosition(padding, height);
             height += l.getHeight() + padding;
             width = Math.max(width, l.getWidth());
             SGL.debug("w:" + width + " h:" + height);
@@ -91,7 +91,7 @@ public class MessageList extends Entity {
     public void draw(Batch batch, float parentAlpha) {
         for (Label l: messages) {
             batch.setColor(0.32f, 0.32f, 0.32f, 0.5f);
-            background.draw(batch, l.getX(), l.getY(), getWidth(), l.getHeight());
+            background.draw(batch, l.getX() - padding, l.getY(), getWidth() + 2 * padding, l.getHeight());
             batch.setColor(1, 1, 1, 1);
             l.draw(batch, parentAlpha);
         }
