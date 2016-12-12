@@ -64,7 +64,7 @@
         {
             "hole": 1,
             "key": 0,
-            "trigger": "unlock:replace:9:0:Stone;message:You can use the keys from your inventory by walking over locked tiles.",
+            "trigger": "unlock:replace:9:0:Stone;teleport:7:0;message:You can use the keys from your inventory by walking over locked tiles.",
             "type": "Metal",
             "x": 4,
             "y": 0

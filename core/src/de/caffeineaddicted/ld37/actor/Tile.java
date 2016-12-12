@@ -359,32 +359,34 @@ public class Tile extends Entity implements Mortal, Creatable {
 
         public static void call(Tile tile, String name, String[] params) {
             if (name.equalsIgnoreCase("message")) {
-                Message(tile, params);
+                Message(params);
             } else if (name.equalsIgnoreCase("replace")) {
-                Replace(tile, params);
+                Replace(params);
             } else if (name.equalsIgnoreCase("unlock")) {
                 Unlock(tile, params);
             } else if (name.equalsIgnoreCase("key")) {
-                Key(tile, params);
+                Key(params);
             } else if (name.equalsIgnoreCase("hole")) {
-                KeyHole(tile, params);
+                KeyHole(params);
+            } else if(name.equalsIgnoreCase("teleport")){
+                Teleport(params);
             }
         }
 
-        public static void Message(Tile tile, String[] params) {
+        public static void Message(String[] params) {
             SGL.provide(GameScreen.class).showMessage(String.join(":", params));
         }
 
-        public static void Replace(Tile tile, String[] params) {
+        public static void Replace(String[] params) {
             for (int i = 0; i + 2 < params.length; i += 3) {
                 int x = Integer.parseInt(params[i + 0]);
                 int y = Integer.parseInt(params[i + 1]);
                 String t = params[i + 2];
 
                 int idx = x * SGL.provide(GameScreen.class).getMap().height + y;
-                Tile ttile = SGL.provide(GameScreen.class).getMap().getFloor()[idx];
-                if (ttile != null) {
-                    ttile.setType(Tile.Type.getTypeByName(t));
+                Tile tile = SGL.provide(GameScreen.class).getMap().getFloor()[idx];
+                if (tile != null) {
+                    tile.setType(Tile.Type.getTypeByName(t));
                 }
             }
         }
@@ -396,21 +398,21 @@ public class Tile extends Entity implements Mortal, Creatable {
             }
         }
 
-        public static void Key(Tile tile, String[] params) {
+        public static void Key(String[] params) {
             for (int i = 0; i + 2 < params.length; i += 3) {
                 int x = Integer.parseInt(params[i + 0]);
                 int y = Integer.parseInt(params[i + 1]);
                 int k = Integer.parseInt(params[i + 2]);
 
                 int idx = x * SGL.provide(GameScreen.class).getMap().height + y;
-                Tile ttile = SGL.provide(GameScreen.class).getMap().getFloor()[idx];
-                if (ttile != null) {
-                    ttile.setKey(k);
+                Tile tile = SGL.provide(GameScreen.class).getMap().getFloor()[idx];
+                if (tile != null) {
+                    tile.setKey(k);
                 }
             }
         }
 
-        public static void KeyHole(Tile tile, String[] params) {
+        public static void KeyHole(String[] params) {
             for (int i = 0; i + 2 < params.length; i += 3) {
                 int x = Integer.parseInt(params[i + 0]);
                 int y = Integer.parseInt(params[i + 1]);
@@ -422,6 +424,12 @@ public class Tile extends Entity implements Mortal, Creatable {
                     ttile.setKeyHole(k);
                 }
             }
+        }
+        public static void Teleport(String[] params) {
+            int x = Integer.parseInt(params[0]);
+            int y = Integer.parseInt(params[1]);
+
+            SGL.provide(GameScreen.class).getPlayer().teleport(x+1,y+1); //Walls
         }
     }
 }
