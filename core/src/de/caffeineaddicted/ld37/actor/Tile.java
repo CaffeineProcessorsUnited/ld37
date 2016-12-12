@@ -47,6 +47,9 @@ public class Tile extends Entity implements Mortal, Creatable {
 
     public void setKey(int key) {
         this.key = key;
+        if(isCreated()){
+            setTexture();
+        }
     }
 
     @Override
@@ -295,7 +298,7 @@ public class Tile extends Entity implements Mortal, Creatable {
 
         Empty(0, false, 0, ACCESS_NONE, MODE.FALLING, Key.KEY_NONE, "tiles/tile_empty.png"),
         Stone(2, false, 4, ACCESS_ALL, MODE.BLOCKING, Key.KEY_NONE, "tiles/stonebroke.png", "tiles/stonehalf.png", "tiles/stone.png"),
-        DamagedStone(1, false, 4, ACCESS_ALL, MODE.BLOCKING, Key.KEY_NONE, "tiles/stonehalf.png", "tiles/stone.png"),
+        DamagedStone(1, false, 4, ACCESS_ALL, MODE.BLOCKING, Key.KEY_NONE, "tiles/stonebroke.png","tiles/stonehalf.png"),
         Ice(1, true, 2, ACCESS_ALL, MODE.BLOCKING, Key.KEY_NONE, "tiles/icebroke.png", "tiles/ice.png"),
 
         HPlank(0, false, 2, ACCESS_HORIZONTAL, MODE.FALLING, Key.KEY_NONE, "tiles/woodplankhorizontal.png"),
