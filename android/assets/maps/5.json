@@ -1278,6 +1278,7 @@
         {
             "hole": 1,
             "key": 0,
+            "trigger": "unlock:key:16:8:2",
             "type": "Metal",
             "x": 9,
             "y": 1
@@ -2450,7 +2451,7 @@
         {
             "hole": 2,
             "key": 0,
-            "trigger": "unlock:key:16:8:2",
+            "trigger": "",
             "type": "Stone",
             "x": 17,
             "y": 8
@@ -2591,6 +2592,7 @@
         {
             "hole": 0,
             "key": 0,
+            "trigger": "",
             "type": "Metal",
             "x": 18,
             "y": 8
