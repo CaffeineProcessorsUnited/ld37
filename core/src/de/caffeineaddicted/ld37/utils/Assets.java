@@ -71,5 +71,6 @@ public class Assets extends SGLAssets {
 
         load("maps/0.json", MapWrapper.class);
         load("maps/1.json", MapWrapper.class);
+        load("maps/2.json", MapWrapper.class);
     }
 }
