@@ -47,14 +47,20 @@ class Map:
             for x in range(self.width):
                 i = x*self.height+y
                 if self.tiles[i]["type"]:
-                    print("{:>2}".format(self.tiles[i]["type"][0]),end="")
+                    print("{:>1}".format(self.tiles[i]["type"][0]),end="")
                 else:
-                    print("{:>2}".format("E"),end="")
+                    print("{:>1}".format("E"),end="")
 
                 if self.tiles[i]["key"] > 0:
                     print("k", end="")
                 else:
                     print(" ", end="")
+                    
+                if self.tiles[i]["hole"] > 0:
+                    print("h", end="")
+                else:
+                    print(" ", end="")
+                
 
             print()
 
@@ -90,14 +96,14 @@ class Map:
         i = posx * self.height + posy
         if 0 <= type < 8:
             self.tiles[i]["hole"] = type
-            print("Set Key at ({}, {}) to {}".format(posx, posy,
+            print("Set Keyhole at ({}, {}) to {}".format(posx, posy,
                                                      ["None",
                                                       "Gold",
                                                       "Pink",
                                                       "Gold+Pink",
-                                                      "Green"
-                                                      "Gold+Green"
-                                                      "Pink+Green"
+                                                      "Green",
+                                                      "Gold+Green",
+                                                      "Pink+Green",
                                                       "Gold+Pink+Green"][type]))
 
     def fill(self, startx=0, starty=0, endx=-1, endy=-1):
