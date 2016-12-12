@@ -157,6 +157,21 @@ public class Player extends UnitBase {
         if (!wasslippery) {
             SGL.provide(GameScreen.class).nextMessage();
         }
+
+        if (action.getAmountX() >= 0) {
+            getActor(ACTOR_BASE).setScaleX(1);
+        } else if (action.getAmountX() < 0) {
+            getActor(ACTOR_BASE).setScaleX(-1);
+        }
+
+        if (action.getAmountY() > 0) {
+            getActor(ACTOR_BASE).setRotation(90);
+            getActor(ACTOR_BASE).setScaleY(1);
+        } else if (action.getAmountY() < 0) {
+            getActor(ACTOR_BASE).setRotation(-90);
+        } else {
+            getActor(ACTOR_BASE).setRotation(0);
+        }
         currentTile.setTriggered(false);
         action.setDuration(speed);
         addAction(action);
