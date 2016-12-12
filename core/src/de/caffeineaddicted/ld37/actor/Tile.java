@@ -329,6 +329,10 @@ public class Tile extends Entity implements Mortal, Creatable {
 
         HPlank(0, false, 2, ACCESS_HORIZONTAL, MODE.FALLING, Key.KEY_NONE, "tiles/woodplankhorizontal.png"),
         VPlank(0, false, 2, ACCESS_VERTICAL, MODE.FALLING, Key.KEY_NONE, "tiles/woodplankvertical.png"),
+        LPlank(0, false, 2, ACCESS_LEFT, MODE.FALLING, Key.KEY_NONE, "tiles/woodplankleft.png"),
+        RPlank(0, false, 2, ACCESS_RIGHT, MODE.FALLING, Key.KEY_NONE, "tiles/woodplankright.png"),
+        UPlank(0, false, 2, ACCESS_UP, MODE.FALLING, Key.KEY_NONE, "tiles/woodplankup.png"),
+        DPlank(0, false, 2, ACCESS_DOWN, MODE.FALLING, Key.KEY_NONE, "tiles/woodplankdown.png"),
         // TODO: Parameter
         DoorPink(0, false, 2, ACCESS_ALL, MODE.BLOCKING, Key.KEY_PINK, "tiles/metal.png"),
         // TODO: Parameter
