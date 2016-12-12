@@ -7,7 +7,7 @@
     "tiles": [
         {
             "key": 0,
-            "trigger": "message:Hey there. This is Niels trying to escape the room. To continue move right...",
+            "trigger": "delay:5:message:Hey there. This is Niels trying to escape the room. To continue move right...",
             "type": "Stone",
             "x": 0,
             "y": 0
