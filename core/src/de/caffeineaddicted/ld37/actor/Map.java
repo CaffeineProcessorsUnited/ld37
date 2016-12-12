@@ -200,14 +200,6 @@ public class Map extends Entity implements Creatable {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        /*
-        batch.end();
-        SGL.provide(ShapeRenderer.class).begin(ShapeRenderer.ShapeType.Filled);
-        SGL.provide(ShapeRenderer.class).setColor(0.498f, 0.165f, 0.251f, 1f);
-        SGL.provide(ShapeRenderer.class).rect(getX(), getY(), getWidth(), getHeight());
-        SGL.provide(ShapeRenderer.class).end();
-        batch.begin();
-        */
         batch.setColor(1, 1, 1, 1);
         background.draw(batch, getX(), getY(), getWidth(), getHeight());
         for (Tile tile : floor) {

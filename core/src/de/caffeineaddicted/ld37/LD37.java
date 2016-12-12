@@ -12,6 +12,7 @@ import de.caffeineaddicted.ld37.screen.BackgroundScreen;
 import de.caffeineaddicted.ld37.screen.GameScreen;
 import de.caffeineaddicted.ld37.screen.MenuScreen;
 import de.caffeineaddicted.ld37.utils.Assets;
+import de.caffeineaddicted.ld37.utils.MusicPlayer;
 import de.caffeineaddicted.sgl.ApplicationConfiguration;
 import de.caffeineaddicted.sgl.AttributeList;
 import de.caffeineaddicted.sgl.SGL;
@@ -65,8 +66,25 @@ public class LD37 extends SGLGame {
     @Override
     protected void startGame() {
         provide(SGLAssets.class).preload();
+        provide(SGLAssets.class).finishLoading();
+
+        supply(MusicPlayer.class, new MusicPlayer());
+        provide(MusicPlayer.class).add("music/song0.mp3");
+        provide(MusicPlayer.class).add("music/song1.mp3");
+        provide(MusicPlayer.class).add("music/song2.mp3");
+        provide(MusicPlayer.class).add("music/song3.mp3");
+        provide(MusicPlayer.class).add("music/song4.mp3");
+        provide(MusicPlayer.class).add("music/song5.mp3");
+        provide(MusicPlayer.class).add("music/song6.mp3");
+        provide(MusicPlayer.class).add("music/song7.mp3");
+        provide(MusicPlayer.class).add("music/song8.mp3");
+
+        provide(MusicPlayer.class).play();
+        provide(MusicPlayer.class).setShuffle(true);
+
         provide(SGLAssets.class).load();
         provide(SGLAssets.class).finishLoading();
+
         supply(Skin.class, provide(SGLAssets.class).get("skin/uiskin.json", Skin.class));
         provide(SGLRootScreen.class).showScreen(BackgroundScreen.class, SGLRootScreen.ZINDEX.FAREST);
         provide(SGLRootScreen.class).showScreen(MenuScreen.class, SGLRootScreen.ZINDEX.NEAREST);

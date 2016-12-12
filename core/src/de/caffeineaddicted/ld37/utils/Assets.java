@@ -1,6 +1,7 @@
 package de.caffeineaddicted.ld37.utils;
 
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import de.caffeineaddicted.ld37.actor.MapLoader;
@@ -22,11 +23,22 @@ public class Assets extends SGLAssets {
         load("skin/uiskin.json", Skin.class);
         load("background/menu.png", Texture.class);
         load("ui/speech.png", Texture.class);
-        load("ui/hud.png", Texture.class);
+
+        load("music/song0.mp3", Music.class);
+        load("music/song1.mp3", Music.class);
+        load("music/song2.mp3", Music.class);
+        load("music/song3.mp3", Music.class);
+        load("music/song4.mp3", Music.class);
+        load("music/song5.mp3", Music.class);
+        load("music/song6.mp3", Music.class);
+        load("music/song7.mp3", Music.class);
+        load("music/song8.mp3", Music.class);
     }
 
     @Override
     public void onLoad() {
+        load("ui/hud.png", Texture.class);
+
         load("player/unicornwalk.png", Texture.class);
         load("player/unicornfalling.png", Texture.class);
         load("player/unicornclimbing.png", Texture.class);
@@ -73,7 +85,9 @@ public class Assets extends SGLAssets {
         load("maps/0.json", MapWrapper.class);
         load("maps/1.json", MapWrapper.class);
         load("maps/10.json", MapWrapper.class);
+        load("maps/9.json", MapWrapper.class);
         load("maps/2.json", MapWrapper.class);
         load("maps/3.json", MapWrapper.class);
+
     }
 }
