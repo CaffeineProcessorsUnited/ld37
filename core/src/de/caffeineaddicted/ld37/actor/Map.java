@@ -93,6 +93,9 @@ public class Map extends Entity implements Creatable {
         this.floor = floor;
         for (Tile tile : this.floor) {
             tile.getStart().add(1, 1);
+            if (tile.getEnd() != null) {
+                tile.getEnd().add(1, 1);
+            }
         }
         start.add(1, 1);
         exit.add(1, 1);
@@ -134,7 +137,6 @@ public class Map extends Entity implements Creatable {
                 }
                 tile = new Tile(type);
                 tile.setStart(new Vector2(x, y));
-                SGL.debug("i: " + i + " tile: " + tile.getStart().toString());
                 //wall[(y == -1 ? 0 : 1) * (width + 2) + (Math.max(y, 0) * 2) + x] = tile;;
                 wall[i++] = tile;
             }

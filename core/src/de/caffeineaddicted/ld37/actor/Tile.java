@@ -1,6 +1,7 @@
 package de.caffeineaddicted.ld37.actor;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Align;
 import de.caffeineaddicted.ld37.screen.GameScreen;
 import de.caffeineaddicted.sgl.SGL;
@@ -23,15 +24,10 @@ public class Tile extends Entity implements Mortal, Creatable {
     public final static int ACCESS_VERTICAL = ACCESS_UP + ACCESS_DOWN;
     public final static int ACCESS_ALL = ACCESS_LEFT + ACCESS_RIGHT + ACCESS_UP + ACCESS_DOWN;
     private Tile.Type type;
-
-    ;
     private int stepsLeft;
     private int key = 0;
     private int keyHole = 0;
     private boolean created = false;
-    private Vector2 move;
-    private Vector2 moveLeft;
-    private boolean moveReversed = false;
     private Vector2 start, end;
     private boolean dieing = false;
     private boolean dead = false;
@@ -40,6 +36,7 @@ public class Tile extends Entity implements Mortal, Creatable {
     private int visitCounter = 0;
 
     private boolean justUnlocked = false;
+    private boolean actionStarted = false;
 
     public Tile(Tile.Type type) {
         this.type = type;
@@ -58,26 +55,18 @@ public class Tile extends Entity implements Mortal, Creatable {
             create();
         }
         super.act(delta);
-        if (end != null && type.speed > 0) {
-            float percent = delta / type.speed;
-            float mX = move.x * (move.x == 0 ? 0 : Map.TileSize / move.x) * percent;
-            float mY = move.y * (move.y == 0 ? 0 : Map.TileSize / move.y) * percent;
-            mX *= (moveReversed) ? -1 : 1;
-            mY *= (moveReversed) ? -1 : 1;
-            if (Math.abs(moveLeft.x) < mX) {
-                mX = moveLeft.x;
-            }
-            if (Math.abs(moveLeft.y) < mY) {
-                mY = moveLeft.y;
-            }
-            moveLeft.sub(mX, mY);
-            moveBy(mX, mY);
-            //SGL.debug("percent=" + percent + ";dx=" + dX + ";dy=" + dY + ";mx=" + mX + ";my=" + mY);
-            if ((moveReversed ? -moveLeft.x : moveLeft.x) < 1 && (moveReversed ? -moveLeft.y : moveLeft.y) < 1) {
-                SGL.debug("reverse!");
-                moveReversed = !moveReversed;
-                moveLeft.set(moveReversed ? -move.x : move.x, moveReversed ? -move.y : move.y);
-            }
+        if (end != null && !actionStarted) {
+            actionStarted = true;
+            addAction(Actions.forever(Actions.sequence(
+                    Actions.moveBy(
+                            (end.x - start.x) * Map.TileSize,
+                            (end.y - start.y) * Map.TileSize,
+                            2f),
+                    Actions.moveBy(
+                            (start.x - end.x) * Map.TileSize,
+                            (start.y - end.y) * Map.TileSize,
+                            2f)
+            )));
         }
         if (dieing) {
             if (SGL.provide(GameScreen.class).getMap().getTileAt(getCenterPoint()) != SGL.provide(GameScreen.class).getMap().getTileAt(SGL.provide(GameScreen.class).getPlayer().getCenterPoint())) {
@@ -203,12 +192,6 @@ public class Tile extends Entity implements Mortal, Creatable {
     public void create() {
         Vector2 vecstart = SGL.provide(GameScreen.class).getMap().calPixCoord(start);
         setCenterPosition(vecstart.x, vecstart.y);
-        if (end != null) {
-            Vector2 vecend = SGL.provide(GameScreen.class).getMap().calPixCoord(end);
-            move = vecend.cpy().sub(vecstart);
-            moveLeft = move.cpy();
-            SGL.debug(move.toString());
-        }
         setTexture();
         sizeChanged();
         SGL.debug(getWidth() + "," + getHeight());
