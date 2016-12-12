@@ -150,7 +150,6 @@ public class MenuScreen extends SGLStagedScreen<LD37> {
             public void clicked(InputEvent event, float x, float y) {
                 SGL.provide(SGLRootScreen.class).hideScreen(MenuScreen.class);
                 SGL.provide(SGLRootScreen.class).showScreen(GameScreen.class, SGLRootScreen.ZINDEX.NEAR);
-                SGL.provide(GameScreen.class).loadMap(-1);
             }
         });
         stage().addActor(btnStart);
