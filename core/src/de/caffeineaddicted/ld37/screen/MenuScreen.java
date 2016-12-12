@@ -92,7 +92,7 @@ public class MenuScreen extends SGLStagedScreen<LD37> {
 
     @Override
     public void onBeforeAct(float delta) {
-        btnContinue.setDisabled(!SGL.provide(GameScreen.class).isCreated());
+        btnContinue.setDisabled(!SGL.provide(GameScreen.class).isLoaded());
         if (SGL.provide(GameScreen.class).isCreated()) {
             btnStart.setText("Restart Game");
         }

@@ -1,6 +1,7 @@
 package de.caffeineaddicted.ld37.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -18,6 +19,7 @@ import de.caffeineaddicted.sgl.etities.Actor;
 import de.caffeineaddicted.sgl.input.SGLScreenInputMultiplexer;
 import de.caffeineaddicted.sgl.messages.Message;
 import de.caffeineaddicted.sgl.messages.MessageReceiver;
+import de.caffeineaddicted.sgl.ui.screens.SGLRootScreen;
 import de.caffeineaddicted.sgl.ui.screens.SGLStagedScreen;
 import de.caffeineaddicted.sgl.utils.MathUtils;
 import de.caffeineaddicted.sgl.utils.SGLAssets;
@@ -25,6 +27,7 @@ import de.caffeineaddicted.sgl.utils.SGLAssets;
 import java.util.ArrayList;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.logging.FileHandler;
 
 /**
  * @author Malte Heinzelmann
@@ -49,6 +52,7 @@ public class GameScreen extends SGLStagedScreen<LD37> {
     private float unicornClimbingDuration = 1.2f, unicornClimbing = 0, unicornClimbingX, unicornClimbingScale;
     private boolean useCustomMaps = false;
     private boolean hardMode = true;
+    private boolean loaded = false;
 
     public void onBeforeAct(float delta) {
         for (Actor a : deleteLater) {
@@ -266,21 +270,34 @@ public class GameScreen extends SGLStagedScreen<LD37> {
     }
 
     public void loadMap(int i) {
+        loaded = false;
         int maxMaps = 10; // TODO: Check with some class
         currentMap = Math.max(-1, i);
         currentMap = Math.min(maxMaps, currentMap);
         player = new Player();
         map = null;
+        String fileName = "maps/" + currentMap + ".json";
         if (useCustomMaps) {
-            try {
-                map = new MapWrapper(Gdx.files.local("./maps/" + currentMap + ".json")).getMap();
-            } catch (Exception e) {
-                SGL.error("Could not load the custom map in \"maps/" + currentMap + ".json\"! Using default maps.");
+            FileHandle file = Gdx.files.local("./" + fileName);
+            if (file.exists() && file.file().canRead()) {
+                try {
+                    map = new MapWrapper(file).getMap();
+                } catch (Exception e) {
+                    SGL.error("Could not load the custom map in \"./" + fileName + "\"! Using default maps.");
+                }
+            }
+        } else {
+            SGL.provide(SGLAssets.class).isLoaded(fileName, MapWrapper.class) {
+                map = SGL.provide(SGLAssets.class).get(fileName, MapWrapper.class).getMap();
             }
         }
         if (map == null) {
-            map = SGL.provide(SGLAssets.class).get("maps/" + currentMap + ".json", MapWrapper.class).getMap();
+            //loaded is false
+            SGL.provide(SGLRootScreen.class).hideScreen(GameScreen.class);
+            SGL.provide(SGLRootScreen.class).showScreen(EndGameScreen.class);
+            return;
         }
+        loaded = true;
         map.reset();
         Vector2 spawn = map.calPixCoord(map.getStart());
         player.setPosition(map.getX() + spawn.x, map.getY() + spawn.y);
@@ -465,6 +482,10 @@ public class GameScreen extends SGLStagedScreen<LD37> {
     public boolean setHardMode(boolean hardMode) {
         this.hardMode = hardMode;
         return hardMode;
+    }
+
+    public boolean isLoaded() {
+        return loaded;
     }
 
     public enum ZINDEX {
