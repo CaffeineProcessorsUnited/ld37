@@ -120,7 +120,7 @@
         {
             "hole": 6,
             "key": 0,
-            "trigger": "unlock:replace:10:0:Stone",
+            "trigger": "unlock:replace:10:0:Stone;visit:2:message:Hallo zum zweiten Mal;visit:4:teleport:6:0",
             "type": "Metal",
             "x": 8,
             "y": 0
