@@ -77,6 +77,7 @@ public class Player extends UnitBase {
         if(teleportPosition != null){
             Vector2 pos = SGL.provide(GameScreen.class).getMap().calPixCoord(teleportPosition);
             pos.add(SGL.provide(GameScreen.class).getMap().getX(), SGL.provide(GameScreen.class).getMap().getY());
+            currentTile.setTriggered(false);
             setPosition(pos.x, pos.y);
             teleportPosition = null;
             clearActions();
@@ -157,6 +158,7 @@ public class Player extends UnitBase {
         if (!wasslippery) {
             SGL.provide(GameScreen.class).nextMessage();
         }
+        currentTile.setTriggered(false);
         action.setDuration(speed);
         addAction(action);
     }
