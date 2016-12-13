@@ -1,6 +1,8 @@
 # Ludum Dare 37: One Room
 
-## Story
+## The Game
+
+### Story
 
 You are trapped in a gigantic tower.
 All levels are connected and form a big room.
@@ -8,20 +10,20 @@ Your mission is to beat your way through all levels and reach the top of the tow
 
 **But beware!** If you make a bad move you will fall down and hopefully land on a lower level.
 
+### Controls
+
+You control the unicorn with the arrow keys. The map is draggable with the mouse so you can get an overview of the level.
+
+### Bonus
+
+As a bonus we added a map editor for you to design own challenging levels.
+
 ## Credits
 
 * Felix Richter(@felix5721): Heavy map design
 * Niels Bernlöhr(@k0rmarun): Game code, map design
 * Malte Heinzelmann(@hnzlmnn): Game code, [SGL](https://github.com/CaffeineProcessorsUnited/superior-game-library) library code
 * Maria Stepanov(@butterwelt): Beautiful assets
-
-## The Game
-
-You control the unicorn with the arrow keys. The map is draggable with the mouse so you can get an overview of the level.
-
-## Bonus
-
-As a bonus we added a map editor for you to design own challenging levels.
 
 ## Development
 
