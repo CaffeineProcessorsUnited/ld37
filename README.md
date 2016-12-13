@@ -15,6 +15,14 @@ Your mission is to beat your way through all levels and reach the top of the tow
 * Malte Heinzelmann(@hnzlmnn): Game code, [SGL](https://github.com/CaffeineProcessorsUnited/superior-game-library) library code
 * Maria Stepanov(@butterwelt): Beautiful assets
 
+## The Game
+
+You control the unicorn with the arrow keys. The map is draggable with the mouse so you can get an overview of the level.
+
+## Bonus
+
+As a bonus we added a map editor for you to design own challenging levels.
+
 ## Development
 
 ## Running
